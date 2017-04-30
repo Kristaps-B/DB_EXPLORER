@@ -1,0 +1,78 @@
+<html>
+<head>
+
+<title>
+	Main Menu
+</title>
+
+
+<script>
+
+	function create() {
+		
+		
+		
+		var inform_str = app.getDBInformation();
+		
+		var inform_json = JSON.parse(inform_str);
+		
+		document.getElementById('INFORMATION').innerHTML = "(DB_INFORMATION - IP: " + inform_json.ip
+		+ " PORT: " + inform_json.port 
+		+ " SID: " + inform_json.sid
+		+ " USERNAME: " + inform_json.username
+		+ " PASSWORD: " + inform_json.password
+		+")";
+		;
+		
+	}
+	
+	
+	function changeDatabase() {
+		
+		app.changeDatabase();
+	}
+	
+	function allTables () {
+		app.allTables();
+	}
+	
+	
+	
+	function allUsers (){
+		
+		app.allUsers();
+		
+	}
+	
+	
+	
+	
+</script>
+</head>
+
+<body>
+	<center><h1>MAIN_MENU</h1></center>
+	</br>
+	
+	<center>
+		<div id="INFORMATION">
+		</div>
+	</center>
+	
+	</br>
+	
+	
+	<button  onclick="allUsers();" > ALL_USERS </button></br>
+	<button onclick="allTables();" > ALL_TABLES </button></br>
+	<button onclick=" " > ALL_VIEWS </button></br>
+	<button onclick=" " > ALL_PL/SQL </button></br>
+	
+	<hr>
+	
+	<button onclick="changeDatabase();" > CHANGE_DATABASE </button> 
+	
+	
+
+</body>
+
+</html>

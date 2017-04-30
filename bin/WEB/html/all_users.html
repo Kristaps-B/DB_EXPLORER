@@ -1,0 +1,57 @@
+<html>
+<head>
+	<title>ALL_USERS</title>
+	
+	
+	<script type="text/javascript">
+	
+	
+		function create() {
+			
+			
+			loadUsers();
+			
+		}
+		
+		
+		
+		function updateUsers() {
+			
+			app.updateUsers();
+		}
+		
+		
+		
+		function loadUsers() {
+			
+			app.loadUsers();
+		}
+		
+		
+	</script>
+
+</head>
+<body>
+	<center><h1>ALL_USERS</h1></center>
+	
+	</br>
+	
+	<center>
+		<button  onclick="updateUsers();" > UPDATE_USERS </button></br></br>	
+	</center>
+
+	
+	<hr>
+	
+	
+	<table id = "USER_TABLE" border="1" width="100%" >
+		<tr>
+			<th>ID</th>
+			<th>USER_ID</th>
+			<th>USERNAME</th>
+		</tr>
+	
+	</table>
+	
+</body>
+</html>

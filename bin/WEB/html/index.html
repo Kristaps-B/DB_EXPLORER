@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<head>
+	<title>Database Visualization project</title>
+	
+	
+	<script type="text/javascript" src="js/vis.js"></script>
+    <link href="css/vis.css" rel="stylesheet" type="text/css" />
+	
+	
+	<style type="text/css">
+        #mynetwork {
+            width: 800px;
+            height: 600px;
+            border: 1px solid lightgray;
+        }
+        
+        h1 {
+        	color: white
+        }
+    </style>
+	
+</head>
+<body  bgcolor="#000000">
+	<center><h1>DB-VISUALIZATION</h1></center>
+	
+	
+	<p><button name = "b" onclick="output()">BUTTON</button></p>
+	<center><div id="mynetwork"></div></center>
+	
+	
+	
+	
+	
+		<script type="text/javascript">
+		function helloWorld() {
+			alert("Hello World!");
+		}
+		
+		function output () {
+			
+			app.output();
+		}
+		
+		function createGraph (pNodes, pEdges) {
+		
+				/*'{"nodes": ['+
+	        '{"id": 1, "label": "Node 1"},'+
+		       '{"id": 2, "font":{"size":30}, "label": "Node 2", "color": "red", "size":40, "shape": "box"},'+
+		        '{"id": 3, "label": "Node 3"},'+
+		        '{"id": 4, "label": "Node 4"},'+
+		        '{"id": 5, "label": "Node 5"}'+
+		    ']}';*/
+		    
+			//if (pNodes == undefined || pEdges == undefined) return;
+			
+		    
+			// create an array with nodes
+			if (pNodes != undefined) {
+				var nodes = new vis.DataSet(JSON.parse(pNodes).nodes);
+			}
+		    
+		    
+		 
+
+		    // create an array with edges
+		    if (pEdges != undefined) {
+		    	var edges = new vis.DataSet(JSON.parse(pEdges).edges);
+		    }
+		    
+
+		    // create a network
+		    var container = document.getElementById('mynetwork');
+
+		    // provide the data in the vis format
+		    var data = {
+		        nodes: nodes,
+		        edges: edges
+		    };
+		    var options = {nodes: {borderWidth: 2}};
+
+		    // initialize your network!
+		    var network = new vis.Network(container, data, options);
+			
+		}
+		
+		
+
+		
+	</script>
+</body>
+</html>
