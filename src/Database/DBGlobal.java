@@ -1,5 +1,5 @@
 package Database;
 
 public class DBGlobal {
-	public static String dBString = "jdbc:sqlite:visualization.db";
+	public static String dBMainString = "jdbc:sqlite:main.db";
 }

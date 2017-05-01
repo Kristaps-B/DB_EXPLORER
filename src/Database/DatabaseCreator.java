@@ -4,10 +4,12 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
 
+import Global.Session;
+
 public class DatabaseCreator {
 	
 	
-	private String dbName = DBGlobal.dBString;
+	private String dbName = DBGlobal.dBMainString;
 	
 	public DatabaseCreator() {
 		
@@ -15,9 +17,10 @@ public class DatabaseCreator {
 	}
 	
 	
-	public void createDatabase () {
-		System.out.println("1 - DatabaseCreator.createDatabase");
-
+	public void createMainDatabase () {
+		System.out.println("1 - DatabaseCreator.createMainDatabase");
+		
+		
 		
 		try ( Connection c = DriverManager.getConnection(dbName);
 				Statement stmt = c.createStatement();
@@ -44,6 +47,31 @@ public class DatabaseCreator {
 			result = stmt.executeUpdate(sql);
 			System.out.println("Created table 'all_databases'");
 			
+		
+			
+		} catch (Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+		
+	}
+	
+	
+	public void createUserDatabase () {
+		System.out.println("1 - DatabaseCreator.createUserDatabase");
+
+		
+		try ( Connection c = DriverManager.getConnection(Session.dBUserString);
+				Statement stmt = c.createStatement();
+				) {
+			Class.forName("org.sqlite.JDBC");
+		
+			
+			System.out.println("Created SQLLite database!");
+			int result = 0;
+			
+			String sql = "";
+			
 			// Create table all_tables
 			
 			sql = "CREATE TABLE IF NOT EXISTS all_tables (" +
@@ -64,7 +92,8 @@ public class DatabaseCreator {
 			sql = "CREATE TABLE IF NOT EXISTS all_users (" +
 					"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"user_id           CHAR(30)," +
-					"username           CHAR(30) unique" +
+					"username           CHAR(30) unique," +
+					"active           CHAR(1) " +
 					")"
 					;
 					

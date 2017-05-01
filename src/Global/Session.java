@@ -6,5 +6,6 @@ public class Session {
 	public static String port = "";
 	public static String username = "";
 	public static String password = "";
+	public static String dBUserString = "jdbc:sqlite:user.db";
 	
 }

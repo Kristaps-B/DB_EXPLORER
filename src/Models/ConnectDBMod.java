@@ -30,7 +30,7 @@ public class ConnectDBMod {
 				")";
 		
 		
-		lInsert.insert(sql);
+		lInsert.insertUpdate(sql, DBGlobal.dBMainString);
 		
 	
 		
@@ -83,7 +83,7 @@ public class ConnectDBMod {
 		result = "[";
 		
 		
-		try ( Connection c = DriverManager.getConnection(DBGlobal.dBString);
+		try ( Connection c = DriverManager.getConnection(DBGlobal.dBMainString);
 				Statement stmt = c.createStatement();
 				) {
 			 
@@ -152,7 +152,7 @@ public class ConnectDBMod {
 	
 	public void deleteDatabase (int id) throws Exception  {
 		
-		try ( Connection c = DriverManager.getConnection(DBGlobal.dBString);
+		try ( Connection c = DriverManager.getConnection(DBGlobal.dBMainString);
 				Statement stmt = c.createStatement();
 				) {
 			 

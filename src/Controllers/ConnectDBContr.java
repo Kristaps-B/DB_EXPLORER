@@ -47,13 +47,13 @@ public class ConnectDBContr {
 	}
 	
 	
-	public void creatingDB() {
+	public void creatingMainDB() {
 		System.out.println("Creating LOCAL DB - START");
 		
 		
 		DatabaseCreator dbCreator = new DatabaseCreator();
 		
-		dbCreator.createDatabase();
+		dbCreator.createMainDatabase();
 		
 	}
 	
@@ -83,6 +83,13 @@ public class ConnectDBContr {
 			Session.sid = sid;
 			Session.username = username;
 			Session.password = password;
+			Session.dBUserString = "jdbc:sqlite:" + sid + ".db";
+			
+			
+			
+			DatabaseCreator dbCreator = new DatabaseCreator();
+			
+			dbCreator.createUserDatabase();
 			
 			
 			

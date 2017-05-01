@@ -2,7 +2,11 @@ package Database;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.Statement;
+
+import Results.Result;
+import Results.UsersResult;
 
 public class SQLLite {
 	
@@ -14,9 +18,9 @@ public class SQLLite {
 	
 	
 	
-	public void insert (String sql) throws Exception {
+	public void insertUpdate (String sql, String db) throws Exception {
 		
-		try ( Connection c = DriverManager.getConnection(DBGlobal.dBString);
+		try ( Connection c = DriverManager.getConnection(db);
 				Statement stmt = c.createStatement();
 				) {
 			 
@@ -47,4 +51,81 @@ public class SQLLite {
 		}
 		
 	}
+	
+	
+	
+	
+	public void query (String sql , Result rs, String dbString) throws Exception {
+		
+		try ( Connection c = DriverManager.getConnection(dbString);
+				Statement stmt = c.createStatement();
+				) {
+			 
+		 
+		    
+		    Class.forName("org.sqlite.JDBC");
+			
+			
+		    c.setAutoCommit(false);
+		 
+			
+				
+			
+			 
+				
+			ResultSet rSet = stmt.executeQuery(sql);
+			
+			
+			copyToResult(rSet, rs); 
+			
+			/*
+			while (rs.next()) {
+
+				result += "{";
+				
+				result += "\"id\":\"" + rs.getString("id") + "\",";
+				result += "\"ip\":\"" + rs.getString("ip") + "\",";
+				result += "\"port\":\"" + rs.getString("port") + "\","; 
+				result += "\"sid\":\"" + rs.getString("sid") + "\",";
+				result += "\"username\":\"" + rs.getString("username") + "\",";
+				result += "\"password\":\"" + rs.getString("password") + "\"";
+			 
+				
+				
+				result += "},";
+			}
+			
+			if (result.length() > 1) {
+				result = result.substring(0, result.length() - 1);
+			}
+				
+			
+			result += "]";
+			*/
+			
+			//result = "[{a:a},{a:b}]";
+			
+			//c.commit();
+			
+			
+		} catch (ClassNotFoundException e) {
+			System.out.println("Exception: " + e.getMessage());
+		} catch(Exception e) {
+			System.out.println("Exception: " + e.getMessage());
+		}
+		
+	}
+	
+	
+	
+	private void copyToResult (ResultSet rSet, Result rs) throws Exception {
+		
+		if (rs instanceof UsersResult) {
+			
+			((UsersResult) rs).copyRows(rSet);
+			
+		}
+		
+	}	
+	
 }

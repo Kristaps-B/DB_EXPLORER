@@ -18,13 +18,77 @@
 		function updateUsers() {
 			
 			app.updateUsers();
+			loadUsers();
+		}
+		
+		function toMenu () {
+			
+			app.toMenu();
+		}
+		
+		function chckBoxCl (id) {
+			
+			
+			var chk = document.getElementById("chkbox" + id).checked;
+			
+
+			//alert("CheckBox " + id + " " + chk);
+			
+			app.updateActive(id, chk);
+			
+			
 		}
 		
 		
 		
 		function loadUsers() {
 			
-			app.loadUsers();
+			var str_users = app.loadUsers();
+			
+			var tableHeaderRowCount = 1;
+			var table = document.getElementById('USERS_TABLE');
+			var rowCount = table.rows.length;
+			for (var i = tableHeaderRowCount; i < rowCount; i++) {
+			    table.deleteRow(tableHeaderRowCount);
+			}	
+			
+			
+			
+			
+			us_json = JSON.parse(str_users);
+			
+			
+			
+			
+			for (var i = 0; i < us_json.length; i++) {
+				
+				var row = table.insertRow(i + 1);
+				
+				var cell =  row.insertCell(0);
+				cell.innerHTML = us_json[i].id;
+				
+				var cell =  row.insertCell(1);
+				cell.innerHTML = us_json[i].user_id;
+				
+				cell =  row.insertCell(2);
+				cell.innerHTML = us_json[i].username;
+				
+				
+				
+				var checked = "";
+				
+				if (us_json[i].active == "Y") {
+					checked = "checked";
+				}
+				
+				cell =  row.insertCell(3);
+				cell.innerHTML =
+					"<input id='chkbox" + us_json[i].id + "' type='checkbox' onclick='chckBoxCl(" + us_json[i].id + ")' " + checked + " >";
+					//us_json[i].active;
+					
+				
+			}
+			
 		}
 		
 		
@@ -37,18 +101,20 @@
 	</br>
 	
 	<center>
-		<button  onclick="updateUsers();" > UPDATE_USERS </button></br></br>	
+		<button  onclick="updateUsers();" > UPDATE_USERS </button></br>
+		<button  onclick="toMenu();" > TO_MENU </button></br>
 	</center>
 
 	
 	<hr>
 	
 	
-	<table id = "USER_TABLE" border="1" width="100%" >
+	<table id = "USERS_TABLE" border="1" width="100%" >
 		<tr>
 			<th>ID</th>
 			<th>USER_ID</th>
 			<th>USERNAME</th>
+			<th>ACTIVE</th>
 		</tr>
 	
 	</table>
