@@ -70,6 +70,9 @@ public class AllUsersContr {
 		
 		String active = "";
 		
+		
+		System.out.println("AllUsersContr.updateActive id: " + id + " chk: " + chk);
+		
 		if (chk == true) {
 			active = "Y";
 		} else {

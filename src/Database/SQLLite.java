@@ -120,11 +120,11 @@ public class SQLLite {
 	
 	private void copyToResult (ResultSet rSet, Result rs) throws Exception {
 		
-		if (rs instanceof UsersResult) {
+		// if (rs instanceof UsersResult) {
 			
-			((UsersResult) rs).copyRows(rSet);
+			(rs).copyRows(rSet);
 			
-		}
+		// }
 		
 	}	
 	

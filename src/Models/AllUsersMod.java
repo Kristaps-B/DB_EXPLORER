@@ -66,7 +66,7 @@ public class AllUsersMod {
 		+ "VALUES (" 
 		+ "'" + row.user_id  + "',"
 		+ "'" + row.username  + "',"
-		+ "'" + 'Y'  + "')"
+		+ "'" + 'N'  + "')"
 		;
 		
 		

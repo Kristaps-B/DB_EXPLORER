@@ -3,9 +3,9 @@ package Results;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-public class UsersResult extends Result {
-	
+import Results.TableResult.Row;
 
+public class ViewsResult extends Result {
 	private ArrayList <Row> columns = new ArrayList <Row> ();
 	
 	
@@ -18,10 +18,10 @@ public class UsersResult extends Result {
 
 			
 			columns.add(new Row(
-					rs.getInt("id"),
-					rs.getInt("user_id"), 
-					rs.getString("username"),
-					rs.getString("active")
+					rs.getInt("ID"),
+					rs.getInt("VIEW_ID"), 
+					rs.getString("OWNER"),
+					rs.getString("VIEW_NAME")
 					));			
 			
 		}
@@ -42,25 +42,20 @@ public class UsersResult extends Result {
 			
 			
 			public int id;
-			public int user_id;
-			public String username;	
-			public String active;
+			public int view_id;
+			public String owner;	
+			public String view_name;
 			
 			
-			public Row (int id, int user_id, String username, String active) {
+			public Row (int id, int view_id, String owner, String view_name) {
 				this.id = id;
-				this.user_id = user_id;
-				this.username = username;
-				this.active = active;
+				this.view_id = view_id;
+				this.owner = owner;
+				this.view_name = view_name;
 			}
 			
 
 			
 			
 		}
-	
 }
-
-
-
-

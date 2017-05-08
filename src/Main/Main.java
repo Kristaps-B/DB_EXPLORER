@@ -7,6 +7,7 @@ import javax.swing.JOptionPane;
 
 import Controllers.AllTablesContr;
 import Controllers.AllUsersContr;
+import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
 import Controllers.MainMenuContr;
 import Database.Database;
@@ -137,6 +138,11 @@ public class Main extends Application {
 		            	
 		            	System.out.println("PAGE: ALL_TABLES");
 		            	window.setMember("app", new AllTablesContr(engine));
+		            	engine.executeScript("create()"); 
+		            } else if (page.equals("all_views.html")) {
+		            	
+		            	System.out.println("PAGE: ALL_VIEWS");
+		            	window.setMember("app", new AllViewsContr(engine));
 		            	engine.executeScript("create()"); 
 		            }
 		            

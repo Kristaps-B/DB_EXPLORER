@@ -75,9 +75,11 @@ public class DatabaseCreator {
 			// Create table all_tables
 			
 			sql = "CREATE TABLE IF NOT EXISTS all_tables (" +
-			"id          INTEGER PRIMARY KEY AUTOINCREMENT," +
-			"name        CHAR(30)," +
-			"type        CHAR(30)" +
+			"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"table_id          INTEGER," +
+			"owner             CHAR(30)," +
+			"table_name        CHAR(30)," +
+			"unique (owner, table_name)" +
 			")"
 			;
 			
@@ -90,10 +92,10 @@ public class DatabaseCreator {
 			
 			
 			sql = "CREATE TABLE IF NOT EXISTS all_users (" +
-					"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
-					"user_id           CHAR(30)," +
+					"id                 INTEGER PRIMARY KEY AUTOINCREMENT," +
+					"user_id            CHAR(30)," +
 					"username           CHAR(30) unique," +
-					"active           CHAR(1) " +
+					"active             CHAR(1) " +
 					")"
 					;
 					
@@ -104,6 +106,26 @@ public class DatabaseCreator {
 			
 			
 			System.out.println("Created table 'all_users'");
+			
+			
+			
+			// Create table all_view
+			
+			sql = "CREATE TABLE IF NOT EXISTS all_views (" +
+			"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"view_id          INTEGER," +
+			"owner             CHAR(30)," +
+			"view_name        CHAR(30)," +
+			"unique (owner, view_name)" +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'all_views'");
 			
 			
 			

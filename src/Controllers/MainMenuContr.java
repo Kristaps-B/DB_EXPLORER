@@ -37,6 +37,12 @@ public class MainMenuContr {
 	}
 	
 	
+	public void allViews() {
+		URL url = Main.class.getResource("../WEB/html/all_views.html");
+		engine.load(url.toExternalForm());		
+	}
+	
+	
 	public String getDBInformation () {
 		
 		String result = "{";

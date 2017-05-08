@@ -1,0 +1,112 @@
+<html>
+<head>
+	<title>ALL_VIEWS</title>
+
+	<script type="text/javascript">
+	
+	function create () {
+		
+		  loadViews();
+	}
+	
+	
+	function toMenu () {
+		
+		app.toMenu();
+	}	
+	
+	
+	function updateViews() {
+		
+		app.updateViews();
+		
+		loadViews();
+	}
+	
+	
+	function analyseViews (owner, view ) {
+ 
+		
+		
+		app.analyseView(owner, view);
+		
+	}
+	
+	
+	function loadViews() {
+		var str_views = app.loadViews();
+		
+		
+		
+		var tableHeaderRowCount = 1;
+		var table = document.getElementById('VIEW_TABLE');
+		var rowCount = table.rows.length;
+		for (var i = tableHeaderRowCount; i < rowCount; i++) {
+		    table.deleteRow(tableHeaderRowCount);
+		}	
+		
+		
+		
+		
+		var view_json = JSON.parse(str_views);
+		
+		
+		
+		
+		for (var i = 0; i < view_json.length; i++) {
+			
+			var row = table.insertRow(i + 1);
+			
+			var cell =  row.insertCell(0);
+			cell.innerHTML = view_json[i].id;
+			
+			var cell =  row.insertCell(1);
+			cell.innerHTML = view_json[i].view_id;
+			
+			cell =  row.insertCell(2);
+			cell.innerHTML = view_json[i].owner;
+			
+			
+			cell =  row.insertCell(3);
+			cell.innerHTML = view_json[i].view_name;
+			
+			
+			cell =  row.insertCell(4);
+			cell.innerHTML =   '<button onclick="analyseViews(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > ANALYSE </button>';
+			
+
+		}
+		
+	}
+	
+	
+		
+	</script>
+</head>
+	<center><h1>ALL_VIEWS</h1></center>
+	
+	
+	<center>
+	<button  onclick="updateViews()" > UPDATE_VIEWS </button></br>
+	<button  onclick="toMenu()" > TO_MENU </button></br>
+	</br>
+	</center>
+	
+	
+	
+	<table id = "VIEW_TABLE" border="1" width="100%" >
+		<tr>
+			<th>ID</th>
+			<th>VIEW_ID</th>
+			<th>OWNER</th>
+			<th>VIEW_NAME</th>
+			<th>ANALYSE</th>
+		</tr>
+	
+	</table>	
+	
+	
+	
+
+
+</html>
