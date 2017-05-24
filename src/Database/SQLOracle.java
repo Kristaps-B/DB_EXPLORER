@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import Global.Session;
 import Results.Result;
 import Results.UsersResult;
 
@@ -22,11 +23,11 @@ public class SQLOracle {
 
 	
 	
-	public SQLOracle (String ip, String port, String sid, String username, String password) {
-		this.URL = "jdbc:oracle:thin:@" + ip + ":" + port + ":" + sid;
+	public SQLOracle () {
+		this.URL = "jdbc:oracle:thin:@" + Session.ip + ":" + Session.port + ":" + Session.sid;
 		
-		this.username = username;
-		this.password = password;
+		this.username = Session.username;
+		this.password = Session.password;
 		
 	}
 	

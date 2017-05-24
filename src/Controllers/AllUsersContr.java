@@ -25,14 +25,7 @@ public class AllUsersContr {
 		
 		System.out.println("AllUsersContr.updateUsers");
 		
-		this.allUsersMod.queryUsers(
-			Session.ip,
-			Session.port,
-			Session.sid,
-			Session.username,
-			Session.password
-				
-			);
+		this.allUsersMod.queryUsers();
 		
 	}
 	

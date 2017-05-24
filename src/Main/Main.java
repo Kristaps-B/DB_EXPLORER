@@ -10,6 +10,7 @@ import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
 import Controllers.MainMenuContr;
+import Controllers.ViewInformationContr;
 import Database.Database;
 //import Database.Database;
 import javafx.application.Application;
@@ -143,6 +144,11 @@ public class Main extends Application {
 		            	
 		            	System.out.println("PAGE: ALL_VIEWS");
 		            	window.setMember("app", new AllViewsContr(engine));
+		            	engine.executeScript("create()"); 
+		            } else if (page.equals("view_information.html")) {
+		            	
+		            	System.out.println("PAGE: VIEW_INFORMATION");
+		            	window.setMember("app", new ViewInformationContr(engine));
 		            	engine.executeScript("create()"); 
 		            }
 		            

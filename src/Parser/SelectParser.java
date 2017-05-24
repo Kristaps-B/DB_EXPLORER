@@ -4,12 +4,12 @@ public class SelectParser {
 	private String sql = "";
 	
 	
-	private int select_start_index;
-	private int select_end_index;
-	private int from_start_index;
-	private int from_end_index;
-	private int where_start_index;
-	private int where_end_index;
+	private int select_start_index = -1;
+	private int select_end_index   = -1;
+	private int from_start_index   = -1;
+	private int from_end_index     = -1;
+	private int where_start_index  = -1;
+	private int where_end_index    = -1;
 	
 	
 	public SelectParser (String sql) {
@@ -26,9 +26,30 @@ public class SelectParser {
 			
 			char c = this.sql.charAt(i);
 			
-			System.out.println(i + ") " + c); 
+			System.out.println(i + ") " + c);
+			
+			
+			if (select_start_index == -1) {
+				
+			}
 		}
 		
+	}
+	
+	
+	private boolean AtLocation (int index, String search, String fullString) {
+		
+		boolean result = false;
+		
+		String sbstr = fullString.substring(index, index + search.length());
+		
+		
+		if (sbstr.equals(search)) {
+			return true;
+		}
+		
+		
+		return result;
 	}
 	
 	

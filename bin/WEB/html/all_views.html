@@ -32,6 +32,11 @@
 		
 	}
 	
+	function goToInformation (viewId) {
+		
+		app.goToInformation(viewId);
+	}
+	
 	
 	function loadViews() {
 		var str_views = app.loadViews();
@@ -75,6 +80,8 @@
 			cell.innerHTML =   '<button onclick="analyseViews(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > ANALYSE </button>';
 			
 
+			cell =  row.insertCell(5);
+			cell.innerHTML =   '<button onclick="goToInformation(\'' + view_json[i].id + '\')" > INFORMATION </button>';
 		}
 		
 	}
@@ -101,6 +108,7 @@
 			<th>OWNER</th>
 			<th>VIEW_NAME</th>
 			<th>ANALYSE</th>
+			<th>INFORMATION</th>
 		</tr>
 	
 	</table>	

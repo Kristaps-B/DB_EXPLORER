@@ -34,11 +34,7 @@ public class AllViewsContr {
 		
 		System.out.println("AllViewsContr.updateViews");
 		
-		this.allViewsMod.updateViews(Session.ip, 
-				Session.port, 
-				Session.sid, 
-				Session.username, 
-				Session.password);
+		this.allViewsMod.updateViews();
 		
 		
 		
@@ -75,6 +71,18 @@ public class AllViewsContr {
 				Session.password, 
 				owner, 
 				view_name);
+	}
+	
+	
+	
+	public void goToInformation(String viewId) {
+		
+		
+		Session.currentViewId = viewId;
+		System.out.println("AllViewsContr.goToInformation");
+		URL url = Main.class.getResource("../WEB/html/view_information.html");
+		engine.load(url.toExternalForm());
+		
 	}
 	
 }

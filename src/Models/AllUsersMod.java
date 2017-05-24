@@ -18,10 +18,10 @@ public class AllUsersMod {
 	}
 	
 	
-	public void queryUsers(String ip, String port, String sid, String username, String password) {
+	public void queryUsers() {
 		
 		
-		SQLOracle oQuerie = new SQLOracle(ip, port, sid, username, password);
+		SQLOracle oQuerie = new SQLOracle();
 		
 		UsersResult  rs = new UsersResult();
 		

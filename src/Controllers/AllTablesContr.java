@@ -34,12 +34,7 @@ public class AllTablesContr {
 		
 		
 		
-		this.allTablesMod.updateTables(
-				Session.ip, 
-				Session.port, 
-				Session.sid, 
-				Session.username, 
-				Session.password);
+		this.allTablesMod.updateTables();
 		
 		
 	}
@@ -49,12 +44,7 @@ public class AllTablesContr {
 		String result = "";
 		
 		
-		result = this.allTablesMod.loadTables(
-				Session.ip, 
-				Session.port, 
-				Session.sid, 
-				Session.username, 
-				Session.password);
+		result = this.allTablesMod.loadTables();
 		
 		
 		return result;

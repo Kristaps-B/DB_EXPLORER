@@ -53,7 +53,7 @@ public class AllViewsMod {
 	}	
 	
 	
-	public void updateViews (String ip, String port, String sid, String username, String password) {
+	public void updateViews () {
 		
 		
 		String activeUsers = this.loadActiveUsers();
@@ -63,7 +63,7 @@ public class AllViewsMod {
 		
 		String sql = "SELECT rownum ID, rownum VIEW_ID, OWNER, VIEW_NAME FROM all_views WHERE 1=1 " + activeUsers;
 		
-		SQLOracle oQuerie = new SQLOracle(ip, port, sid, username, password);
+		SQLOracle oQuerie = new SQLOracle();
 		
 		ViewsResult  rs = new ViewsResult();
 		
@@ -185,7 +185,7 @@ public class AllViewsMod {
 		
 		String sql = "SELECT OWNER, VIEW_NAME, TEXT FROM all_views WHERE owner = '" + owner + "' AND view_name = '" + view_name + "'";
 		
-		SQLOracle oQuerie = new SQLOracle(ip, port, sid, username, password);
+		SQLOracle oQuerie = new SQLOracle();
 		
 		ViewTextResult  rs = new ViewTextResult();
 		

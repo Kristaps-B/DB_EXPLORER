@@ -16,7 +16,7 @@ public class AllTablesMod {
 	}
 	
 	
-	public void updateTables (String ip, String port, String sid, String username, String password) {
+	public void updateTables () {
 		
 		
 		String activeUsers = this.loadActiveUsers();
@@ -28,7 +28,7 @@ public class AllTablesMod {
 		
 		String sql = "SELECT rownum ID, rownum TABLE_ID, OWNER, TABLE_NAME FROM all_tables WHERE 1=1 " + activeUsers;
 		
-		SQLOracle oQuerie = new SQLOracle(ip, port, sid, username, password);
+		SQLOracle oQuerie = new SQLOracle();
 		
 		TableResult  rs = new TableResult();
 		 
@@ -132,7 +132,7 @@ public class AllTablesMod {
 	}
 	
 	
-	public String loadTables (String ip, String port, String sid, String username, String password) {
+	public String loadTables () {
 		String result = "";
 		
 		
