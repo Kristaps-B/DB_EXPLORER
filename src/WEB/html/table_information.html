@@ -1,0 +1,30 @@
+<html>
+	<head>
+		<title>VIEW_INFORMATION</title>
+		
+		
+		<script type="text/javascript">
+		
+			function create() {
+				 document.getElementById('table_name').innerHTML = app.getTableName();
+			}
+			
+			
+			function allTables() {
+				
+				 app.toAllTables();
+				
+			}
+			
+			
+		</script>
+	</head>
+	<body>
+		<center><h1>TABLE_INFORMATION: <div id="table_name"></div></h1></center>
+		
+		</br>
+		<button onclick="allTables();" > ALL_TABLES </button>
+		
+	
+	</body>
+</html>

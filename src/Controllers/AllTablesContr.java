@@ -52,7 +52,15 @@ public class AllTablesContr {
 	}
 	
 	
-	
+	public void goToInformation(String tableId) {
+		
+		
+		Session.currentTableId = tableId;
+		System.out.println("AllTableContr.goToInformation");
+		URL url = Main.class.getResource("../WEB/html/table_information.html");
+		engine.load(url.toExternalForm());
+		
+	}
 	
 		
 	

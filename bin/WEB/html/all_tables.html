@@ -24,6 +24,12 @@
 	}
 	
 	
+	function goToInformation (viewId) {
+		
+		app.goToInformation(viewId);
+	}
+	
+	
 	
 	function loadTables () {
 		
@@ -63,7 +69,8 @@
 			cell.innerHTML = table_json[i].table_name;
 			
 			
-			
+			cell =  row.insertCell(4);
+			cell.innerHTML =   '<button onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
 				
 			
 		}
@@ -95,6 +102,7 @@
 			<th>TABLE_ID</th>
 			<th>OWNER</th>
 			<th>TABLE_NAME</th>
+			<th>INFORMATION</th>
 		</tr>
 	
 	</table>	

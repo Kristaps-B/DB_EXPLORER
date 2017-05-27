@@ -1,1 +1,1 @@
-"# DB_ANALYSER" 
+"# DB_EXPLORER" 

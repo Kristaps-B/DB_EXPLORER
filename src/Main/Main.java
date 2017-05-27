@@ -10,6 +10,7 @@ import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
 import Controllers.MainMenuContr;
+import Controllers.TableInformationContr;
 import Controllers.ViewInformationContr;
 import Database.Database;
 //import Database.Database;
@@ -149,6 +150,11 @@ public class Main extends Application {
 		            	
 		            	System.out.println("PAGE: VIEW_INFORMATION");
 		            	window.setMember("app", new ViewInformationContr(engine));
+		            	engine.executeScript("create()"); 
+		            } else if (page.equals("table_information.html")) {
+		            	
+		            	System.out.println("PAGE: TABLE_INFORMATION");
+		            	window.setMember("app", new TableInformationContr(engine));
 		            	engine.executeScript("create()"); 
 		            }
 		            

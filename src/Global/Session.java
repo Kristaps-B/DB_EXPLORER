@@ -9,5 +9,6 @@ public class Session {
 	public static String dBUserString = "jdbc:sqlite:user.db";
 	
 	public static String currentViewId = "";
+	public static String currentTableId = "";
 	
 }
