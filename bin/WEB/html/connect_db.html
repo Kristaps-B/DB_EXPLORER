@@ -69,6 +69,7 @@
 		}
 		
 		
+		/*
 		function openButton () {
 			var ip =  document.getElementById('IP').value;
 			var port =  document.getElementById('PORT').value;
@@ -79,22 +80,28 @@
 			
 			app.goToMenu(ip, port, sid, un, pass);
 		}
+		*/
 		
 		
 		
-		
-		function selectJson( n ) {
+		function openDB( n ) {
 			
 		 
 			
 			var nmb =  parseInt(n);
  
 			
-			document.getElementById('IP').value  = db_json[nmb].ip;
-			document.getElementById('PORT').value  = db_json[nmb].port;
-			document.getElementById('SID').value  = db_json[nmb].sid;
-			document.getElementById('UN').value  = db_json[nmb].username;
-			document.getElementById('PASS').value  = db_json[nmb].password;
+		
+			
+			
+			var ip      =  db_json[nmb].ip;
+			var port    =  db_json[nmb].port;
+			var sid     =  db_json[nmb].sid;
+			var un      =  db_json[nmb].username;
+			var pass    =  db_json[nmb].password;
+			
+			
+			app.goToMenu(ip, port, sid, un, pass);
 			
 		}
 		
@@ -161,7 +168,7 @@
 				cell.innerHTML = db_json[i].password;
 				
 				cell =  row.insertCell(7);
-				cell.innerHTML = '<button   onclick="selectJson(' + i + ');" > SELECT </button>';
+				cell.innerHTML = '<button   onclick="openDB(' + i + ');" > OPEN </button>';
 				
 				cell =  row.insertCell(8);
 				cell.innerHTML = '<button onclick="deleteDatabase(' + db_json[i].id + ')" > DELETE </button>';				
@@ -235,7 +242,7 @@
 	
 		<button onclick="sbmButton();" > CHECK_CONNECTION </button>
 		<button onclick="saveButton();" > SAVE_CONNECTION </button>	 
-		<button onclick="openButton();" > OPEN_CONNECTION </button>	
+		<!-- <button onclick="openButton();" > OPEN_CONNECTION </button>   -->	
 	</center>
 	
 
@@ -251,7 +258,7 @@
 			<th>SID</th>
 			<th>USERNAME</th>
 			<th>PASSWORD</th>
-			<th>SELECT</th>
+			<th>OPEN_DB_CONNECTION</th>
 			<th>DELETE</th>
 		</tr>
 	</table>	

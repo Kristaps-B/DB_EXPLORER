@@ -4,11 +4,11 @@ import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
-import Parser.SelectParser;
 import Results.TableResult;
 import Results.UsersResult;
 import Results.ViewTextResult;
 import Results.ViewsResult;
+import SQLParser.SelectParser;
 
 public class AllViewsMod {
 	

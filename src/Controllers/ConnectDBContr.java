@@ -75,7 +75,7 @@ public class ConnectDBContr {
 		
 
 		try {
-			connectDBMod.checkConnection(ip, port, sid, username, password);
+			// connectDBMod.checkConnection(ip, port, sid, username, password);
 			
 			
 			Session.ip = ip;

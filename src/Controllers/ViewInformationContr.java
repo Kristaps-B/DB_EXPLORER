@@ -1,6 +1,9 @@
 package Controllers;
 
+import java.net.URL;
+
 import Global.Session;
+import Main.Main;
 import Models.AllViewsMod;
 import Models.ViewInformationMod;
 import javafx.scene.web.WebEngine;
@@ -26,4 +29,14 @@ public class ViewInformationContr {
 		return result;
 		
 	}
+	
+	
+	public void toAllViews() {
+		
+		URL url = Main.class.getResource("../WEB/html/all_views.html");
+		engine.load(url.toExternalForm());	
+		
+	}
+	
+	
 }
