@@ -1,9 +1,14 @@
 package SQLParser;
 
+import java.util.ArrayList;
+
 public class WhereClause {
 	
 	
 	private String sql;
+	
+	
+	private ArrayList <WhereExpression> whereExpressionList = new ArrayList <> ();	
 	
 	public WhereClause () {
 		
@@ -14,14 +19,16 @@ public class WhereClause {
 	
 	public void addWhereString (String sql) {
 		this.sql = sql;
+		
+		splitWhereClauses(sql);
 	}
 	
 	
-	/*
-	
-	private void splitWhereClauses () {
 
-		String [] whereArray = this.whereString.split("AND");
+	
+	private void splitWhereClauses (String sql) {
+
+		String [] whereArray = sql.split("AND");
 		
 		System.out.println("Split WHERE");
 		
@@ -29,13 +36,12 @@ public class WhereClause {
 			
 			str = str.trim();
 			
-			selectColumnList.add(str);
+			whereExpressionList.add(new WhereExpression(str));
 			
 			System.out.println(str);
 		}		
 		
 	}
-	
-	*/
+
 	
 }

@@ -191,27 +191,30 @@ public class SelectQuery {
 		
 		System.out.println("GET_CLAUSES");
 		
+		
+		// SELECT
 		String selectString = this.sql.substring(select_start_index, select_end_index);
 		System.out.println("SELECT_STRING: " + selectString);
 		
 		
 		selectClause.addSelectString(selectString);
 		
+		// FROM
 		String fromString = this.sql.substring(from_start_index, from_end_index ); 
 		System.out.println("FROM_STRING: "   + fromString);
 		
 		
 		fromClause.addFromString(fromString);
 		
-		
+		// WHERE
 		String whereString = this.sql.substring(where_start_index, where_end_index ); 
-		
+		System.out.println("WHERE_STRING: "  + whereString);
 		
 		whereClause.addWhereString(whereString);
 		
 		
 		
-		System.out.println("WHERE_STRING: "  + whereString);
+		
 		 
 		
 		
