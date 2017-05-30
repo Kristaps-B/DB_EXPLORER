@@ -121,12 +121,34 @@ public class DatabaseCreator {
 			;
 			
 			
+	
+			
+			result = stmt.executeUpdate(sql);
+
+			
+			
+			
+			System.out.println("Created table 'all_columns'");
+			
+			
+			
+				// Create table all_columns
+			
+			sql = "CREATE TABLE IF NOT EXISTS all_columns (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"column_id             INTEGER,"  +
+			"column_name           CHAR(30)," +
+			"table_id              INTEGER,"  +
+			"unique (column_name, table_id)"  +
+			")"
+			;
+			
+			
 			
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_views'");
-			
+			System.out.println("Created table 'all_columns'");
 			
 			
 		

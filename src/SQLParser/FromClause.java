@@ -44,6 +44,42 @@ public class FromClause {
 		}
 	}
 	
-
+	
+	
+	public ArrayList <FromTable> getTables () {
+		return this.fromTableList;
+	}
+	
+	
+	public FromTable getTableByAlias(String alias) {
+		FromTable fromTable = null;
+		
+		for (FromTable ft: fromTableList) {
+			
+			if (ft.getAlias().equals(alias)) {
+				
+				fromTable = ft;
+			}
+		}
+		
+		
+		
+		return fromTable;
+	}
+	
+	
+	public FromTable getTableByTable(String table) {
+		FromTable fromTable = null;
+		
+		for (FromTable ft: fromTableList) {
+			
+			if (ft.getTable().equals(table)) {
+				
+				fromTable = ft;
+			}
+		}		
+		
+		return fromTable;		
+	}
 	
 }

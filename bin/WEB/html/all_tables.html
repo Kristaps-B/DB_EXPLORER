@@ -24,9 +24,14 @@
 	}
 	
 	
-	function goToInformation (viewId) {
+	function goToInformation (tableId) {
 		
-		app.goToInformation(viewId);
+		app.goToInformation(tableId);
+	}
+	
+	
+	function analyseTable(tableId) {
+		app.analyseTable(tableId);
 	}
 	
 	
@@ -70,6 +75,9 @@
 			
 			
 			cell =  row.insertCell(4);
+			cell.innerHTML =   '<button onclick="analyseTable(\'' + table_json[i].id + '\')" > ANALYSE </button>';
+			
+			cell =  row.insertCell(5);
 			cell.innerHTML =   '<button onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
 				
 			
@@ -102,6 +110,7 @@
 			<th>TABLE_ID</th>
 			<th>OWNER</th>
 			<th>TABLE_NAME</th>
+			<th>ANALYSE</th>
 			<th>INFORMATION</th>
 		</tr>
 	

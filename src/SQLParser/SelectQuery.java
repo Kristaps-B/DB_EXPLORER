@@ -221,7 +221,19 @@ public class SelectQuery {
 	}
 	
 	
+	public ArrayList <FromTable> getTables () {
+		return this.fromClause.getTables();
+	}
 	
+	
+	public FromTable getTableByAlias (String alias) {
+		return this.fromClause.getTableByAlias(alias);
+	}
+	
+	
+	public FromTable getTableByTable (String table) {
+		return this.fromClause.getTableByTable(table);
+	}	
 	
 
 }

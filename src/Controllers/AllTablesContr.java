@@ -62,6 +62,13 @@ public class AllTablesContr {
 		
 	}
 	
+	
+	public void analyseTable(int tableId) {
+		
+		this.allTablesMod.analyseTable(tableId);
+		
+	}
+	
 		
 	
 	

@@ -187,4 +187,11 @@ public class AllTablesMod {
 		
 	}
 	
+	
+	
+	public void analyseTable(int tableId) {
+		
+		
+	}
+	
 }
