@@ -63,9 +63,11 @@ public class AllTablesContr {
 	}
 	
 	
-	public void analyseTable(int tableId) {
+	public void analyseTable(int id, String owner, String table) {
 		
-		this.allTablesMod.analyseTable(tableId);
+		System.out.println("AllTablesContr.analyseTable id: " + id + " owner: " + owner + " table: " + table);
+		
+		this.allTablesMod.analyseTable(id, owner, table);
 		
 	}
 	

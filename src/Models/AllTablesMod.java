@@ -4,6 +4,7 @@ import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
+import Results.ColumnResult;
 import Results.TableResult;
 import Results.UsersResult;
 
@@ -189,8 +190,68 @@ public class AllTablesMod {
 	
 	
 	
-	public void analyseTable(int tableId) {
+	public void analyseTable(int id, String owner, String table) {
 		
+		String result = "";
+		
+		
+		SQLOracle oQuerie = new SQLOracle();
+		
+		ColumnResult rs = new ColumnResult();
+		
+		String sql = "SELECT rownum id, column_id, column_name,  " + id + " table_id FROM all_tab_cols WHERE owner = '" + owner + "' AND table_name = '" + table + "'";
+		
+		System.out.println(sql);
+		
+		try {
+			
+			oQuerie.queryDatabase(sql, rs);
+			
+			
+			
+			// ColumnResult.Row r =  rs.getColumns().get(0);
+			
+			saveColumns(rs);
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+	}
+	
+	
+	private void saveColumns (ColumnResult columResult) {
+		
+		String sql = "";
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		for (ColumnResult.Row row: columResult.getColumns()) {
+			
+			sql = "insert into all_columns"
+					+ "(column_id, column_name, table_id) "
+					+ "VALUES (" 
+					+ "'" + row.column_id  + "',"
+					+ "'" + row.column_name  + "',"
+					+ "'" + row.table_id  + "'"
+					+ ")"
+					;
+			
+			
+			try {
+				
+				System.out.println("Inserting column_name: " + row.column_name + " table_id: " + row.table_id);
+				
+				sqlLite.insertUpdate(sql, Session.dBUserString);
+				
+				System.out.println("Inserted column: " + row.column_name);
+				
+			} catch (Exception e) {
+				System.out.println(e.getMessage());
+			}
+			
+		}
 		
 	}
 	
