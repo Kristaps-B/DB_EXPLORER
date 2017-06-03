@@ -4,11 +4,11 @@ public class WhereExpression {
 	
 	private String sql;
 	
-	String expression = "";
-	String leftTable = "";
-	String rightTable = "";
-	String leftColumn = "";
-	String rightColumn = "";
+	private String expression = "";
+	private String leftTable = "";
+	private String rightTable = "";
+	private String leftColumn = "";
+	private String rightColumn = "";
 	
 	public WhereExpression (String sql) {
 		this.sql = sql;
@@ -51,5 +51,29 @@ public class WhereExpression {
 		System.out.println("RIGHT_TABLE: " + rightTable);
 		System.out.println("RIGHT_COLUMN: " + rightColumn);
 	}
+	
+	
+	
+	public String getExpression () {
+		return this.expression;
+	}
+	
+	public String getLeftTable () {
+		return this.expression;
+	}
+	
+	public String getRightTable () {
+		return this.expression;
+	}
+	
+	public String getLeftAlias () {
+		return this.expression;
+	}
+	
+	public String getRightAlias () {
+		return this.expression;
+	}
+	
+
 	
 }

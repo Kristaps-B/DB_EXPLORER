@@ -7,12 +7,58 @@
 		
 			function create() {
 				 document.getElementById('table_name').innerHTML = app.getTableName();
+				 
+				 
+				 loadColumns();
 			}
 			
 			
 			function allTables() {
 				
 				 app.toAllTables();
+				
+			}
+			
+			
+			function loadColumns () {
+				
+				var str_json = app.loadColumns();
+				
+				
+				
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('TABLE_COLUMNS');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var column_json = JSON.parse(str_json);
+				
+				
+				
+				
+				for (var i = 0; i < column_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+					
+					var cell =  row.insertCell(0);
+					cell.innerHTML = column_json[i].column_id;
+					
+					var cell =  row.insertCell(1);
+					cell.innerHTML = column_json[i].column_name;
+					
+					cell =  row.insertCell(2);
+					cell.innerHTML = column_json[i].data_type;
+					
+	 
+					
+				}
+				
 				
 			}
 			
@@ -25,6 +71,15 @@
 		</br>
 		<button onclick="allTables();" > ALL_TABLES </button>
 		
+		
+		<table id = "TABLE_COLUMNS" border="1" width="100%" >
+		<tr>
+			<th>COLUMN_ID</th>
+			<th>COLUMN_NAME</th>
+			<th>DATA_TYPE</th>
+		</tr>
+	
+	</table>	
 	
 	</body>
 </html>

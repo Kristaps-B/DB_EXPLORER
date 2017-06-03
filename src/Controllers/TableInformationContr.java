@@ -37,4 +37,18 @@ public class TableInformationContr {
 		
 	}
 	
+	
+	
+	
+	public String loadColumns() {
+		String result = "";
+		
+	
+		 result = this.tableInformationMod.loadColumns();
+		
+		
+		return result;
+		
+	}
+	
 }

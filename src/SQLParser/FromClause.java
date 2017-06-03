@@ -82,4 +82,8 @@ public class FromClause {
 		return fromTable;		
 	}
 	
+	
+	
+ 
+	
 }

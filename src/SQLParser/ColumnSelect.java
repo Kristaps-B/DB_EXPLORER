@@ -26,7 +26,7 @@ public class ColumnSelect {
 			
 		} else if (clArray.length > 1) {
 			
-			this.table = clArray[0];
+			this.table  = clArray[0];
 			this.column = clArray[1];
 			
 		}
@@ -47,9 +47,9 @@ public class ColumnSelect {
 		}
 		
 		
-		System.out.println("table: " + this.table);
+		System.out.println("table:  "  + this.table);
 		System.out.println("column: " + this.column);
-		System.out.println("alias: " + this.alias);
+		System.out.println("alias:  "  + this.alias);
 		
 	}
 	

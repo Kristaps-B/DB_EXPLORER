@@ -42,6 +42,11 @@ public class WhereClause {
 		}		
 		
 	}
+	
+	
+	public ArrayList <WhereExpression> getExpressionList () {
+		return whereExpressionList;
+	}
 
 	
 }

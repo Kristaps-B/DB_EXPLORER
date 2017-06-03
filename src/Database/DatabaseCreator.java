@@ -139,6 +139,7 @@ public class DatabaseCreator {
 			"column_id             INTEGER,"  +
 			"column_name           CHAR(30)," +
 			"table_id              INTEGER,"  +
+			"data_type             CHAR(30)," +
 			"unique (column_name, table_id)"  +
 			")"
 			;

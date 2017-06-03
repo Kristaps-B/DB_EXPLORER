@@ -36,4 +36,7 @@ public class FromTable {
 		return this.table;
 	}
 	
+	
+ 
+	
 }

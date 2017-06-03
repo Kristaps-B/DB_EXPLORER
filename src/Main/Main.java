@@ -32,7 +32,7 @@ import netscape.javascript.JSObject;
 
 public class Main extends Application {
 	
-	private String title = "DE(Oracle) project V.0.1 - KBA(2017)";
+	private String title = "DATABASE_EXPLORER (Oracle) project V.0.1 - KBA(2017)";
 	
 	public static void main (String [] args) {
 		

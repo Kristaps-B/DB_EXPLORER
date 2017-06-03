@@ -41,6 +41,11 @@ public class SelectClause {
 		}
 		
 	}
+	
+	
+	public ArrayList <ColumnSelect> getColumnList () {
+		return this.columnSelectList;
+	}
 
 	
 	

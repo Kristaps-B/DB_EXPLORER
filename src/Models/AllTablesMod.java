@@ -199,7 +199,7 @@ public class AllTablesMod {
 		
 		ColumnResult rs = new ColumnResult();
 		
-		String sql = "SELECT rownum id, column_id, column_name,  " + id + " table_id FROM all_tab_cols WHERE owner = '" + owner + "' AND table_name = '" + table + "'";
+		String sql = "SELECT rownum id, column_id, column_name,  " + id + " table_id, data_type FROM all_tab_cols WHERE owner = '" + owner + "' AND table_name = '" + table + "'";
 		
 		System.out.println(sql);
 		
@@ -230,10 +230,11 @@ public class AllTablesMod {
 		for (ColumnResult.Row row: columResult.getColumns()) {
 			
 			sql = "insert into all_columns"
-					+ "(column_id, column_name, table_id) "
+					+ "(column_id, column_name, data_type, table_id) "
 					+ "VALUES (" 
 					+ "'" + row.column_id  + "',"
 					+ "'" + row.column_name  + "',"
+					+ "'" + row.data_type  + "',"
 					+ "'" + row.table_id  + "'"
 					+ ")"
 					;
@@ -241,7 +242,7 @@ public class AllTablesMod {
 			
 			try {
 				
-				System.out.println("Inserting column_name: " + row.column_name + " table_id: " + row.table_id);
+				System.out.println("Inserting column_name: " + row.column_name + " data_type: " + row.data_type + " table_id: " + row.table_id);
 				
 				sqlLite.insertUpdate(sql, Session.dBUserString);
 				
