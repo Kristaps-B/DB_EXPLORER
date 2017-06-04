@@ -64,11 +64,7 @@ public class AllViewsContr {
 		System.out.println("ANALYSE: " + owner + "." + view_name);
 		
 		
-		this.allViewsMod.analyseView(Session.ip, 
-				Session.port, 
-				Session.sid, 
-				Session.username, 
-				Session.password, 
+		this.allViewsMod.analyseView(
 				owner, 
 				view_name);
 	}

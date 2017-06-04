@@ -41,6 +41,11 @@ public class SelectParser {
 	}
 	
 	
+	public SelectQuery getSelectQuery () {
+		return selectQuery;
+	}
+	
+	
 
 	
 /*

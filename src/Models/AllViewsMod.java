@@ -1,5 +1,7 @@
 package Models;
 
+import java.util.ArrayList;
+
 import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
@@ -8,7 +10,11 @@ import Results.TableResult;
 import Results.UsersResult;
 import Results.ViewTextResult;
 import Results.ViewsResult;
+import SQLParser.ColumnSelect;
+import SQLParser.FromTable;
 import SQLParser.SelectParser;
+import SQLParser.SelectQuery;
+import SQLParser.WhereExpression;
 
 public class AllViewsMod {
 	
@@ -180,7 +186,7 @@ public class AllViewsMod {
 	
 	
 	
-	public void analyseView(String ip, String port, String sid, String username, String password,
+	public void analyseView(
 			String owner, String view_name) {
 		
 		String sql = "SELECT OWNER, VIEW_NAME, TEXT FROM all_views WHERE owner = '" + owner + "' AND view_name = '" + view_name + "'";
@@ -197,6 +203,7 @@ public class AllViewsMod {
 			System.out.println("VIEW TEXT: " + sqlView);
 			SelectParser selectParser = new SelectParser(sqlView);
 			
+			saveViewInformation (selectParser);
 			
 			
 		} catch (Exception e) {
@@ -204,6 +211,68 @@ public class AllViewsMod {
 			
 			System.out.println(e.getMessage());
 		}
+		
+	}
+	
+	
+	private void saveViewInformation (SelectParser selectParser) {
+		
+		SelectQuery selectQuery = selectParser.getSelectQuery();
+		
+		
+		ArrayList <FromTable> tableList =  selectQuery.getTables();
+		
+		System.out.println("----------------- TABLES ---------------------");
+		
+		for (FromTable ft: tableList) {
+			
+			String table = ft.getTable();
+			String alias = ft.getAlias();
+			
+			System.out.println("Table: " + table + " alias: " + alias);
+			
+		}
+		
+		System.out.println("----------------- COLUMNS ---------------------");
+		//ArrayList <>  = selectQuery.
+		ArrayList <ColumnSelect> columnList = selectQuery.getColumnList();
+		
+		for (ColumnSelect cs: columnList) {
+			
+			
+			String table = cs.getTable();
+			String column = cs.getColumn();
+			String alias = cs.getAlias();
+			
+			System.out.println("Table: " + table + " column: " + column + " alias: " + alias);
+			
+		}	
+		
+		
+		System.out.println("------------- WHERE --------------------------");
+		ArrayList <WhereExpression> whereList = selectQuery.getWhereList();
+		
+		
+		for (WhereExpression we: whereList) {
+			
+			
+			String expression    =  we.getExpression();
+			String leftAlias     =  we.getLeftAlias();
+			String rightAlias    =  we.getRightAlias();
+			
+			String leftColumn    =  we.getLeftColumn();
+			String rightColumn   =  we.getRightColumn();
+			
+			String leftTable     = selectQuery.getTableByAlias(leftAlias).getTable();
+			String rightTable    = selectQuery.getTableByAlias(rightAlias).getTable();
+			 
+			
+			System.out.println("Left table: " + leftTable + " Right Table: " + rightTable + " Left Column: " + leftColumn + " Right Column: " + rightColumn + " Expression: " + expression);
+			
+		}			
+		
+		
+		
 		
 	}
 

@@ -54,4 +54,19 @@ public class ColumnSelect {
 	}
 	
 	
+	public String getTable () {
+		return this.table;
+	}
+	
+	public String getColumn () {
+		return this.column;
+	}
+	
+	public String getAlias () {
+		return this.alias;
+	}
+	
+	
+	
+	
 }

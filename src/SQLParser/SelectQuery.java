@@ -233,7 +233,16 @@ public class SelectQuery {
 	
 	public FromTable getTableByTable (String table) {
 		return this.fromClause.getTableByTable(table);
-	}	
+	}
+	
+	public ArrayList <ColumnSelect> getColumnList () {
+		
+		return this.selectClause.getColumnList();
+	}
+	
+	public ArrayList <WhereExpression> getWhereList () {
+		return this.whereClause.getExpressionList();
+	}
 	
 
 }

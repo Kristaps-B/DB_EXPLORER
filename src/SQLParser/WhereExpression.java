@@ -5,8 +5,8 @@ public class WhereExpression {
 	private String sql;
 	
 	private String expression = "";
-	private String leftTable = "";
-	private String rightTable = "";
+	private String leftAlias = "";
+	private String rightAlias = "";
 	private String leftColumn = "";
 	private String rightColumn = "";
 	
@@ -21,7 +21,7 @@ public class WhereExpression {
 		
 		if (arr.length > 1) {
 			
-			String expression = "=";
+			this.expression = "=";
 			
 			
 			
@@ -29,7 +29,7 @@ public class WhereExpression {
 			
 			if (arrLeft.length > 1) {
 				
-				leftTable = arrLeft[0];
+				leftAlias = arrLeft[0];
 				leftColumn = arrLeft[1];
 			}
 			
@@ -37,7 +37,7 @@ public class WhereExpression {
 			
 			if (arrRight.length > 1) {
 				
-				rightTable = arrRight[0];
+				rightAlias = arrRight[0];
 				rightColumn = arrRight[1];
 			}
 			
@@ -45,10 +45,10 @@ public class WhereExpression {
 		}
 		
 		
-		System.out.println("LEFT_TABLE: " + leftTable);
+		System.out.println("LEFT_ALIAS: " + leftAlias);
 		System.out.println("LEFT_COLUMN: " + leftColumn);
 		System.out.println("Expression: " + expression);
-		System.out.println("RIGHT_TABLE: " + rightTable);
+		System.out.println("RIGHT_ALIAS: " + rightAlias);
 		System.out.println("RIGHT_COLUMN: " + rightColumn);
 	}
 	
@@ -58,20 +58,21 @@ public class WhereExpression {
 		return this.expression;
 	}
 	
-	public String getLeftTable () {
-		return this.expression;
+	public String getLeftColumn () { 
+		
+		return this.leftColumn;
 	}
 	
-	public String getRightTable () {
-		return this.expression;
+	public String getRightColumn () {
+		return this.rightColumn;
 	}
 	
 	public String getLeftAlias () {
-		return this.expression;
+		return this.leftAlias;
 	}
 	
 	public String getRightAlias () {
-		return this.expression;
+		return this.rightAlias;
 	}
 	
 
