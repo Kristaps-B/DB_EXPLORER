@@ -76,7 +76,7 @@ public class AllTablesMod {
 		
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			if (rs.getColumns().size() > 0 ) {
 				
@@ -121,7 +121,7 @@ public class AllTablesMod {
 		
 		
 		try {
-			sqlLite.insertUpdate(sql, Session.dBUserString);
+			sqlLite.insertUpdate(sql);
 			
 			System.out.println("TABLE " + row.table_name + " was inserted!");
 			
@@ -144,7 +144,7 @@ public class AllTablesMod {
 		String sql = "SELECT id, table_id, owner, table_name FROM all_tables";
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			
 			System.out.println("---------LOAD_TABLES--------------");
@@ -244,7 +244,7 @@ public class AllTablesMod {
 				
 				System.out.println("Inserting column_name: " + row.column_name + " data_type: " + row.data_type + " table_id: " + row.table_id);
 				
-				sqlLite.insertUpdate(sql, Session.dBUserString);
+				sqlLite.insertUpdate(sql);
 				
 				System.out.println("Inserted column: " + row.column_name);
 				

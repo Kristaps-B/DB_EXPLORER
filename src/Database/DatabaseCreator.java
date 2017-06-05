@@ -132,7 +132,7 @@ public class DatabaseCreator {
 			
 			
 			
-				// Create table all_columns
+			// Create table all_columns
 			
 			sql = "CREATE TABLE IF NOT EXISTS all_columns (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -150,6 +150,28 @@ public class DatabaseCreator {
 			result = stmt.executeUpdate(sql);
 			
 			System.out.println("Created table 'all_columns'");
+			
+			
+			
+			// Create table all_columns
+			
+			sql = "CREATE TABLE IF NOT EXISTS all_view_tables (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"view_id               INTEGER,"  +
+			"table_id              INTEGER," +
+			"alias                 CHAR(30),"  +
+			"unique (view_id, table_id)"  +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'all_view_tables'");
+			
+			
 			
 			
 		

@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 
+import Global.Session;
 import Results.Result;
 import Results.UsersResult;
 
@@ -18,9 +19,9 @@ public class SQLLite {
 	
 	
 	
-	public void insertUpdate (String sql, String db) throws Exception {
+	public void insertUpdate (String sql) throws Exception {
 		
-		try ( Connection c = DriverManager.getConnection(db);
+		try ( Connection c = DriverManager.getConnection(Session.dBUserString);
 				Statement stmt = c.createStatement();
 				) {
 			 
@@ -55,9 +56,9 @@ public class SQLLite {
 	
 	
 	
-	public void query (String sql , Result rs, String dbString) throws Exception {
+	public void query (String sql , Result rs) throws Exception {
 		
-		try ( Connection c = DriverManager.getConnection(dbString);
+		try ( Connection c = DriverManager.getConnection(Session.dBUserString);
 				Statement stmt = c.createStatement();
 				) {
 			 

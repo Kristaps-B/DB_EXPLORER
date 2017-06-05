@@ -6,6 +6,7 @@ import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
+import Results.IdResult;
 import Results.TableResult;
 import Results.UsersResult;
 import Results.ViewTextResult;
@@ -31,7 +32,7 @@ public class AllViewsMod {
 		
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			if (rs.getColumns().size() > 0 ) {
 				
@@ -116,7 +117,7 @@ public class AllViewsMod {
 		
 		
 		try {
-			sqlLite.insertUpdate(sql, Session.dBUserString);
+			sqlLite.insertUpdate(sql);
 			
 			System.out.println("VIEW " + row.view_name + " was inserted!");
 			
@@ -140,7 +141,7 @@ public class AllViewsMod {
 		String sql = "SELECT id, view_id, owner, view_name FROM all_views";
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			
 			System.out.println("---------LOAD_VIEWS--------------");
@@ -203,7 +204,7 @@ public class AllViewsMod {
 			System.out.println("VIEW TEXT: " + sqlView);
 			SelectParser selectParser = new SelectParser(sqlView);
 			
-			saveViewInformation (selectParser);
+			saveViewInformation (selectParser, owner, view_name);
 			
 			
 		} catch (Exception e) {
@@ -215,9 +216,14 @@ public class AllViewsMod {
 	}
 	
 	
-	private void saveViewInformation (SelectParser selectParser) {
+	private void saveViewInformation (SelectParser selectParser, String owner, String view) {
 		
 		SelectQuery selectQuery = selectParser.getSelectQuery();
+		
+		
+		int viewId = getViewId(view);
+		
+		System.out.println("viewId: " + viewId);
 		
 		
 		ArrayList <FromTable> tableList =  selectQuery.getTables();
@@ -229,7 +235,13 @@ public class AllViewsMod {
 			String table = ft.getTable();
 			String alias = ft.getAlias();
 			
-			System.out.println("Table: " + table + " alias: " + alias);
+			
+			int tableId = getTableId(table);
+			
+			System.out.println("Table: " + table + " alias: " + alias + " tableId: " + tableId);
+			
+			
+			saveViewTable(viewId, tableId, alias);
 			
 		}
 		
@@ -265,6 +277,9 @@ public class AllViewsMod {
 			
 			String leftTable     = selectQuery.getTableByAlias(leftAlias).getTable();
 			String rightTable    = selectQuery.getTableByAlias(rightAlias).getTable();
+			
+			
+			
 			 
 			
 			System.out.println("Left table: " + leftTable + " Right Table: " + rightTable + " Left Column: " + leftColumn + " Right Column: " + rightColumn + " Expression: " + expression);
@@ -273,6 +288,100 @@ public class AllViewsMod {
 		
 		
 		
+		
+	}
+	
+	
+	private int getViewId (String view) {
+		int result = -1;
+		
+		
+		
+		
+		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "'";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		IdResult rs = new IdResult();
+		
+		try {
+			sqlLite.query(sql, rs);
+			
+			result = rs.getColumns().get(0).id;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		
+		
+		return result;		
+		
+		
+	}
+	
+	
+	private int getTableId (String table) {
+		int result = -1;
+		
+		
+		
+		
+		String sql = "SELECT id FROM all_tables WHERE table_name = '" + table + "'";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		IdResult rs = new IdResult();
+		
+		try {
+			sqlLite.query(sql, rs);
+			
+			result = rs.getColumns().get(0).id;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		
+		
+		return result;
+		
+		
+	}
+	
+	
+	private void saveViewTable (int viewId, int tableId, String alias) {
+		SQLLite  sqlLite = new SQLLite();
+		
+		String sql = "insert into all_view_tables"
+		+ "(view_id, table_id, alias) "
+		+ "VALUES (" 
+		+ "" + viewId  + ","
+		+ "" + tableId  + ","
+		+ "'" + alias  + "'"
+		+ ")"
+		;
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql);
+			
+			System.out.println("VIEW_TABLE viewID: " + viewId + " tableID: " + tableId + " was inserted!");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		
 	}
 

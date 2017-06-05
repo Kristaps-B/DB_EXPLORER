@@ -31,7 +31,7 @@ public class TableInformationMod {
 		System.out.println(sql);
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			result = rs.getColumns().get(0).table_name;
 			
@@ -61,7 +61,7 @@ public class TableInformationMod {
 		String sql = "SELECT id, column_id, table_id, column_name, data_type FROM all_columns  WHERE table_id = " + Session.currentTableId + " ORDER BY column_id ASC";
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			
 			System.out.println("---------LOAD_COLUMNS--------------");

@@ -27,7 +27,7 @@ public class ViewInformationMod {
 		System.out.println(sql);
 		
 		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
+			sqlLite.query(sql, rs);
 			
 			result = rs.getColumns().get(0).view_name;
 			
