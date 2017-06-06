@@ -30,7 +30,7 @@ public class ConnectDBMod {
 				")";
 		
 		
-		lInsert.insertUpdate(sql);
+		lInsert.insertUpdate(sql, DBGlobal.dBMainString);
 		
 	
 		

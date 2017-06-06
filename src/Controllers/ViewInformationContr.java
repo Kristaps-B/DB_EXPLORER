@@ -2,10 +2,15 @@ package Controllers;
 
 import java.net.URL;
 
+import Database.SQLLite;
+import Database.SQLOracle;
 import Global.Session;
+import Json.ArrayJson;
 import Main.Main;
 import Models.AllViewsMod;
 import Models.ViewInformationMod;
+import Results.ViewTableResult;
+import Results.ViewsResult;
 import javafx.scene.web.WebEngine;
 
 public class ViewInformationContr {
@@ -35,6 +40,22 @@ public class ViewInformationContr {
 		
 		URL url = Main.class.getResource("../WEB/html/all_views.html");
 		engine.load(url.toExternalForm());	
+		
+	}
+	
+	
+	
+	
+	
+	
+	public String loadViewsTables() {
+		String result = "";
+		
+		
+		result = viewInformationMod.loadViewsTables();
+		
+		return result;
+		
 		
 	}
 	

@@ -72,7 +72,7 @@ public class AllUsersMod {
 		
 		
 		try {
-			sqlLite.insertUpdate(sql);
+			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
 			System.out.println("USER " + row.username + " was inserted!");
 			
@@ -98,7 +98,7 @@ public class AllUsersMod {
 		String sql = "SELECT id, user_id, username, active FROM all_users";
 		
 		try {
-			sqlLite.query(sql, rs);
+			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			System.out.println("---------LOAD_USERS--------------");
 			
@@ -148,7 +148,7 @@ public class AllUsersMod {
 			
 			SQLLite  sqlLite = new SQLLite();
 			
-			sqlLite.insertUpdate(sql);
+			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
 			
 		} catch (Exception e) {

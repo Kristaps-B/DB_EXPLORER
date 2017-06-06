@@ -32,7 +32,7 @@ public class AllViewsMod {
 		
 		
 		try {
-			sqlLite.query(sql, rs);
+			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			if (rs.getColumns().size() > 0 ) {
 				
@@ -117,7 +117,7 @@ public class AllViewsMod {
 		
 		
 		try {
-			sqlLite.insertUpdate(sql);
+			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
 			System.out.println("VIEW " + row.view_name + " was inserted!");
 			
@@ -141,7 +141,7 @@ public class AllViewsMod {
 		String sql = "SELECT id, view_id, owner, view_name FROM all_views";
 		
 		try {
-			sqlLite.query(sql, rs);
+			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			
 			System.out.println("---------LOAD_VIEWS--------------");
@@ -306,7 +306,7 @@ public class AllViewsMod {
 		IdResult rs = new IdResult();
 		
 		try {
-			sqlLite.query(sql, rs);
+			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			result = rs.getColumns().get(0).id;
 			
@@ -340,7 +340,7 @@ public class AllViewsMod {
 		IdResult rs = new IdResult();
 		
 		try {
-			sqlLite.query(sql, rs);
+			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			result = rs.getColumns().get(0).id;
 			
@@ -359,6 +359,41 @@ public class AllViewsMod {
 		
 	}
 	
+	/*
+	private int getColumnId (String table, String column) {
+		int result = -1;
+		
+		
+		
+		
+		String sql = "SELECT id FROM all_tables WHERE table_name = '" + table + "'";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		IdResult rs = new IdResult();
+		
+		try {
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			result = rs.getColumns().get(0).id;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		
+		
+		return result;
+		
+		
+	}	
+	*/
+	
 	
 	private void saveViewTable (int viewId, int tableId, String alias) {
 		SQLLite  sqlLite = new SQLLite();
@@ -375,7 +410,7 @@ public class AllViewsMod {
 		
 		
 		try {
-			sqlLite.insertUpdate(sql);
+			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
 			System.out.println("VIEW_TABLE viewID: " + viewId + " tableID: " + tableId + " was inserted!");
 			

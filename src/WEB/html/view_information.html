@@ -7,6 +7,9 @@
 		
 			function create() {
 				document.getElementById('view_name').innerHTML = app.getViewName();
+				
+				
+				loadViews();
 			}
 			
 			
@@ -14,7 +17,55 @@
 				
 				app.toAllViews();
 				
+				
+				
 			}
+			
+			
+			
+			function loadViews() {
+				var str_vtables = app.loadViewsTables();
+				
+				
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('TABLE_TABLE');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var vtables_json = JSON.parse(str_vtables);
+				
+				
+				
+				
+				for (var i = 0; i < vtables_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+					
+					var cell =  row.insertCell(0);
+					cell.innerHTML = vtables_json[i].id;
+					
+					
+					cell =  row.insertCell(1);
+					cell.innerHTML = vtables_json[i].table_id;
+					
+					
+					cell =  row.insertCell(2);
+					cell.innerHTML = vtables_json[i].table_name;
+
+					
+					cell =  row.insertCell(3);
+					cell.innerHTML = vtables_json[i].alias;					
+
+				}
+				
+				
+			}			
 			
 			
 		</script>
@@ -32,11 +83,17 @@
 		<tr>
 			<th>ID</th>
 			<th>TABLE_ID</th>
-			<th>TABLE</th>
+			<th>TABLE_NAME</th>
 			<th>ALIAS</th>
 		</tr>
 	
-	</table>		
+	</table>	
+	
+	
+	<center><h2>COLUMNS</h2></center>	
+	
+	
+	<center><h2>JOINS</h2></center>		
 		
 	
 	</body>

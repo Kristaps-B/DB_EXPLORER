@@ -19,9 +19,9 @@ public class SQLLite {
 	
 	
 	
-	public void insertUpdate (String sql) throws Exception {
+	public void insertUpdate (String sql, String connectionString) throws Exception {
 		
-		try ( Connection c = DriverManager.getConnection(Session.dBUserString);
+		try ( Connection c = DriverManager.getConnection(connectionString);
 				Statement stmt = c.createStatement();
 				) {
 			 
@@ -56,9 +56,9 @@ public class SQLLite {
 	
 	
 	
-	public void query (String sql , Result rs) throws Exception {
+	public void query (String sql , Result rs, String connectionString) throws Exception {
 		
-		try ( Connection c = DriverManager.getConnection(Session.dBUserString);
+		try ( Connection c = DriverManager.getConnection(connectionString);
 				Statement stmt = c.createStatement();
 				) {
 			 
