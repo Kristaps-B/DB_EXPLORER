@@ -153,7 +153,7 @@ public class DatabaseCreator {
 			
 			
 			
-			// Create table all_columns
+			// Create table all_view_tables
 			
 			sql = "CREATE TABLE IF NOT EXISTS all_view_tables (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
@@ -173,6 +173,25 @@ public class DatabaseCreator {
 			
 			
 			
+			
+			// Create table all_view_tables
+
+			sql = "CREATE TABLE IF NOT EXISTS all_table_joins (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"left_table_id         INTEGER," +
+			"right_table_id        INTEGER," +
+			"left_column_id        INTEGER," +
+			"right_column_id        INTEGER," +
+			"unique (left_table_id, right_table_id, left_column_id, right_column_id)"  +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'all_table_joins'");
 			
 		
 			

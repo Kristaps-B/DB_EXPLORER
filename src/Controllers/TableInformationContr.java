@@ -51,4 +51,16 @@ public class TableInformationContr {
 		
 	}
 	
+	
+	public String loadTableJoins () {
+		String result = "";
+		
+		System.out.println("TableInformationContr.loadTableJoins");
+		
+		result = this.tableInformationMod.loadTableJoins();
+		
+		return result;
+		
+	}
+	
 }

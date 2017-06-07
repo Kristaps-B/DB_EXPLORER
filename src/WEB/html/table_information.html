@@ -10,6 +10,7 @@
 				 
 				 
 				 loadColumns();
+				 loadJoins();
 			}
 			
 			
@@ -63,6 +64,57 @@
 			}
 			
 			
+			
+			function loadJoins () {
+				
+				var str_json = app.loadTableJoins();
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('TABLE_JOINS');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var join_json = JSON.parse(str_json);
+				
+				
+				
+				
+				for (var i = 0; i < join_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+					
+					var cell =  row.insertCell(0);
+					cell.innerHTML = join_json[i].id;
+					
+					
+					// LEFT_TABLE
+					var cell =  row.insertCell(1);
+					cell.innerHTML = join_json[i].left_table_name;
+					
+					cell =  row.insertCell(2);
+					cell.innerHTML = join_json[i].left_column_name;
+					
+					
+					
+					// RIGHT_TABLE
+					cell =  row.insertCell(3);
+					cell.innerHTML = join_json[i].right_table_name;
+					
+					cell =  row.insertCell(4);
+					cell.innerHTML = join_json[i].right_column_name;
+					
+	 
+					
+				}
+				
+			}
+			
+			
 		</script>
 	</head>
 	<body>
@@ -71,15 +123,29 @@
 		</br>
 		<button onclick="allTables();" > ALL_TABLES </button>
 		
-		
+		<center><h2>COLUMNS</h2></center>
 		<table id = "TABLE_COLUMNS" border="1" width="100%" >
 		<tr>
 			<th>COLUMN_ID</th>
 			<th>COLUMN_NAME</th>
 			<th>DATA_TYPE</th>
 		</tr>
+	</table>
 	
+	<center><h2>JOINS</h2></center>
+	<table id = "TABLE_JOINS" border="1" width="100%" >
+		<tr>
+			<th>TABLE_JOIN_ID</th>
+			
+			<th>LEFT_TABLE_NAME</th>
+			<th>LEFT_COLUMN_NAME</th>	
+			
+			<th>RIGHT_TABLE_NAME</th>
+			<th>RIGHT_COLUMN_NAME</th>	
+					
+		</tr>
 	</table>	
+		
 	
 	</body>
 </html>

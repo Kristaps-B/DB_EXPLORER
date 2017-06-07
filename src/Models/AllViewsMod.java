@@ -252,11 +252,17 @@ public class AllViewsMod {
 		for (ColumnSelect cs: columnList) {
 			
 			
-			String table = cs.getTable();
+ 
+			String table = selectQuery.getTableByAlias(cs.getTable()).getTable();
 			String column = cs.getColumn();
 			String alias = cs.getAlias();
 			
-			System.out.println("Table: " + table + " column: " + column + " alias: " + alias);
+			
+			
+			int tableId = this.getTableId(table);
+			int columnId = this.getColumnId(tableId, column);
+			
+			System.out.println("Table: " + table + " table_id: " + tableId  + " column: " + column + " column_id: " + columnId + " alias: " + alias);
 			
 		}	
 		
@@ -280,10 +286,27 @@ public class AllViewsMod {
 			
 			
 			
+			int leftTableId     = this.getTableId(leftTable);
+			int rightTableId    = this.getTableId(rightTable);
+			
+			int leftColumnId    = this.getColumnId(leftTableId, leftColumn);
+			int rightColumnId    = this.getColumnId(rightTableId, rightColumn);
+			
+			
 			 
 			
-			System.out.println("Left table: " + leftTable + " Right Table: " + rightTable + " Left Column: " + leftColumn + " Right Column: " + rightColumn + " Expression: " + expression);
+			System.out.println("Left table: " + leftTable + " (" + leftTableId +") Right Table: " + rightTable + " ("+ rightTableId +") Left Column: " + leftColumn + " (" + leftColumnId + ") Right Column: " + rightColumn + " (" + rightColumnId + ") Expression: " + expression);
+			System.out.println("");
 			
+			
+			this.saveTableJoin (
+				leftTableId,
+				rightTableId,
+				leftColumnId,
+				rightColumnId
+						);
+			
+			System.out.println();
 		}			
 		
 		
@@ -359,14 +382,17 @@ public class AllViewsMod {
 		
 	}
 	
-	/*
-	private int getColumnId (String table, String column) {
+	
+	private int getColumnId (int table_id, String column) {
 		int result = -1;
 		
 		
 		
 		
-		String sql = "SELECT id FROM all_tables WHERE table_name = '" + table + "'";
+		String sql = "SELECT id FROM all_columns " + 
+		" WHERE table_id = " + table_id + " " +
+		" AND column_name = '" + column + "'";
+				;
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -392,7 +418,7 @@ public class AllViewsMod {
 		
 		
 	}	
-	*/
+	
 	
 	
 	private void saveViewTable (int viewId, int tableId, String alias) {
@@ -417,6 +443,42 @@ public class AllViewsMod {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+	}
+	
+	
+	
+	private void saveTableJoin (
+		int leftTableId,
+		int rightTableId,
+		int leftColumnId,
+		int rightColumnId
+			) {
+		
+		SQLLite  sqlLite = new SQLLite();
+		
+		String sql = "insert into all_table_joins "
+		+ "(left_table_id, right_table_id, left_column_id, right_column_id) "
+		+ "VALUES (" 
+		+ "" + leftTableId  + ","
+		+ "" + rightTableId  + ","
+		+ "" + leftColumnId  + ","
+		+ "" + rightColumnId  + ""
+		+ ")"
+		;
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+			System.out.println("TABLE_JOIN created! ");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
 		
 	}
 
