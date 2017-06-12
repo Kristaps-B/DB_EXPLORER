@@ -10,6 +10,7 @@
 				
 				
 				loadViews();
+				loadJoins();
 			}
 			
 			
@@ -65,7 +66,58 @@
 				}
 				
 				
-			}			
+			}	
+			
+			
+			
+			function loadJoins () {
+				var str_vjoins = app.loadJoins();
+
+				
+				
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('JOIN_TABLE');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var vjoins_json = JSON.parse(str_vjoins);
+				
+				
+				
+				
+				for (var i = 0; i < vjoins_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+					
+					var cell =  row.insertCell(0);
+					cell.innerHTML = vjoins_json[i].id;
+					
+					
+					cell =  row.insertCell(1);
+					cell.innerHTML = vjoins_json[i].left_table_name;
+					
+					
+					cell =  row.insertCell(2);
+					cell.innerHTML = vjoins_json[i].left_column_name;
+
+					
+					cell =  row.insertCell(3);
+					cell.innerHTML = vjoins_json[i].right_table_name;		
+					
+					
+					cell =  row.insertCell(4);
+					cell.innerHTML = vjoins_json[i].right_column_name;	
+
+				}				
+				
+				
+			}
 			
 			
 		</script>
@@ -90,10 +142,30 @@
 	</table>	
 	
 	
-	<center><h2>COLUMNS</h2></center>	
+	<center><h2>COLUMNS</h2></center>
+	<table id = "COLUMN_TABLE" border="1" width="100%" >
+		<tr>
+			<th>ID</th>
+			<th>COLUMN_NAME</th>
+			<th>COLUMN_TYPE</th>
+		</tr>
+	
+	</table>		
+		
 	
 	
 	<center><h2>JOINS</h2></center>		
+	<table id = "JOIN_TABLE" border="1" width="100%" >
+		<tr>
+			<th>ID</th>
+			<th>LEFT_TABLE</th>
+			<th>LEFT_COLUMN</th>
+			<th>RIGHT_TABLE</th>
+			<th>RIGHT_COLUMN</th>
+		</tr>
+	
+	</table>	
+	
 		
 	
 	</body>

@@ -60,4 +60,16 @@ public class ViewInformationContr {
 	}
 	
 	
+	public String loadJoins () {
+		String result = "";
+		
+		
+		result = viewInformationMod.loadJoins();
+		
+		return result;
+		
+		
+	}
+	
+	
 }
