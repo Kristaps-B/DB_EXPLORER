@@ -72,4 +72,14 @@ public class ViewInformationContr {
 	}
 	
 	
+	public String loadColumns() {
+		String result = "";
+		
+		result = viewInformationMod.loadColumns();
+		
+		return result;
+		
+	}
+	
+	
 }

@@ -212,6 +212,25 @@ public class DatabaseCreator {
 			
 			System.out.println("Created table 'join_sources'");
 			
+			
+			
+			// Create table column_sources
+			sql = "CREATE TABLE IF NOT EXISTS column_sources (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"column_id             INTEGER," +
+			"source_id             INTEGER," +
+			"source_type           CHAR(30)," +
+			"unique (column_id, source_id, source_type)"  +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'column_sources'");
+			
 		
 			
 		} catch (Exception e) {

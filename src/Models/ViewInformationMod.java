@@ -191,4 +191,15 @@ public class ViewInformationMod {
 	}
 	
 	
+	public String loadColumns() {
+		String result = "";
+		
+		
+		
+		return result;
+		
+		
+	}
+	
+	
 }

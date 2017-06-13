@@ -263,6 +263,8 @@ public class AllViewsMod {
 			int tableId = this.getTableId(table);
 			int columnId = this.getColumnId(tableId, column);
 			
+			this.saveColumnSource(viewId, tableId, columnId);
+			
 			System.out.println("Table: " + table + " table_id: " + tableId  + " column: " + column + " column_id: " + columnId + " alias: " + alias);
 			
 		}	
@@ -636,6 +638,35 @@ public class AllViewsMod {
 			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
 			System.out.println("Inserted into JOIN_SOURCES table value join_id: " + joinId + " view_id: " + viewId);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}		
+		
+		
+		
+	}
+	
+	
+	private void saveColumnSource(int viewId, int tableId, int columnId) {
+		
+		SQLLite  sqlLite = new SQLLite();
+		
+		String sql = "insert into column_sources "
+		+ "(column_id, source_id, source_type) "
+		+ "VALUES (" 
+		+ "" + columnId  + ","
+		+ "" + viewId  + ","
+		+ "'" + "VIEW"  + "'"
+		+ ")"
+		;
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+			System.out.println("Inserted into COLUMN_SOURCES table value column_id: " + columnId + " table_id: " + tableId + " viewId: " + viewId);
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());

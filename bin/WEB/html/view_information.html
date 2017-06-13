@@ -9,8 +9,9 @@
 				document.getElementById('view_name').innerHTML = app.getViewName();
 				
 				
-				loadViews();
+				loadTables();
 				loadJoins();
+				loadColumns ();
 			}
 			
 			
@@ -24,7 +25,7 @@
 			
 			
 			
-			function loadViews() {
+			function loadTables() {
 				var str_vtables = app.loadViewsTables();
 				
 				
@@ -116,6 +117,12 @@
 
 				}				
 				
+				
+			}
+			
+			
+			function loadColumns () {
+				var str_cloumns = app.loadColumns();
 				
 			}
 			
