@@ -1,6 +1,6 @@
 <html>
 <head>
-
+	<link rel="stylesheet" href="css/bootstrap.css">
 <title>
 	Main Menu
 </title>
@@ -56,25 +56,31 @@
 </head>
 
 <body>
-	<center><h1>MAIN_MENU</h1></center>
+	<center><h1>MENU</h1></center>
 	</br>
 	
 	<center>
 		<div id="INFORMATION">
 		</div>
+		
+		</br>
+		<button class="btn btn-primary" onclick="changeDatabase();" > CHANGE_DATABASE </button> 
 	</center>
 	
 	</br>
-	
-	
-	<button  onclick="allUsers();" > ALL_USERS </button></br>
-	<button onclick="allTables();" > ALL_TABLES </button></br>
-	<button onclick="allViews()" > ALL_VIEWS </button></br>
-	<button onclick=" " > ALL_PL/SQL </button></br>
-	
+	<center>
+	<div class="well">
+		<div class="list-group">
+			<button  onclick="allUsers();"  class="list-group-item">1 - ALL_USERS </button>
+			<button onclick="allTables();"  class="list-group-item">2 - ALL_TABLES </button>
+			<button onclick="allViews()"  class="list-group-item">3 - ALL_VIEWS </button>
+			<button onclick=" "  class="list-group-item">4 - ALL_PL/SQL </button>
+		</div>
+	</div>
+	</center>
 	<hr>
 	
-	<button onclick="changeDatabase();" > CHANGE_DATABASE </button> 
+ 
 	
 	
 

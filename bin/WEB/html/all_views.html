@@ -1,5 +1,7 @@
 <html>
 <head>
+
+	<link rel="stylesheet" href="css/bootstrap.css">
 	<title>ALL_VIEWS</title>
 
 	<script type="text/javascript">
@@ -77,11 +79,11 @@
 			
 			
 			cell =  row.insertCell(4);
-			cell.innerHTML =   '<button onclick="analyseViews(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > EXAMINE </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseViews(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > EXAMINE </button>';
 			
 
 			cell =  row.insertCell(5);
-			cell.innerHTML =   '<button onclick="goToInformation(\'' + view_json[i].id + '\')" > INFORMATION </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + view_json[i].id + '\')" > INFORMATION </button>';
 		}
 		
 	}
@@ -94,14 +96,14 @@
 	
 	
 	<center>
-	<button  onclick="updateViews()" > UPDATE_VIEWS </button></br>
-	<button  onclick="toMenu()" > TO_MENU </button></br>
+	<button class="btn btn-primary"   onclick="updateViews()" > UPDATE_VIEWS </button>
+	<button class="btn btn-primary"   onclick="toMenu()" > TO_MENU </button></br>
 	</br>
 	</center>
 	
 	
 	
-	<table id = "VIEW_TABLE" border="1" width="100%" >
+	<table id = "VIEW_TABLE"   class="table"  >
 		<tr>
 			<th>ID</th>
 			<th>VIEW_ID</th>

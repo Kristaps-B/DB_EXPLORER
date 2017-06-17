@@ -1,5 +1,7 @@
 <html>
 	<head>
+	
+		<link rel="stylesheet" href="css/bootstrap.css">
 		<title>VIEW_INFORMATION</title>
 		
 		
@@ -121,10 +123,13 @@
 		<center><h1>TABLE_INFORMATION: <div id="table_name"></div></h1></center>
 		
 		</br>
-		<button onclick="allTables();" > ALL_TABLES </button>
+		
+		<center>
+			<button  class="btn btn-primary"  onclick="allTables();" > ALL_TABLES </button>
+		</center>
 		
 		<center><h2>COLUMNS</h2></center>
-		<table id = "TABLE_COLUMNS" border="1" width="100%" >
+		<table id = "TABLE_COLUMNS"   class="table"  >
 		<tr>
 			<th>COLUMN_ID</th>
 			<th>COLUMN_NAME</th>
@@ -133,7 +138,7 @@
 	</table>
 	
 	<center><h2>JOINS</h2></center>
-	<table id = "TABLE_JOINS" border="1" width="100%" >
+	<table id = "TABLE_JOINS"   class="table" >
 		<tr>
 			<th>TABLE_JOIN_ID</th>
 			

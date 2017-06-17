@@ -1,5 +1,7 @@
 <html>
 	<head>
+		<link rel="stylesheet" href="css/bootstrap.css">
+	
 		<title>VIEW_INFORMATION</title>
 		
 		
@@ -169,12 +171,14 @@
 		<center><h1>VIEW_INFORMATION: <div id="view_name"></div></h1></center>
 		
 		</br>
-		<button onclick="allViews();" > ALL_VIEWS </button>
 		
+		<center>
+			<button  class="btn btn-primary"  onclick="allViews();" > ALL_VIEWS </button>
+		</center>
 		
 		<center><h2>TABLES</h2></center>
 		
-	<table id = "TABLE_TABLE" border="1" width="100%" >
+	<table id = "TABLE_TABLE"   class="table"  >
 		<tr>
 			<th>ID</th>
 			<th>TABLE_ID</th>
@@ -186,7 +190,7 @@
 	
 	
 	<center><h2>COLUMNS</h2></center>
-	<table id = "COLUMN_TABLE" border="1" width="100%" >
+	<table id = "COLUMN_TABLE"   class="table"  >
 		<tr>
 			<th>ID</th>
 			<th>COLUMN_NAME</th>
@@ -198,7 +202,7 @@
 	
 	
 	<center><h2>JOINS</h2></center>		
-	<table id = "JOIN_TABLE" border="1" width="100%" >
+	<table id = "JOIN_TABLE"   class="table"  >
 		<tr>
 			<th>ID</th>
 			<th>LEFT_TABLE</th>

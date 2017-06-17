@@ -117,7 +117,7 @@ public class ConnectDBMod {
 				result += "\"port\":\"" + rs.getString("port") + "\","; 
 				result += "\"sid\":\"" + rs.getString("sid") + "\",";
 				result += "\"username\":\"" + rs.getString("username") + "\",";
-				result += "\"password\":\"" + rs.getString("password") + "\"";
+				result += "\"password\":\"" + rs.getString("password").replaceAll(".", "*") + "\"";
 			 
 				
 				
