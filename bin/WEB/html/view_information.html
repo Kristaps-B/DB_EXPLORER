@@ -122,7 +122,43 @@
 			
 			
 			function loadColumns () {
-				var str_cloumns = app.loadColumns();
+				var str_columns = app.loadColumns();
+				
+				
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('COLUMN_TABLE');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var columns_json = JSON.parse(str_columns);
+				
+				
+				
+				
+				for (var i = 0; i < columns_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+					
+					var cell =  row.insertCell(0);
+					cell.innerHTML = columns_json[i].id;
+					
+					
+					cell =  row.insertCell(1);
+					cell.innerHTML = columns_json[i].column_name;
+					
+					
+					cell =  row.insertCell(2);
+					cell.innerHTML = columns_json[i].data_type;
+
+				 
+
+				}				
 				
 			}
 			

@@ -5,6 +5,7 @@ import Global.Session;
 import Json.ArrayJson;
 import Results.TableJoinResult;
 import Results.TableResult;
+import Results.ViewColumnResult;
 import Results.ViewJoinResult;
 import Results.ViewTableResult;
 import Results.ViewsResult;
@@ -194,6 +195,62 @@ public class ViewInformationMod {
 	public String loadColumns() {
 		String result = "";
 		
+
+		
+		String viewId = Session.currentViewId;
+		
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		ViewColumnResult rs = new ViewColumnResult();
+		
+		String sql = "SELECT ac.id, ac.column_name, ac.data_type "  + 
+		" FROM column_sources cs, all_columns ac" +
+		" WHERE cs.column_id = ac.id " +
+		" AND cs.source_id = " + viewId +
+		" AND cs.source_type = 'VIEW'" +
+		" ORDER BY cs.id ASC";
+		
+		try {
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			
+			System.out.println("---------LOAD_COLUMNS_TABLES--------------");
+			
+			
+			ArrayJson aJson = new ArrayJson ();
+			aJson.startJson();
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				ViewColumnResult.Row row = rs.getColumns().get(i);
+				
+				// System.out.println(" " + row.table_name);
+				 
+				
+				aJson.addValue("id", "" + row.id);
+				aJson.addValue("column_name", "" + row.column_name);
+				aJson.addValue("data_type", "" + row.data_type);
+	 
+				
+				aJson.newRow();
+			}
+			
+			aJson.endJson();
+			
+			
+			result = aJson.getJson();
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		System.out.println(result);				
 		
 		
 		return result;
