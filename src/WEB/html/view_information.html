@@ -150,12 +150,15 @@
 					var cell =  row.insertCell(0);
 					cell.innerHTML = columns_json[i].id;
 					
-					
 					cell =  row.insertCell(1);
-					cell.innerHTML = columns_json[i].column_name;
+					cell.innerHTML = columns_json[i].table_name;
 					
 					
 					cell =  row.insertCell(2);
+					cell.innerHTML = columns_json[i].column_name;
+					
+					
+					cell =  row.insertCell(3);
 					cell.innerHTML = columns_json[i].data_type;
 
 				 
@@ -193,6 +196,7 @@
 	<table id = "COLUMN_TABLE"   class="table"  >
 		<tr>
 			<th>ID</th>
+			<th>TABLE_NAME</th>
 			<th>COLUMN_NAME</th>
 			<th>COLUMN_TYPE</th>
 		</tr>

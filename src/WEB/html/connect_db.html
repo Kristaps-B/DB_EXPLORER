@@ -165,7 +165,8 @@
 				cell.innerHTML = db_json[i].username;
 				
 				cell =  row.insertCell(6);
-				cell.innerHTML = db_json[i].password;
+				cell.innerHTML = db_json[i].password.replace(/./g, '*');
+			
 				
 				cell =  row.insertCell(7);
 				cell.innerHTML = '<button  class="btn btn-default"   onclick="openDB(' + i + ');" > OPEN </button>';

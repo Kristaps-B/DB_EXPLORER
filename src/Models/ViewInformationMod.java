@@ -205,18 +205,22 @@ public class ViewInformationMod {
 		
 		ViewColumnResult rs = new ViewColumnResult();
 		
-		String sql = "SELECT ac.id, ac.column_name, ac.data_type "  + 
-		" FROM column_sources cs, all_columns ac" +
+		String sql = "SELECT ac.id, at.table_name, ac.column_name, ac.data_type"  + 
+		" FROM column_sources cs, all_columns ac, all_tables at" +
 		" WHERE cs.column_id = ac.id " +
+		" AND at.id = ac.table_id " +
 		" AND cs.source_id = " + viewId +
 		" AND cs.source_type = 'VIEW'" +
 		" ORDER BY cs.id ASC";
+		
+	
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
 			
 			
 			System.out.println("---------LOAD_COLUMNS_TABLES--------------");
+			System.out.println("SQL: " + sql);
 			
 			
 			ArrayJson aJson = new ArrayJson ();
@@ -230,8 +234,10 @@ public class ViewInformationMod {
 				 
 				
 				aJson.addValue("id", "" + row.id);
+				aJson.addValue("table_name",  row.table_name);
 				aJson.addValue("column_name", "" + row.column_name);
 				aJson.addValue("data_type", "" + row.data_type);
+				
 	 
 				
 				aJson.newRow();
