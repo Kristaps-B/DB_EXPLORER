@@ -231,6 +231,25 @@ public class DatabaseCreator {
 			
 			System.out.println("Created table 'column_sources'");
 			
+			
+			// Create table all_plsql
+			sql = "CREATE TABLE IF NOT EXISTS all_plsql (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"plsql_id              INTEGER,"  +
+			"owner                 CHAR(30)," +
+			"name                  CHAR(30)," +
+			"type                  CHAR(30)," +
+			"unique (owner, name)"  +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'all_plsql'");			
+			
 		
 			
 		} catch (Exception e) {

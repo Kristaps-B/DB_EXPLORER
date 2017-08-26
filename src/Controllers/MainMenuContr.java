@@ -43,6 +43,13 @@ public class MainMenuContr {
 	}
 	
 	
+	public void allPlsql() {
+		
+		URL url = Main.class.getResource("../WEB/html/all_plsql.html");
+		engine.load(url.toExternalForm());		
+	}
+	
+	
 	public String getDBInformation () {
 		
 		String result = "{";
