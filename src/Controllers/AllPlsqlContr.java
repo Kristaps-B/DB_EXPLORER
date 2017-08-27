@@ -40,4 +40,14 @@ public class AllPlsqlContr {
 		
 		
 	}
+	
+	
+	public void updatePlsql() {
+		
+		System.out.println("Update Plsql");
+		
+		this.allPlsqlMod.updatePlsql();
+		
+		
+	}
 }
