@@ -2,6 +2,7 @@ package Controllers;
 
 import java.net.URL;
 
+import Global.Session;
 import Main.Main;
 import Models.AllPlsqlMod;
 
@@ -50,4 +51,17 @@ public class AllPlsqlContr {
 		
 		
 	}
+	
+	
+	public void goToInformation(String id) {
+		
+		
+		Session.currentPlsqlId = id;
+		System.out.println("AllTableContr.goToInformation");
+		URL url = Main.class.getResource("../WEB/html/plsql_information.html");
+		engine.load(url.toExternalForm());
+		
+	}
+		
+	
 }

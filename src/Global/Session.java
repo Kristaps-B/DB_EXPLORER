@@ -10,5 +10,6 @@ public class Session {
 	
 	public static String currentViewId = "";
 	public static String currentTableId = "";
+	public static String currentPlsqlId = "";
 	
 }

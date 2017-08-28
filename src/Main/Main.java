@@ -11,6 +11,7 @@ import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
 import Controllers.MainMenuContr;
+import Controllers.PlsqlInformationContr;
 import Controllers.TableInformationContr;
 import Controllers.ViewInformationContr;
 import Database.Database;
@@ -162,6 +163,11 @@ public class Main extends Application {
 		            	
 		            	System.out.println("PAGE: ALL_PLSQL");
 		            	window.setMember("app", new AllPlsqlContr(engine));
+		            	engine.executeScript("create()"); 
+		            } else if (page.equals("plsql_information.html")) {
+		            	
+		            	System.out.println("PAGE: PLSQL_INFORMATION");
+		            	window.setMember("app", new PlsqlInformationContr(engine));
 		            	engine.executeScript("create()"); 
 		            }
 		            
