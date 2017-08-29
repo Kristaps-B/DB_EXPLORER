@@ -49,6 +49,51 @@ public class SelectQuery {
 	
 	
 	
+	private String removeComments (String inSql) {
+		String outSql = "";
+		
+		
+		boolean isComment = false;
+		
+		
+		for (int  i = 0; i < this.sql.length(); i ++) {
+			
+			char c = this.sql.charAt(i);
+			
+			if (atLocation(i, "--", this.sql) || atLocation(i, "/*", this.sql)) {
+				
+				isComment = true;
+				
+			}
+			
+			
+			if (isComment == true) {
+				outSql += c;
+			} else {
+				if (atLocation(i-1, "*/", this.sql)) {
+					
+					isComment = false;
+					
+				}
+				
+				if (c == '\n'  || c == '\r' ) {
+					isComment = false;
+				}
+			}
+			
+			
+		}
+		
+		
+		
+		
+		return outSql;
+		
+	}
+	
+	
+	
+	
 	
 	private void splitClauses() {
 		
@@ -61,7 +106,12 @@ public class SelectQuery {
 		int where_end_index    = -1;
 		
 		
+		
+		
+		
 		this.sql = this.sql.toUpperCase();
+		
+		this.sql = this.removeComments(this.sql);
 		
 		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
 		
