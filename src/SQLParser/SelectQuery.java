@@ -23,6 +23,9 @@ public class SelectQuery {
 	public void createSelect (String sql) {
 		this.sql = sql;
 		
+		
+		System.out.println("Select query START");
+		
 		splitClauses ();
 	}
 	
@@ -52,6 +55,7 @@ public class SelectQuery {
 	private String removeComments (String inSql) {
 		String outSql = "";
 		
+		System.out.println("Remove comments");
 		
 		boolean isComment = false;
 		
@@ -60,17 +64,19 @@ public class SelectQuery {
 			
 			char c = this.sql.charAt(i);
 			
+			System.out.println("Character: " + c);
+			
 			if (atLocation(i, "--", this.sql) || atLocation(i, "/*", this.sql)) {
 				
 				isComment = true;
-				
+				// System.out.println("Comment starts");
 			}
 			
 			
-			if (isComment == true) {
+			if (isComment == false) {
 				outSql += c;
 			} else {
-				if (atLocation(i-1, "*/", this.sql)) {
+				if ( i > 0 && atLocation(i-1, "*/", this.sql)) {
 					
 					isComment = false;
 					
@@ -111,7 +117,11 @@ public class SelectQuery {
 		
 		this.sql = this.sql.toUpperCase();
 		
+		System.out.println("SQL before removing comments: " + this.sql);
+		
 		this.sql = this.removeComments(this.sql);
+		
+		System.out.println("SQL after removing comments: " + this.sql);
 		
 		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
 		
@@ -153,25 +163,30 @@ public class SelectQuery {
 			}
 			// FROM END
 			else if (from_end_index == -1) {
-				if (atLocation(i, " WHERE ", this.sql)) {
+				if ( i == this.sql.length() - 1 ) {
 					from_end_index = i;
 					
 					System.out.println("FROM_END_INDEX: " + from_end_index);
 					
+					
+				}
+				else if (atLocation(i, " WHERE ", this.sql) ) {
 					// WHERE START
 					
-					where_start_index = i + " WHERE".length();
+					from_end_index = i;
 					
+					System.out.println("FROM_END_INDEX: " + from_end_index);
+					
+					where_start_index = i + " WHERE".length();
 					System.out.println("WHERE_START_INDEX: " + where_start_index);
 				}
 				
 			}
-			
-			
 			// WHERE END
 			else if (where_end_index == -1) {
 				if (atLocation(i, " GROUP BY ", this.sql)
 					|| atLocation(i, " ORDER BY ", this.sql)	
+					||  i == this.sql.length() - 1 
 					) {
 					where_end_index = i;
 					
@@ -205,7 +220,7 @@ public class SelectQuery {
 		boolean result = false;
 	
 		if ((index) == fullString.length() - 1) {
-			return true;
+			return false;
 		}	
 		else if ((index + search.length() +1) >= fullString.length() - 1) {
 			
@@ -243,6 +258,7 @@ public class SelectQuery {
 		
 		
 		// SELECT
+		System.out.println("Select start index: " + select_start_index + " select end index: " + select_end_index );
 		String selectString = this.sql.substring(select_start_index, select_end_index);
 		System.out.println("SELECT_STRING: " + selectString);
 		
@@ -250,6 +266,7 @@ public class SelectQuery {
 		selectClause.addSelectString(selectString);
 		
 		// FROM
+		System.out.println("From start index: " + from_start_index + " from end index: " + from_end_index);
 		String fromString = this.sql.substring(from_start_index, from_end_index ); 
 		System.out.println("FROM_STRING: "   + fromString);
 		
@@ -257,10 +274,15 @@ public class SelectQuery {
 		fromClause.addFromString(fromString);
 		
 		// WHERE
-		String whereString = this.sql.substring(where_start_index, where_end_index ); 
-		System.out.println("WHERE_STRING: "  + whereString);
-		
-		whereClause.addWhereString(whereString);
+		if (where_start_index != -1) {
+			
+			System.out.println("Where start index: " + where_start_index + " where end index: " + where_end_index);
+			String whereString = this.sql.substring(where_start_index, where_end_index ); 
+			System.out.println("WHERE_STRING: "  + whereString);
+			
+			whereClause.addWhereString(whereString);			
+		}
+
 		
 		
 		

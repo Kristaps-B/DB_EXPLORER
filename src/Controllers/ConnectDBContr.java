@@ -9,6 +9,7 @@ import Database.DatabaseCreator;
 import Global.Session;
 import Main.Main;
 import Models.ConnectDBMod;
+import SQLParser.SelectParser;
 import javafx.scene.web.WebEngine;
 
 public class ConnectDBContr {
@@ -20,6 +21,10 @@ public class ConnectDBContr {
 	
 	public ConnectDBContr(WebEngine engine) {
 		this.engine = engine;
+		
+		
+		
+		testSQLParsing();
 		
 	}
 	
@@ -131,6 +136,24 @@ public class ConnectDBContr {
 			engine.executeScript("pageAlert('EXCEPTION "+ e.getMessage() +"')");
 		}
 			
+		
+	}
+	
+	
+	public void testSQLParsing() {
+		System.out.println("=======================================================");
+		System.out.println("             Test SQL Parsing");
+		System.out.println("=======================================================");
+		
+		
+		String sql = "SELECT d /* Test comment removal  */ FROM dual -- FROM TAG \n WHERE 1=1  -- End comment";
+		
+		
+		SelectParser selectParser = new SelectParser(sql);
+		
+		
+		
+		System.out.println("--------------------------------------------------------------------");
 		
 	}
 	
