@@ -30,6 +30,7 @@ public class FromClause {
 	
 	private void splitFromClauses (String sql) {
 		
+		/*
 		String [] fromArray = sql.split(",");
 		
 		System.out.println("Split FROM");
@@ -40,8 +41,48 @@ public class FromClause {
 			
 			fromTableList.add(new FromTable(str));
 			
-			System.out.println(str);
+			
+			System.out.println("F" +str);
 		}
+		
+		*/
+		
+		int nmbOfBrackets = 0;
+		
+		
+		String strTable = "";
+		for (int i = 0; i < sql.length(); i++) {
+			char c = sql.charAt(i);
+			
+			strTable += c;
+			
+			if (c == '(') {
+				nmbOfBrackets += 1;
+			}
+			if (c == ')') {
+				nmbOfBrackets -= 1;
+			}
+			
+			if ((c == ',' && nmbOfBrackets == 0) || i == sql.length() - 1) {
+				
+				// Remove last coma
+				if (c == ',') {
+					strTable = strTable.substring(0, strTable.length() - 1);
+				}
+				
+				
+				System.out.println("Table -> " + strTable);
+				fromTableList.add(new FromTable(strTable));
+				
+				strTable = "";
+				
+			}
+			
+			
+			
+		}
+		
+		
 	}
 	
 	

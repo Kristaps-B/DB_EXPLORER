@@ -258,6 +258,7 @@ public class SelectQuery {
 		
 		
 		// SELECT
+		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.println("Select start index: " + select_start_index + " select end index: " + select_end_index );
 		String selectString = this.sql.substring(select_start_index, select_end_index);
 		System.out.println("SELECT_STRING: " + selectString);
@@ -266,6 +267,7 @@ public class SelectQuery {
 		selectClause.addSelectString(selectString);
 		
 		// FROM
+		System.out.println("-----------------------------------------------------------------------------------------------");
 		System.out.println("From start index: " + from_start_index + " from end index: " + from_end_index);
 		String fromString = this.sql.substring(from_start_index, from_end_index ); 
 		System.out.println("FROM_STRING: "   + fromString);
@@ -274,6 +276,7 @@ public class SelectQuery {
 		fromClause.addFromString(fromString);
 		
 		// WHERE
+		System.out.println("-----------------------------------------------------------------------------------------------");
 		if (where_start_index != -1) {
 			
 			System.out.println("Where start index: " + where_start_index + " where end index: " + where_end_index);
