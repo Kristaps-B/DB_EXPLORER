@@ -12,11 +12,13 @@ public class SelectQuery {
 	private FromClause fromClause     = new FromClause();
 	private WhereClause whereClause   = new WhereClause();
 	
+	private ParserUtils parserUtils;
+	
 	
 	private String sql;
 	
 	public SelectQuery () {
-		
+		parserUtils = new ParserUtils();
 	}
 	
 	
@@ -64,9 +66,9 @@ public class SelectQuery {
 			
 			char c = this.sql.charAt(i);
 			
-			System.out.println("Character: " + c);
+			// System.out.println("Character: " + c);
 			
-			if (atLocation(i, "--", this.sql) || atLocation(i, "/*", this.sql)) {
+			if (parserUtils.atLocation(i, "--", this.sql) || parserUtils.atLocation(i, "/*", this.sql)) {
 				
 				isComment = true;
 				// System.out.println("Comment starts");
@@ -76,7 +78,7 @@ public class SelectQuery {
 			if (isComment == false) {
 				outSql += c;
 			} else {
-				if ( i > 0 && atLocation(i-1, "*/", this.sql)) {
+				if ( i > 0 && parserUtils.atLocation(i-1, "*/", this.sql)) {
 					
 					isComment = false;
 					
@@ -140,7 +142,7 @@ public class SelectQuery {
 			
 			// SELECT START
 			if (select_start_index == -1) {
-				if (atLocation(i, " SELECT ", this.sql)) {
+				if (parserUtils.atLocation(i, " SELECT ", this.sql)) {
 					select_start_index = i + " SELECT".length();
 					
 					System.out.println("SELECT_START_INDEX: " + select_start_index);
@@ -148,7 +150,7 @@ public class SelectQuery {
 			}
 			// SELECT END;
 			else if (select_end_index == -1) {
-				if (atLocation(i, " FROM ", this.sql)) {
+				if (parserUtils.atLocation(i, " FROM ", this.sql)) {
 					select_end_index = i;
 					
 					System.out.println("SELECT_END_INDEX: " + select_end_index);
@@ -170,7 +172,7 @@ public class SelectQuery {
 					
 					
 				}
-				else if (atLocation(i, " WHERE ", this.sql) ) {
+				else if (parserUtils.atLocation(i, " WHERE ", this.sql) ) {
 					// WHERE START
 					
 					from_end_index = i;
@@ -184,8 +186,8 @@ public class SelectQuery {
 			}
 			// WHERE END
 			else if (where_end_index == -1) {
-				if (atLocation(i, " GROUP BY ", this.sql)
-					|| atLocation(i, " ORDER BY ", this.sql)	
+				if (parserUtils.atLocation(i, " GROUP BY ", this.sql)
+					|| parserUtils.atLocation(i, " ORDER BY ", this.sql)	
 					||  i == this.sql.length() - 1 
 					) {
 					where_end_index = i;
@@ -215,29 +217,7 @@ public class SelectQuery {
 	}
 	
 	
-	private boolean atLocation (int index, String search, String fullString) {
-		
-		boolean result = false;
-	
-		if ((index) == fullString.length() - 1) {
-			return false;
-		}	
-		else if ((index + search.length() +1) >= fullString.length() - 1) {
-			
-			return false;
-		} 
-		 
-		 
-		String sbstr = fullString.substring(index, index + search.length());
-		
-		
-		if (sbstr.equals(search)) {
-			return true;
-		}
-		
-		
-		return result;
-	}
+
 	
 	
 	
