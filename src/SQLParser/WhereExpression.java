@@ -19,38 +19,7 @@ public class WhereExpression {
 		parserUtils = new ParserUtils();
 		
 		
-		/*
-		this.sql = this.sql.replaceAll(" ", "");
-		
-		
-		String [] arr = this.sql.split("=");
-		
-		
-		if (arr.length > 1) {
-			
-			this.expression = "=";
-			
-			
-			
-			String [] arrLeft = arr[0].split("\\.");
-			
-			if (arrLeft.length > 1) {
-				
-				leftAlias = arrLeft[0];
-				leftColumn = arrLeft[1];
-			}
-			
-			String [] arrRight = arr[1].split("\\.");
-			
-			if (arrRight.length > 1) {
-				
-				rightAlias = arrRight[0];
-				rightColumn = arrRight[1];
-			}
-			
-			
-		}
-		*/
+	
 		
 		System.out.println("Where Expression START!!!");
 		System.out.println("SQL: " + this.sql);
@@ -62,14 +31,16 @@ public class WhereExpression {
 			leftColumn   = parserUtils.getFirstPart(this.sql, "=");
 			rightColumn  = parserUtils.getSecondPart(this.sql, "=");
 			
+		
 			
-			if (parserUtils.isTextInside(leftColumn, ".")) {
+			
+			if (parserUtils.isTextInside(leftColumn, ".") == true) {
 				leftAlias   = parserUtils.getFirstPart(leftColumn, ".");
 				leftColumn  = parserUtils.getSecondPart(leftColumn, ".");
 			}
 			
 			
-			if (parserUtils.isTextInside(rightColumn, ".")) {					
+			if (parserUtils.isTextInside(rightColumn, ".") == true) {					
 				rightAlias  = parserUtils.getFirstPart(rightColumn, ".");
 				rightColumn = parserUtils.getSecondPart(rightColumn, ".");				
 			
@@ -79,7 +50,7 @@ public class WhereExpression {
 	
 				System.out.println("LEFT_ALIAS: " + leftAlias);
 				System.out.println("LEFT_COLUMN: " + leftColumn);
-				System.out.println("Expression: " + expression);
+				// System.out.println("Expression: " + expression);
 				System.out.println("RIGHT_ALIAS: " + rightAlias);
 				System.out.println("RIGHT_COLUMN: " + rightColumn);	
 

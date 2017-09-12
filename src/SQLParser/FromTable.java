@@ -12,6 +12,8 @@ public class FromTable {
 	
 	
 	SelectParser selectParser;
+	
+	ParserUtils parserUtils;
 
 	public FromTable (String sql) {
 		
@@ -19,19 +21,13 @@ public class FromTable {
 		
 		this.sql = this.sql.trim();
 		
+		parserUtils = new ParserUtils();
+	
 		
-		/*
-		 String [] tableArray =	this.sql.split(" ");
-		 
-		 
-		 this.table = tableArray[0];
-		 
-		 if (tableArray.length > 1) {
-			 this.alias = tableArray[1];
-		 }
-		 */
+		// splitAlias(this.sql);
 		
-		splitAlias(this.sql);
+		this.table = parserUtils.getFirstPart(this.sql, " ");
+		this.alias = parserUtils.getSecondPart(this.sql, " ");
 		 
 		 System.out.println("table: " + this.table);
 		 System.out.println("alias: " + this.alias);
@@ -51,52 +47,7 @@ public class FromTable {
 	}
 	
 	
-	private void splitAlias (String sql) {
-		
-		
-		int numberOfBrackets = 0;
-		
-		int spacePosition = -1;
-		
-		for (int i = 0; i < sql.length(); i++) {
-			char c = sql.charAt(i);
-			
-			if (c == '(') {
-				numberOfBrackets += 1;
-			}
-			if (c == ')') {
-				numberOfBrackets -= 1;
-			}
-			
-			if (c == ' ' && numberOfBrackets == 0) {
-				spacePosition = i;
-				break;
-			}
-			
-			
-			
-		}
-		
-		
-		
-		if (spacePosition > 0) {
-			
-			
-			
-			this.table = this.sql.substring(0, spacePosition);
-			
-			
-			this.alias = this.sql.substring(spacePosition + 1);
-			
-		} else {
-			
-			this.table = this.sql;
-		}
-		
-		
-		
-	}
-	
+
 	
 	
 	private void  checkSubquery(String table) {
@@ -113,6 +64,18 @@ public class FromTable {
 			
 			selectParser = new SelectParser(subquery);
 		}
+		
+	}
+	
+	
+	public boolean getIsSubstring () {
+		return this.isSubquery;
+	}
+	
+	
+	public SelectQuery getSubquery () {
+		
+		return selectParser.getSelectQuery();
 		
 	}
 	

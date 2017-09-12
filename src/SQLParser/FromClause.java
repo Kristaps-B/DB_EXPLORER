@@ -30,22 +30,6 @@ public class FromClause {
 	
 	private void splitFromClauses (String sql) {
 		
-		/*
-		String [] fromArray = sql.split(",");
-		
-		System.out.println("Split FROM");
-		
-		for (String str: fromArray) {
-			
-			str = str.trim();
-			
-			fromTableList.add(new FromTable(str));
-			
-			
-			System.out.println("F" +str);
-		}
-		
-		*/
 		
 		int nmbOfBrackets = 0;
 		
@@ -88,20 +72,56 @@ public class FromClause {
 	
 	
 	public ArrayList <FromTable> getTables () {
-		return this.fromTableList;
+		ArrayList <FromTable> tables = new ArrayList <> ();
+		
+		
+		for ( FromTable t: this.fromTableList ) {
+			if ( t.getIsSubstring() == true ) {
+				tables.addAll(t.getSubquery().getTables());
+			} else {
+				tables.add(t);
+				
+			}
+			
+			
+		}
+		
+		
+		
+		return tables;
 	}
 	
 	
 	public FromTable getTableByAlias(String alias) {
 		FromTable fromTable = null;
 		
-		for (FromTable ft: fromTableList) {
-			
-			if (ft.getAlias().equals(alias)) {
+		System.out.println("getTableByAlias");
+		
+		
+		
+			for (FromTable ft: fromTableList) {
 				
-				fromTable = ft;
+				
+				if (ft.getIsSubstring() == false) {
+					if (ft.getAlias().equals(alias.toUpperCase())) {
+						
+						fromTable = ft;
+							
+						
+					}
+				} else {
+					
+					fromTable = ft.getSubquery().getTableByAlias(alias);
+					
+				}
+				
+				
+					
 			}
-		}
+	
+			
+			
+		
 		
 		
 		
@@ -116,7 +136,12 @@ public class FromClause {
 			
 			if (ft.getTable().equals(table)) {
 				
-				fromTable = ft;
+				
+				
+					fromTable = ft;
+				
+				
+				
 			}
 		}		
 		

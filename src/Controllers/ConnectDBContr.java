@@ -9,6 +9,7 @@ import Database.DatabaseCreator;
 import Global.Session;
 import Main.Main;
 import Models.ConnectDBMod;
+import SQLParser.FromTable;
 import SQLParser.SelectParser;
 import javafx.scene.web.WebEngine;
 
@@ -154,7 +155,22 @@ public class ConnectDBContr {
 		
 		
 		System.out.println("--------------------------------------------------------------------");
+		System.out.println("                   SQL Information");
+		System.out.println("--------------------------------------------------------------------");
 		
+		
+		for (FromTable t: selectParser.getSelectQuery().getTables() ) {
+			System.out.println("Table: " + t.getTable());
+		}
+		
+		
+		
+		System.out.println("Get table of alias D: " + selectParser.getSelectQuery().getTableByAlias("D").getTable());
+		
+		
+		
+		
+		System.out.println("#####################################################################");
 	}
 	
 	

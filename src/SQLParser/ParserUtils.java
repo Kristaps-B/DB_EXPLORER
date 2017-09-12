@@ -58,6 +58,16 @@ public class ParserUtils {
 		}
 		
 		
+		if (result.size() > 0) {
+			
+			pieceOfText = pieceOfText.substring(parseBy.length());
+			
+		}
+		result.add(pieceOfText);
+		
+		
+		
+		
 		return result;
 	}
 	
@@ -122,27 +132,34 @@ public class ParserUtils {
 		boolean result = false;
 		
 		// This one needs to be fixed!!!!
+		//System.out.println("--------------------------------------------");
+		//System.out.println("index: " + index + " search: " + search + " fullString: " + fullString);
 	
 		if ((index) == fullString.length() - 1) {
-			System.out.println("atLocation 1");			
+			//System.out.println("atLocation 1");			
 			return false;
 		}	
-		else if ((index + search.length() +1) >= fullString.length() - 1) {
-			System.out.println("atLocation 2");
+		else if ( (index + search.length() +1) > fullString.length() ) {
+			//System.out.println("atLocation 2");
 			return false;
 		} 
 		 
 		 
 		String sbstr = fullString.substring(index, index + search.length());
-		System.out.println("Sbstr: " + sbstr);
+		//System.out.println("Sbstr: " + sbstr);
 		
 		
 		if (sbstr.equals(search)) {
+			//System.out.println("RETURN TRUE");
 			return true;
 		}
 		
 		
 		return result;
 	}
+	
+	
+
+	
 	
 }

@@ -277,7 +277,14 @@ public class SelectQuery {
 	
 	
 	public ArrayList <FromTable> getTables () {
-		return this.fromClause.getTables();
+		ArrayList <FromTable> tables = new ArrayList <> ();
+		
+		
+		tables.addAll(this.fromClause.getTables());
+	
+		
+		return tables;
+		
 	}
 	
 	
