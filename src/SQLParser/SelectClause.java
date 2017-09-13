@@ -8,9 +8,11 @@ public class SelectClause {
 	
 	
 	private ArrayList <ColumnSelect> columnSelectList = new ArrayList <> ();
+	
+	ParserUtils parserUtils;
 
 	public SelectClause () {
-		
+		parserUtils = new ParserUtils();
 	}
 	
 	
@@ -24,6 +26,9 @@ public class SelectClause {
 	
 	
 	private void splitSelectClause (String sql) {
+		
+		
+		/*
 		
 		String [] selectArray = this.sql.split(",");
 		
@@ -39,6 +44,17 @@ public class SelectClause {
 			
 			System.out.println(str);
 		}
+		
+		
+		*/
+		
+		ArrayList <String> list = parserUtils.parseString(sql, ",");
+		
+		for (String s: list) {
+			
+			columnSelectList.add(new ColumnSelect(s));
+		}
+		
 		
 	}
 	

@@ -8,43 +8,34 @@ public class ColumnSelect {
 	private String column = "";
 	private String alias = "";
 	
+	ParserUtils parserUtils;
+	
 	
 	public ColumnSelect (String sql) {
 		
 		this.sql = sql;
 		
-		// System.out.println("ColumnSelect: " + this.sql);
+		parserUtils = new ParserUtils();
 		
-		String [] clArray = this.sql.split("\\.");
+		this.sql = this.sql.trim();
 		
-		// System.out.println("Length: " + clArray.length);
 		
-		if (clArray.length == 1) {
-			
-			this.column = clArray[0];
-			
-			
-		} else if (clArray.length > 1) {
-			
-			this.table  = clArray[0];
-			this.column = clArray[1];
-			
+		String tableColumn = "";
+		
+		tableColumn = parserUtils.getFirstPart(this.sql, " ");
+		
+		this.table = parserUtils.getFirstPart(tableColumn, ".");
+		this.column = parserUtils.getSecondPart(tableColumn, ".");
+		
+		this.alias = parserUtils.getSecondPart(this.sql, " ");
+		
+		
+		if (this.column.equals("")) {
+			this.column = this.table;
+			this.table = "";
 		}
 		
-		clArray = column.split(" ");
 		
-		
-		
-		if (clArray.length == 1) {
-			
-			this.column = clArray[0];
-			
-		} else if (clArray.length > 1) {
-			
-			this.column = clArray[0];
-			this.alias = clArray[1];
-			
-		}
 		
 		
 		System.out.println("table:  "  + this.table);

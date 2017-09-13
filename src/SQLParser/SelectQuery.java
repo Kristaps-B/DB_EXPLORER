@@ -105,18 +105,6 @@ public class SelectQuery {
 	
 	private void splitClauses() {
 		
-		
-		int select_start_index = -1;
-		int select_end_index   = -1;
-		int from_start_index   = -1;
-		int from_end_index     = -1;
-		int where_start_index  = -1;
-		int where_end_index    = -1;
-		
-		
-		
-		
-		
 		this.sql = this.sql.toUpperCase();
 		
 		System.out.println("SQL before removing comments: " + this.sql);
@@ -130,150 +118,64 @@ public class SelectQuery {
 		
 		this.sql = " " + this.sql.trim().replaceAll(" +", " ") + " ";
 		
+		String withClause = "";
+		String selectClause = "";
+		String fromClause = "";
+		String whereClause = "";
+		
 		
 		System.out.println(this.sql);
 		
-		for (int  i = 0; i < this.sql.length(); i ++) {
-			
-			char c = this.sql.charAt(i);
-			
-			// System.out.println(i + ") " + c);
-			
-			
-			// SELECT START
-			if (select_start_index == -1) {
-				if (parserUtils.atLocation(i, " SELECT ", this.sql)) {
-					select_start_index = i + " SELECT".length();
-					
-					System.out.println("SELECT_START_INDEX: " + select_start_index);
-				}
-			}
-			// SELECT END;
-			else if (select_end_index == -1) {
-				if (parserUtils.atLocation(i, " FROM ", this.sql)) {
-					select_end_index = i;
-					
-					System.out.println("SELECT_END_INDEX: " + select_end_index);
-					
-					// FROM START
-					
-					from_start_index = i + " FROM".length();
-					
-					System.out.println("FROM_START_INDEX: " + from_start_index);
-				}
-				
-			}
-			// FROM END
-			else if (from_end_index == -1) {
-				if ( i == this.sql.length() - 1 ) {
-					from_end_index = i;
-					
-					System.out.println("FROM_END_INDEX: " + from_end_index);
-					
-					
-				}
-				else if (parserUtils.atLocation(i, " WHERE ", this.sql) ) {
-					// WHERE START
-					
-					from_end_index = i;
-					
-					System.out.println("FROM_END_INDEX: " + from_end_index);
-					
-					where_start_index = i + " WHERE".length();
-					System.out.println("WHERE_START_INDEX: " + where_start_index);
-				}
-				
-			}
-			// WHERE END
-			else if (where_end_index == -1) {
-				if (parserUtils.atLocation(i, " GROUP BY ", this.sql)
-					|| parserUtils.atLocation(i, " ORDER BY ", this.sql)	
-					||  i == this.sql.length() - 1 
-					) {
-					where_end_index = i;
-					
-					System.out.println("WHERE_END_INDEX: " + where_end_index);
-				
-				}
-				
-			}
-			
-			
-			
+		String remainingPart = "";
+		
+		
+		withClause = parserUtils.getFirstPart(this.sql, " SELECT ");
+		
+		remainingPart = parserUtils.getSecondPart(this.sql, " SELECT ");
+		
+		selectClause = parserUtils.getFirstPart(remainingPart, " FROM ");
+		
+		remainingPart = parserUtils.getSecondPart(remainingPart, " FROM ");
+		
+		fromClause = parserUtils.getFirstPart(remainingPart, " WHERE ");
+		
+		remainingPart = parserUtils.getSecondPart(remainingPart, " WHERE ");
+		
+		whereClause = parserUtils.getFirstPart(remainingPart, " GROUP BY ");
+		
+		
+		
+		System.out.println("With clause: " + withClause);
+		System.out.println("Select clause: " + selectClause);
+		System.out.println("From clause: " + fromClause);
+		System.out.println("Where clause: " + whereClause);
+		
+		
+		
+		if (withClause.equals("") != true) {
 			
 		}
 		
 		
-		getClauses (
-				select_start_index, 
-				select_end_index, 
-				from_start_index, 
-				from_end_index, 
-				where_start_index, 
-				where_end_index	
-		);
+		this.selectClause.addSelectString(selectClause);
+		
+		
+		this.fromClause.addFromString(fromClause);
+		
+		
+		if (whereClause.equals("") != true) {
+			this.whereClause.addWhereString(whereClause);		
+		}
+		
+		
+		
 		
 		
 	}
 	
 	
 
-	
-	
-	
-	private void getClauses (
-		int select_start_index,
-		int select_end_index,
-		int from_start_index,
-		int from_end_index,
-		int where_start_index,
-		int where_end_index
-			
-			) {
-		
-		
-		
-		
-		System.out.println("GET_CLAUSES");
-		
-		
-		// SELECT
-		System.out.println("-----------------------------------------------------------------------------------------------");
-		System.out.println("Select start index: " + select_start_index + " select end index: " + select_end_index );
-		String selectString = this.sql.substring(select_start_index, select_end_index);
-		System.out.println("SELECT_STRING: " + selectString);
-		
-		
-		selectClause.addSelectString(selectString);
-		
-		// FROM
-		System.out.println("-----------------------------------------------------------------------------------------------");
-		System.out.println("From start index: " + from_start_index + " from end index: " + from_end_index);
-		String fromString = this.sql.substring(from_start_index, from_end_index ); 
-		System.out.println("FROM_STRING: "   + fromString);
-		
-		
-		fromClause.addFromString(fromString);
-		
-		// WHERE
-		System.out.println("-----------------------------------------------------------------------------------------------");
-		if (where_start_index != -1) {
-			
-			System.out.println("Where start index: " + where_start_index + " where end index: " + where_end_index);
-			String whereString = this.sql.substring(where_start_index, where_end_index ); 
-			System.out.println("WHERE_STRING: "  + whereString);
-			
-			whereClause.addWhereString(whereString);			
-		}
 
-		
-		
-		
-		
-		 
-		
-		
-	}
 	
 	
 	public ArrayList <FromTable> getTables () {

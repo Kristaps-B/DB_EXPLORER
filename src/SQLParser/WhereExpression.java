@@ -16,6 +16,8 @@ public class WhereExpression {
 	public WhereExpression (String sql) {
 		this.sql = sql;
 		
+		this.sql = this.sql.trim();
+		
 		parserUtils = new ParserUtils();
 		
 		

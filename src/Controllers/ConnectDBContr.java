@@ -147,7 +147,7 @@ public class ConnectDBContr {
 		System.out.println("=======================================================");
 		
 		
-		String sql = "SELECT d /* Test comment removal  */ FROM dual a, tabula b, (SELECT 1 FROM table1 d) c -- FROM TAG \n WHERE 1=1  -- End comment";
+		String sql = "SELECT d /* Test comment removal  */ , (select a, b FROM tab123 ) FROM dual a, tabula b, (SELECT 1 FROM table1 d) c -- FROM TAG \n WHERE 1=1  -- End comment";
 		
 		
 		SelectParser selectParser = new SelectParser(sql);
