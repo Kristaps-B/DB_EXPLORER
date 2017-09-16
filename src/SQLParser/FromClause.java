@@ -9,6 +9,8 @@ public class FromClause {
 	
 	
 	private ArrayList <FromTable> fromTableList = new ArrayList <> ();	
+	
+	private ParserUtils parserUtils = new ParserUtils();
 
 	public FromClause () {
 		
@@ -33,7 +35,7 @@ public class FromClause {
 		
 		int nmbOfBrackets = 0;
 		
-		
+		/*
 		String strTable = "";
 		for (int i = 0; i < sql.length(); i++) {
 			char c = sql.charAt(i);
@@ -61,14 +63,25 @@ public class FromClause {
 				strTable = "";
 				
 			}
+			*/
+		
+		for (String str: parserUtils.parseString(this.sql, ",")) {
 			
-			
+				processTable(str);
 			
 		}
+				
+				
 		
 		
 	}
 	
+	
+	
+	private void processTable (String str) {
+		
+		fromTableList.add(new FromTable(str));
+	}
 	
 	
 	public ArrayList <FromTable> getTables () {

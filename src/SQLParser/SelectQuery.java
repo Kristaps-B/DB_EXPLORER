@@ -7,10 +7,10 @@ public class SelectQuery {
 	
 	private ArrayList <SelectQuery> selectUnionList = new ArrayList <>();
 	
-	
-	private SelectClause selectClause = new SelectClause();
-	private FromClause fromClause     = new FromClause();
-	private WhereClause whereClause   = new WhereClause();
+	private WithClause   withClause     = new WithClause();
+	private SelectClause selectClause   = new SelectClause();
+	private FromClause   fromClause     = new FromClause();
+	private WhereClause  whereClause    = new WhereClause();
 	
 	private ParserUtils parserUtils;
 	
@@ -153,7 +153,7 @@ public class SelectQuery {
 		
 		
 		if (withClause.equals("") != true) {
-			
+			this.withClause.addWithString(withClause);
 		}
 		
 		

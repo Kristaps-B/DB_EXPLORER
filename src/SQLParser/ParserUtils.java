@@ -159,7 +159,21 @@ public class ParserUtils {
 	}
 	
 	
-
+	public String getBracketsContent (String str) {
+		
+		String result = "";
+		
+		
+		int start = str.indexOf("(");
+		
+		int end = str.lastIndexOf(")");
+		
+		
+		result = str.substring(start + 1, end);
+		
+		return result;
+		
+	}
 	
 	
 }

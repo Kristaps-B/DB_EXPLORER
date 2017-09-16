@@ -19,6 +19,8 @@ public class SelectClause {
 	public void addSelectString (String sql) {
 		this.sql = sql;
 		
+		this.sql = this.sql.replaceAll(" AS ", " ");
+		
 		splitSelectClause(this.sql);
 	}
 	
