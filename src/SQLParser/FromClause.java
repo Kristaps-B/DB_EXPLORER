@@ -11,10 +11,12 @@ public class FromClause {
 	private ArrayList <FromTable> fromTableList = new ArrayList <> ();	
 	
 	private ParserUtils parserUtils = new ParserUtils();
+	
+	private SelectQuery mainQuery;
 
-	public FromClause () {
+	public FromClause (SelectQuery mainQuery) {
 		
-		
+		this.mainQuery = mainQuery;
 		
 		
 	}
@@ -35,35 +37,7 @@ public class FromClause {
 		
 		int nmbOfBrackets = 0;
 		
-		/*
-		String strTable = "";
-		for (int i = 0; i < sql.length(); i++) {
-			char c = sql.charAt(i);
-			
-			strTable += c;
-			
-			if (c == '(') {
-				nmbOfBrackets += 1;
-			}
-			if (c == ')') {
-				nmbOfBrackets -= 1;
-			}
-			
-			if ((c == ',' && nmbOfBrackets == 0) || i == sql.length() - 1) {
-				
-				// Remove last coma
-				if (c == ',') {
-					strTable = strTable.substring(0, strTable.length() - 1);
-				}
-				
-				
-				System.out.println("Table -> " + strTable);
-				fromTableList.add(new FromTable(strTable));
-				
-				strTable = "";
-				
-			}
-			*/
+	
 		
 		for (String str: parserUtils.parseString(this.sql, ",")) {
 			
@@ -80,7 +54,67 @@ public class FromClause {
 	
 	private void processTable (String str) {
 		
-		fromTableList.add(new FromTable(str));
+		
+		// Check if it is ANSI JOIN
+		
+		if (parserUtils.isTextInside(str, "JOIN")) {
+			// Looks like its is ANSI JOIN
+			System.out.println("ANSI Join  -> ");
+			
+			// Remove LEFT, INNER, RIGHT keywoad, because its not needed
+			str = str.replace(" LEFT ", " ");
+			str = str.replaceAll(" INNER ", " ");
+			str = str.replaceAll(" RIGHT", " ");
+			
+			processAnsi(str);
+			
+			
+		} else {
+			
+			System.out.println("-----------  FROM subquery  ----------------");
+			
+			fromTableList.add(new FromTable(str, this.mainQuery));		
+			
+			System.out.println("---------------------------------------------------------------------");
+			
+		}
+		
+		
+
+		
+		
+		
+	}
+	
+	
+	private void processAnsi (String str) {
+		// Split by JOIN
+		
+		for (String s: parserUtils.parseString(str, " JOIN ")) {
+			
+			System.out.println("ANSI part: " + s);
+			
+			// Split by ON, to get JOIN
+			
+			String tablePart = "";
+			String wherePart = "";
+			
+			
+			tablePart = parserUtils.getFirstPart(s, " ON ");
+			wherePart = parserUtils.getSecondPart(s, " ON ");
+			
+			if (wherePart != "") {
+				wherePart = parserUtils.getBracketsContent(wherePart);	
+			}
+			
+			
+			
+			System.out.println("Table: " + tablePart + " Where part: " + wherePart);
+			
+			
+			
+		}
+		
 	}
 	
 	
@@ -108,7 +142,7 @@ public class FromClause {
 	public FromTable getTableByAlias(String alias) {
 		FromTable fromTable = null;
 		
-		System.out.println("getTableByAlias");
+		System.out.println("---------------getTableByAlias----------------- alias: " + alias);
 		
 		
 		
@@ -118,13 +152,23 @@ public class FromClause {
 				if (ft.getIsSubstring() == false) {
 					if (ft.getAlias().equals(alias.toUpperCase())) {
 						
+						System.out.println("Get by alias (not substring)");
 						fromTable = ft;
-							
+						return fromTable;
 						
 					}
 				} else {
+					System.out.println("Get by alias: " + alias + " from substring");
+					System.out.println("Substring query: " + ft.getSubquery().getQuery());
+					
 					
 					fromTable = ft.getSubquery().getTableByAlias(alias);
+					
+					
+					if (fromTable != null) {
+						return fromTable;
+					}
+					
 					
 				}
 				

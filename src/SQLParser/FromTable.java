@@ -11,16 +11,17 @@ public class FromTable {
 	private boolean isSubquery = false;
 	
 	
-	SelectParser selectParser;
+	private SelectParser selectParser;
+	private ParserUtils parserUtils;
 	
-	ParserUtils parserUtils;
+	private SelectQuery mainQuery;
 
-	public FromTable (String sql) {
+	public FromTable (String sql, SelectQuery mainQuery) {
 		
 		this.sql = sql;
 		
 		this.sql = this.sql.trim();
-		
+		this.mainQuery = mainQuery;
 		parserUtils = new ParserUtils();
 	
 		
@@ -31,6 +32,9 @@ public class FromTable {
 		 
 		 System.out.println("table: " + this.table);
 		 System.out.println("alias: " + this.alias);
+		 
+		 
+		 checkWith(this.table);
 		 
 		 
 		 checkSubquery(this.table);
@@ -48,7 +52,24 @@ public class FromTable {
 	
 	
 
-	
+	private void checkWith(String table) {
+		
+		WithClause withClause = mainQuery.getWith();
+		
+		SelectParser withTableParser = withClause.getSelectParser(table);
+		
+		if (withTableParser != null) {
+			
+			System.out.println("With SUBSTITUTION!!! table: " + table);
+			System.out.println("Table Query: " + withTableParser.getSelectQuery().getQuery());
+			
+			isSubquery = true;
+			this.selectParser = withTableParser;
+			
+		}
+		
+		
+	}
 	
 	private void  checkSubquery(String table) {
 		
@@ -62,7 +83,7 @@ public class FromTable {
 			System.out.println("Subquery: " + subquery);
 			
 			
-			selectParser = new SelectParser(subquery);
+			this.selectParser = new SelectParser(subquery);
 		}
 		
 	}

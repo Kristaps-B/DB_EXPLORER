@@ -147,7 +147,11 @@ public class ConnectDBContr {
 		System.out.println("=======================================================");
 		
 		
-		String sql = "WITH tabb123 AS (SELECT 1 FROM dual) SELECT d /* Test comment removal  */ , (select a, b FROM tab123 ) FROM dual a, tabula b, (SELECT 1 FROM table1 d) c -- FROM TAG \n WHERE 1=1  -- End comment";
+		String sql = "WITH tabb123 AS (SELECT 1 FROM dual)" +
+		 " SELECT d /* Test comment removal  */ , (select a, b FROM tab123 ) " + 
+		" FROM dual a, tabula b, (SELECT 1 FROM table1 d) c, tabb123 tt -- FROM TAG \n " +
+		", tab1 a1 INNER JOIN tab2 a2 ON (a1.id = a2.id) " +
+		" WHERE 1=1  -- End comment";
 		
 		
 		SelectParser selectParser = new SelectParser(sql);

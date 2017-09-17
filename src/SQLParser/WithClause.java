@@ -47,16 +47,18 @@ public class WithClause {
 	
 	
 	
-	public SelectQuery getSelectQuery(String tableName) {
-		SelectQuery selectQuery = null;
+	public SelectParser getSelectParser(String tableName) {
+		SelectParser selectParser = null;
 		
 		for (WithTable sq: tableList) {
 			
 			if (sq.getTableName().equals(tableName)) {
-				selectQuery = sq.getSelectQuery();
+				selectParser = sq.getSelectParser();
 			}
 		}
 		
-		return selectQuery;
+		return selectParser;
 	}
+	
+
 }

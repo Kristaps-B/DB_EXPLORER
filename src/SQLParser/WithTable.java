@@ -11,7 +11,7 @@ public class WithTable {
 	
 	private ParserUtils parserUtils;
 	
-	private SelectQuery selectQuery;
+	private SelectParser selectParser;
 	
 	public WithTable (String sql) {
 		this.sql = sql;
@@ -26,8 +26,8 @@ public class WithTable {
 		
 		this.tableQuery = parserUtils.getBracketsContent(this.tableQuery);
 		
-		selectQuery = new SelectQuery();
-		selectQuery.createSelect(this.tableQuery);
+		selectParser = new SelectParser(this.tableQuery);
+		 
 		
 		System.out.println("TableName: " + this.tableName);
 		System.out.println("Table Query: " + this.tableQuery);
@@ -39,8 +39,13 @@ public class WithTable {
 		return this.tableName;
 	}
 	
-	public SelectQuery getSelectQuery () {
-		return this.selectQuery;
+	public SelectParser getSelectParser () {
+		return this.selectParser;
+	}
+	
+	
+	public String getQuery () {
+		return this.sql;
 	}
 
 }

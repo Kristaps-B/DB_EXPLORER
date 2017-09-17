@@ -9,7 +9,7 @@ public class SelectQuery {
 	
 	private WithClause   withClause     = new WithClause();
 	private SelectClause selectClause   = new SelectClause();
-	private FromClause   fromClause     = new FromClause();
+	private FromClause   fromClause     = new FromClause(this);
 	private WhereClause  whereClause    = new WhereClause();
 	
 	private ParserUtils parserUtils;
@@ -36,6 +36,10 @@ public class SelectQuery {
 		
 		selectUnionList.add(selectQuery);
 		
+	}
+	
+	public WithClause getWith () {
+		return this.withClause;
 	}
 	
 	
@@ -206,6 +210,10 @@ public class SelectQuery {
 	
 	public ArrayList <WhereExpression> getWhereList () {
 		return this.whereClause.getExpressionList();
+	}
+	
+	public String getQuery () {
+		return this.sql;
 	}
 	
 
