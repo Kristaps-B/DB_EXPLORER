@@ -10,7 +10,7 @@ public class SelectQuery {
 	private WithClause   withClause     = new WithClause();
 	private SelectClause selectClause   = new SelectClause();
 	private FromClause   fromClause     = new FromClause(this);
-	private WhereClause  whereClause    = new WhereClause();
+	private WhereClause  whereClause;
 	
 	private ParserUtils parserUtils;
 	
@@ -168,7 +168,7 @@ public class SelectQuery {
 		
 		
 		if (whereClause.equals("") != true) {
-			this.whereClause.addWhereString(whereClause);		
+			this.whereClause = new WhereClause(whereClause); 	
 		}
 		
 		

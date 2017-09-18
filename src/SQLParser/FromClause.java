@@ -9,6 +9,7 @@ public class FromClause {
 	
 	
 	private ArrayList <FromTable> fromTableList = new ArrayList <> ();	
+	private ArrayList <WhereClause> ansiWhereList = new ArrayList <> ();
 	
 	private ParserUtils parserUtils = new ParserUtils();
 	
@@ -92,7 +93,7 @@ public class FromClause {
 		
 		for (String s: parserUtils.parseString(str, " JOIN ")) {
 			
-			System.out.println("ANSI part: " + s);
+			System.out.println("-------> ANSI part: " + s);
 			
 			// Split by ON, to get JOIN
 			
@@ -109,7 +110,12 @@ public class FromClause {
 			
 			
 			
-			System.out.println("Table: " + tablePart + " Where part: " + wherePart);
+			System.out.println("ANSI Table: " + tablePart + " Where part: " + wherePart);
+			
+			fromTableList.add(new FromTable(tablePart, this.mainQuery));
+			
+			
+			ansiWhereList.add(new WhereClause(wherePart));
 			
 			
 			

@@ -10,6 +10,8 @@ public class WhereExpression {
 	private String leftColumn = "";
 	private String rightColumn = "";
 	
+	private boolean isJoin = false;
+	
 	
 	private ParserUtils parserUtils;
 	
@@ -25,6 +27,9 @@ public class WhereExpression {
 		
 		System.out.println("Where Expression START!!!");
 		System.out.println("SQL: " + this.sql);
+		
+		// Remove left/right JOIN
+		this.sql = this.sql.replace("(+)", "");
 		
 		
 		if (parserUtils.isTextInside(this.sql, "=") == true) {
@@ -49,17 +54,53 @@ public class WhereExpression {
 
 			}
 			
-	
-				System.out.println("LEFT_ALIAS: " + leftAlias);
-				System.out.println("LEFT_COLUMN: " + leftColumn);
-				// System.out.println("Expression: " + expression);
-				System.out.println("RIGHT_ALIAS: " + rightAlias);
-				System.out.println("RIGHT_COLUMN: " + rightColumn);	
+			this.leftAlias = this.leftAlias.trim();
+			this.rightAlias = this.rightAlias.trim();
+			this.leftColumn = this.leftColumn.trim();
+			this.rightColumn = this.rightColumn.trim();
+		
+
+			System.out.println("LEFT_ALIAS: " + this.leftAlias);
+			System.out.println("LEFT_COLUMN: " + this.leftColumn);
+			// System.out.println("Expression: " + expression);
+			System.out.println("RIGHT_ALIAS: " + this.rightAlias);
+			System.out.println("RIGHT_COLUMN: " + this.rightColumn);	
 
 			
 		}
 		
+		
+		checkIfIsJoin();
 
+	}
+	
+	
+	private void checkIfIsJoin () {
+		
+		if ( 
+			this.leftAlias.equals("") ||
+			this.leftAlias.equals("") ||
+			this.leftAlias.equals("") ||
+			this.leftAlias.equals("") 
+		  ) {
+			return;
+		}
+		
+		
+		
+		if (parserUtils.isNumeric(this.leftColumn) || parserUtils.isNumeric(this.rightColumn)) {
+			return;
+			
+		}
+		
+		if (parserUtils.isTextInside(this.leftColumn, "(") || parserUtils.isTextInside(this.rightColumn, "(")) {
+			return;
+		}
+			
+		
+		isJoin = true;
+		System.out.println("*) Where Expression " + this.sql + " is JOIN!!!");
+		
 	}
 	
 	

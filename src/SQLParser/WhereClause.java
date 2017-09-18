@@ -10,19 +10,10 @@ public class WhereClause {
 	
 	private ArrayList <WhereExpression> whereExpressionList = new ArrayList <> ();	
 	
-	public WhereClause () {
-		
-		
-	}
-	
-	
-	
-	public void addWhereString (String sql) {
+	public WhereClause (String sql) {
 		this.sql = sql;
-		
 		splitWhereClauses(sql);
 	}
-	
 	
 
 	
