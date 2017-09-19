@@ -9,9 +9,11 @@ public class WhereClause {
 	
 	
 	private ArrayList <WhereExpression> whereExpressionList = new ArrayList <> ();	
+	private FromClause fromClause;
 	
-	public WhereClause (String sql) {
+	public WhereClause (String sql, FromClause fromClause) {
 		this.sql = sql;
+		this.fromClause = fromClause;
 		splitWhereClauses(sql);
 	}
 	
@@ -27,7 +29,7 @@ public class WhereClause {
 			
 			str = str.trim();
 			
-			whereExpressionList.add(new WhereExpression(str));
+			whereExpressionList.add(new WhereExpression(str, this.fromClause));
 			
 			System.out.println(str);
 		}		

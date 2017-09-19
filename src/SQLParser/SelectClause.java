@@ -9,15 +9,18 @@ public class SelectClause {
 	
 	private ArrayList <ColumnSelect> columnSelectList = new ArrayList <> ();
 	
-	ParserUtils parserUtils;
+	private ParserUtils parserUtils;
+	private FromClause fromClause;
 
 	public SelectClause () {
 		parserUtils = new ParserUtils();
+		
 	}
 	
 	
-	public void addSelectString (String sql) {
+	public void addSelectString (String sql, FromClause fromClause) {
 		this.sql = sql;
+		this.fromClause = fromClause;
 		
 		this.sql = this.sql.replaceAll(" AS ", " ");
 		

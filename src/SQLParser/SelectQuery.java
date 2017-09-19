@@ -161,14 +161,17 @@ public class SelectQuery {
 		}
 		
 		
-		this.selectClause.addSelectString(selectClause);
-		
-		
 		this.fromClause.addFromString(fromClause);
 		
 		
+		this.selectClause.addSelectString(selectClause, this.fromClause);
+		
+		
+		
+		
+		
 		if (whereClause.equals("") != true) {
-			this.whereClause = new WhereClause(whereClause); 	
+			this.whereClause = new WhereClause(whereClause, this.fromClause); 	
 		}
 		
 		

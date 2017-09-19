@@ -4,11 +4,11 @@ import java.util.ArrayList;
 
 public class WithClause {
 	
-	String sql = "";
-	ParserUtils parserUtils = new ParserUtils();
+	private String sql = "";
+	private ParserUtils parserUtils = new ParserUtils();
 	
-	ArrayList <WithTable> tableList = new ArrayList <>();
-	
+	private ArrayList <WithTable> tableList = new ArrayList <>();
+
 	
 	public WithClause() {
 		 

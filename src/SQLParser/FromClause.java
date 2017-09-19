@@ -115,7 +115,7 @@ public class FromClause {
 			fromTableList.add(new FromTable(tablePart, this.mainQuery));
 			
 			
-			ansiWhereList.add(new WhereClause(wherePart));
+			ansiWhereList.add(new WhereClause(wherePart, this));
 			
 			
 			

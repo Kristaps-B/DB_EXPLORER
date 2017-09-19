@@ -9,16 +9,22 @@ public class WhereExpression {
 	private String rightAlias = "";
 	private String leftColumn = "";
 	private String rightColumn = "";
+	private String leftTable = "";
+	private String rightTable = "";
 	
 	private boolean isJoin = false;
 	
 	
 	private ParserUtils parserUtils;
 	
-	public WhereExpression (String sql) {
+	private FromClause fromClause;
+	
+	public WhereExpression (String sql, FromClause fromClause) {
 		this.sql = sql;
 		
 		this.sql = this.sql.trim();
+		this.fromClause = fromClause;
+		
 		
 		parserUtils = new ParserUtils();
 		
@@ -58,14 +64,20 @@ public class WhereExpression {
 			this.rightAlias = this.rightAlias.trim();
 			this.leftColumn = this.leftColumn.trim();
 			this.rightColumn = this.rightColumn.trim();
+			
+			this.leftTable = this.fromClause.getTableByAlias(this.leftAlias).getTable();
+			this.rightTable = this.fromClause.getTableByAlias(this.rightAlias).getTable(); 
+			
 		
-
-			System.out.println("LEFT_ALIAS: " + this.leftAlias);
-			System.out.println("LEFT_COLUMN: " + this.leftColumn);
+			System.out.println("####################################################");
+			System.out.println("   * LEFT_TABLE: " + this.leftTable);
+			System.out.println("     LEFT_ALIAS: " + this.leftAlias);
+			System.out.println("     LEFT_COLUMN: " + this.leftColumn);
 			// System.out.println("Expression: " + expression);
-			System.out.println("RIGHT_ALIAS: " + this.rightAlias);
-			System.out.println("RIGHT_COLUMN: " + this.rightColumn);	
-
+			System.out.println("   * RIGHT_TABLE: " + this.rightTable);
+			System.out.println("     RIGHT_ALIAS: " + this.rightAlias);
+			System.out.println("     RIGHT_COLUMN: " + this.rightColumn);	
+			System.out.println("####################################################");
 			
 		}
 		
@@ -124,6 +136,14 @@ public class WhereExpression {
 	
 	public String getRightAlias () {
 		return this.rightAlias;
+	}
+	
+	public String getRightTable() {
+		return this.rightTable;
+	}
+	
+	public String getLeftTable() {
+		return this.leftTable;
 	}
 	
 

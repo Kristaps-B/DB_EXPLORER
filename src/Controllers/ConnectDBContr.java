@@ -147,11 +147,11 @@ public class ConnectDBContr {
 		System.out.println("=======================================================");
 		
 		
-		String sql = "WITH tabb123 AS (SELECT 1 FROM dual)" +
-		 " SELECT d /* Test comment removal  */ , (select a, b FROM tab123 ) " + 
-		" FROM dual a, tabula b, (SELECT 1 FROM table1 d) c, tabb123 tt -- FROM TAG \n " +
-		", tab1 a1 INNER JOIN tab2 a2 ON (a1.id = a2.id) " +
-		" WHERE 1=1  -- End comment";
+		String sql = "WITH tabb123 AS (SELECT t1.column1 FROM tab1 t1)" +
+		 " SELECT tab2 t2 /* Test comment removal  */ , (select t3.column2, t3.column3 FROM tab3 t3 ) " + 
+		" FROM tab4 t4, tab5 t5, (SELECT t6.col5 FROM tab6 t6 ) sq1, tab7 t7 -- FROM TAG \n " +
+		", tab8 t8 INNER JOIN tab9 t9  ON (t8.col1 = t9.col2) " +
+		" WHERE t4.id = t5.id  -- End comment";
 		
 		
 		SelectParser selectParser = new SelectParser(sql);
@@ -169,7 +169,7 @@ public class ConnectDBContr {
 		
 		
 		
-		System.out.println("Get table of alias D: " + selectParser.getSelectQuery().getTableByAlias("D").getTable());
+		System.out.println("Get table of alias D: " + selectParser.getSelectQuery().getTableByAlias("t8").getTable());
 		
 		
 		
