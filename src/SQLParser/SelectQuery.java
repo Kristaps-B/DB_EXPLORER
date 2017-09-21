@@ -147,6 +147,14 @@ public class SelectQuery {
 		
 		whereClause = parserUtils.getFirstPart(remainingPart, " GROUP BY ");
 		
+		// Check other alternatives
+		if (whereClause.equals(remainingPart)) {
+			whereClause = parserUtils.getFirstPart(remainingPart, " ORDER BY ");
+		}
+		if (whereClause.equals(remainingPart)) {
+			whereClause = parserUtils.getFirstPart(remainingPart, " WITH ");
+		}
+		
 		
 		
 		System.out.println("With clause: " + withClause);

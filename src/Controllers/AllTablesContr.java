@@ -40,11 +40,11 @@ public class AllTablesContr {
 	}
 	
 	
-	public String loadTables() {
+	public String loadTables(int limit, int offset) {
 		String result = "";
 		
 		
-		result = this.allTablesMod.loadTables();
+		result = this.allTablesMod.loadTables(limit, offset - 1);
 		
 		
 		return result;

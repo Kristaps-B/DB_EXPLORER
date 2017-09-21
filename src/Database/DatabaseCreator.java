@@ -79,6 +79,7 @@ public class DatabaseCreator {
 			"table_id          INTEGER," +
 			"owner             CHAR(30)," +
 			"table_name        CHAR(30)," +
+			"examine_time      DATETIME," +
 			"unique (owner, table_name)" +
 			")"
 			;
@@ -95,7 +96,9 @@ public class DatabaseCreator {
 					"id                 INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"user_id            CHAR(30)," +
 					"username           CHAR(30) unique," +
-					"active             CHAR(1) " +
+					"active             CHAR(1), " +
+					"examine_time       DATETIME" +
+					
 					")"
 					;
 					
@@ -116,6 +119,7 @@ public class DatabaseCreator {
 			"view_id          INTEGER," +
 			"owner             CHAR(30)," +
 			"view_name        CHAR(30)," +
+			"examine_time       DATETIME," +
 			"unique (owner, view_name)" +
 			")"
 			;
@@ -160,6 +164,7 @@ public class DatabaseCreator {
 			"view_id               INTEGER,"  +
 			"table_id              INTEGER," +
 			"alias                 CHAR(30),"  +
+			"examine_time         DATETIME," +
 			"unique (view_id, table_id)"  +
 			")"
 			;
@@ -239,6 +244,7 @@ public class DatabaseCreator {
 			"owner                 CHAR(30)," +
 			"name                  CHAR(30)," +
 			"type                  CHAR(30)," +
+			"examine_time         DATETIME," +
 			"unique (owner, name)"  +
 			")"
 			;

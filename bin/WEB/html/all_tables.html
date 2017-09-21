@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	function create () {
 		
-		loadTables();
+		loadTables('5', document.getElementById('offset').value);
 	}
 	
 	
@@ -20,7 +20,7 @@
 		
 		app.updateTables();
 		
-		loadTables();
+		loadTables('5', document.getElementById('offset').value);
 	}
 	
 	
@@ -37,11 +37,35 @@
 		
 	}
 	
-	
-	
-	function loadTables () {
+	function analyseSingleTable(tableId, tableOwner, tableName) {
 		
-		var str_json = app.loadTables();
+		analyseTable(tableId, tableOwner, tableName);
+		loadTables('5', document.getElementById('offset').value);
+	}
+	
+	
+	function analyseAll() {
+		
+		var table = document.getElementById('TABLE_TABLE');
+		
+		
+		for (var i = 1, row; row = table.rows[i]; i++ ) {
+			
+			var col_id = row.cells[1].innerHTML;
+			var col_owner = row.cells[2].innerHTML;
+			var col_table = row.cells[3].innerHTML;
+			
+			analyseTable(col_id, col_owner, col_table);
+		}
+		
+		loadTables('5', document.getElementById('offset').value );
+	}
+	
+	
+	
+	function loadTables (limit, offset) {
+		
+		var str_json = app.loadTables(limit, offset);
 		
 		
 		var tableHeaderRowCount = 1;
@@ -76,17 +100,26 @@
 			cell =  row.insertCell(3);
 			cell.innerHTML = table_json[i].table_name;
 			
-			
 			cell =  row.insertCell(4);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseTable(\'' + table_json[i].table_id + '\', \'' + table_json[i].owner + '\', \'' + table_json[i].table_name + '\')" > EXAMINE </button>';
+			cell.innerHTML = table_json[i].examine_time;
+			
 			
 			cell =  row.insertCell(5);
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSingleTable(\'' + table_json[i].table_id + '\', \'' + table_json[i].owner + '\', \'' + table_json[i].table_name + '\')" > EXAMINE </button>';
+			
+			cell =  row.insertCell(6);
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
 				
 			
 		}
 		
 		
+		
+	}
+	
+	
+	function offsetChanged() {
+		 loadTables('5', document.getElementById('offset').value);
 		
 	}
 	
@@ -100,7 +133,7 @@
 	
 	
 	<center>
-	<button class="btn btn-primary"   onclick="updateTables();" > UPDATE_TABLES </button>
+	<button class="btn btn-primary"   onclick="updateTables();" > UPDATE_TABLE_LIST </button>
 	<button class="btn btn-primary"   onclick="toMenu();" > TO_MENU </button></br>
 	</br>
 	</center>
@@ -113,6 +146,7 @@
 			<th>TABLE_ID</th>
 			<th>OWNER</th>
 			<th>TABLE_NAME</th>
+			<th>LAST_EXAMINE_TIME</th>
 			<th>ANALYSE</th>
 			<th>INFORMATION</th>
 		</tr>
@@ -120,6 +154,13 @@
 	</table>	
 	
 	
+	<center>
+		<button class="btn btn-primary"   onclick="analyseAll();" > ANALYSE_ALL </button></br>
+		
+		 <br/>
+		 
+		 OFFSET: <input id="offset" type="number" value="0"  /> <button class="btn btn-primary"   onclick="offsetChanged();" > RELOAD </button></br>
+	</center>
 
 </body>
 
