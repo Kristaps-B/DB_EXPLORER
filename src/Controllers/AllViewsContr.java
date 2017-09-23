@@ -41,16 +41,12 @@ public class AllViewsContr {
 	}
 	
 	
-	public String loadViews() {
+	public String loadViews(int limit, int offset) {
 		String result = "";
 		
 		
 		result = this.allViewsMod.loadViews(
-				Session.ip, 
-				Session.port, 
-				Session.sid, 
-				Session.username, 
-				Session.password);
+				 limit, offset - 1);
 		
 		
 		return result;		

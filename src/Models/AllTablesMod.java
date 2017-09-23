@@ -28,7 +28,7 @@ public class AllTablesMod {
 		System.out.println("ACTIVE_USERS: " + activeUsers);
 		
 		
-		String sql = "SELECT rownum ID, rownum TABLE_ID, OWNER, TABLE_NAME FROM all_tables WHERE 1=1 " + activeUsers;
+		String sql = "SELECT rownum ID, rownum TABLE_ID, OWNER, TABLE_NAME, '' examine_time FROM all_tables WHERE 1=1 " + activeUsers;
 		
 		SQLOracle oQuerie = new SQLOracle();
 		

@@ -69,7 +69,7 @@ public class AllViewsMod {
 		System.out.println("ACTIVE_USERS: " + activeUsers);
 		
 		
-		String sql = "SELECT rownum ID, rownum VIEW_ID, OWNER, VIEW_NAME FROM all_views WHERE 1=1 " + activeUsers;
+		String sql = "SELECT rownum ID, rownum VIEW_ID, OWNER, VIEW_NAME, '' EXAMINE_TIME FROM all_views WHERE 1=1 " + activeUsers;
 		
 		SQLOracle oQuerie = new SQLOracle();
 		
@@ -107,11 +107,12 @@ public class AllViewsMod {
 		SQLLite  sqlLite = new SQLLite();
 		
 		String sql = "insert into all_views"
-		+ "(view_id, owner, view_name) "
+		+ "(view_id, owner, view_name, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.view_id  + "',"
 		+ "'" + row.owner  + "',"
-		+ "'" + row.view_name  + "'"
+		+ "'" + row.view_name  + "',"
+		+ "DATETIME('now', 'localtime')"
 		+ ")"
 		;
 		
@@ -123,7 +124,7 @@ public class AllViewsMod {
 			System.out.println("VIEW " + row.view_name + " was inserted!");
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("saveView exception: " +e.getMessage());
 		}
 		
 	}
@@ -131,7 +132,7 @@ public class AllViewsMod {
 	
 	
 	
-	public String loadViews (String ip, String port, String sid, String username, String password) {
+	public String loadViews (int limit, int offset) {
 		String result = "";
 		
 		
@@ -139,7 +140,7 @@ public class AllViewsMod {
 		
 		ViewsResult rs = new ViewsResult();
 		
-		String sql = "SELECT id, view_id, owner, view_name FROM all_views";
+		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM all_views LIMIT " + limit + "  OFFSET " + offset;
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -162,6 +163,7 @@ public class AllViewsMod {
 				aJson.addValue("view_id", "" + row.view_id);
 				aJson.addValue("owner", row.owner);
 				aJson.addValue("view_name", row.view_name);
+				aJson.addValue("examine_time", row.examine_time);
 				
 				aJson.newRow();
 			}
@@ -188,6 +190,31 @@ public class AllViewsMod {
 	
 	
 	
+	private void update_examine_time (String owner, String viewName) throws Exception {
+		SQLLite sqlLite = new SQLLite();
+		
+		String sql  = "UPDATE all_views " +
+		"SET examine_time = DATETIME('now', 'localtime')" +
+	    "WHERE owner = '" + owner +"' AND view_name = '" + viewName + "' ";
+		
+		
+		try {
+			
+			System.out.println("Updating examine_time " + owner + " view_name: " + viewName);
+			
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+		 
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+	
+	
+	
 	public void analyseView(
 			String owner, String view_name) {
 		
@@ -205,7 +232,13 @@ public class AllViewsMod {
 			System.out.println("VIEW TEXT: " + sqlView);
 			SelectParser selectParser = new SelectParser(sqlView);
 			
+			
+			update_examine_time (owner, view_name);
+			
 			saveViewInformation (selectParser, owner, view_name);
+			
+			
+			
 			
 			
 		} catch (Exception e) {

@@ -29,11 +29,11 @@ public class AllPlsqlContr {
 	}
 	
 	
-	public String loadPlsql() {
+	public String loadPlsql(int limit, int offset) {
 		String result = "";
 		System.out.println("Load all Plsql");
 		
-		result = this.allPlsqlMod.loadPlsql();
+		result = this.allPlsqlMod.loadPlsql(limit, offset);
 		
 		
 		return result;
@@ -60,6 +60,14 @@ public class AllPlsqlContr {
 		System.out.println("AllTableContr.goToInformation");
 		URL url = Main.class.getResource("../WEB/html/plsql_information.html");
 		engine.load(url.toExternalForm());
+		
+	}
+	
+	
+	public void analysePlsql ( String owner, String name) {
+		System.out.println("AllPlsqlContr.analysePlsql");
+		
+		this.allPlsqlMod.analysePlsql(owner, name);
 		
 	}
 		

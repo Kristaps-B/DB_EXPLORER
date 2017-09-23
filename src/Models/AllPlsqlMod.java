@@ -17,7 +17,7 @@ public class AllPlsqlMod {
 	
 	
 	
-	public String loadPlsql() {
+	public String loadPlsql(int limit, int offset) {
 
 		
 		
@@ -29,7 +29,7 @@ public class AllPlsqlMod {
 		
 		PlsqlResult rs = new PlsqlResult();
 		
-		String sql = "SELECT id, plsql_id, owner, name, type FROM all_plsql";
+		String sql = "SELECT id, plsql_id, owner, name, type, examine_time FROM all_plsql  LIMIT " + limit + "  OFFSET " + offset;
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -53,6 +53,7 @@ public class AllPlsqlMod {
 				aJson.addValue("owner", row.owner);
 				aJson.addValue("name", row.name);
 				aJson.addValue("type", row.type);
+				aJson.addValue("examine_time", row.examine_time);
 				
 				aJson.newRow();
 			}
@@ -94,7 +95,7 @@ public class AllPlsqlMod {
 		
 		
 		
-		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type " +
+		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, '' examine_time " +
 		" FROM all_objects " +
 		" WHERE 1=1 " +
 		activeUsers +
@@ -144,7 +145,8 @@ public class AllPlsqlMod {
 		+ "'" + row.plsql_id  + "',"
 		+ "'" + row.owner  + "',"
 		+ "'" + row.name  + "',"
-		+ "'" + row.type  + "'"
+		+ "'" + row.type  + "',"
+		+ "DATETIME('now', 'localtime')"
 		+ ")"
 		;
 		
@@ -160,6 +162,46 @@ public class AllPlsqlMod {
 		}
 				
 		
+	}
+	
+	
+	
+	private void update_examine_time (String owner, String name) throws Exception {
+		SQLLite sqlLite = new SQLLite();
+		
+		String sql  = "UPDATE all_plsql " +
+		"SET examine_time = DATETIME('now', 'localtime')" +
+	    "WHERE owner = '" + owner +"' AND name = '" + name + "' ";
+		
+		
+		try {
+			
+			System.out.println("Updating examine_time " + owner + "  name: " + name);
+			
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+		 
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+	}
+	
+	
+	public void analysePlsql(String owner, String name) {
+		
+		try {
+			
+			update_examine_time(owner, name);
+			
+			
+			
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

@@ -118,10 +118,24 @@
 	}
 	
 	
-	function offsetChanged() {
+	function previous() {
+		
+		
+		if (parseInt(document.getElementById('offset').value) <= 0) return false;
+		
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		
 		 loadTables('5', document.getElementById('offset').value);
 		
 	}
+	
+	function next() {
+		
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		
+		 loadTables('5', document.getElementById('offset').value);
+		
+	}	
 	
 </script>
 
@@ -159,7 +173,9 @@
 		
 		 <br/>
 		 
-		 OFFSET: <input id="offset" type="number" value="0"  /> <button class="btn btn-primary"   onclick="offsetChanged();" > RELOAD </button></br>
+		 <button class="btn btn-primary"   onclick="previous();" > PREVIOUS </button>
+		 <input id="offset" type="number" value="0" disabled /> 
+		 <button class="btn btn-primary"   onclick="next();" > NEXT </button></br>
 	</center>
 
 </body>

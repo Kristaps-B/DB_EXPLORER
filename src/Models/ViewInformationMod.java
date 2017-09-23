@@ -27,7 +27,7 @@ public class ViewInformationMod {
 		
 		ViewsResult rs = new ViewsResult();
 		
-		String sql = "SELECT id, view_id, owner, view_name FROM all_views WHERE id = " + viewId;
+		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM all_views WHERE id = " + viewId;
 		
 		System.out.println(sql);
 		

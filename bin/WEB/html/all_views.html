@@ -8,7 +8,7 @@
 	
 	function create () {
 		
-		  loadViews();
+		  loadViews(5, document.getElementById('offset').value );
 	}
 	
 	
@@ -22,11 +22,11 @@
 		
 		app.updateViews();
 		
-		loadViews();
+		loadViews(5, document.getElementById('offset').value );
 	}
 	
 	
-	function analyseViews (owner, view ) {
+	function analyseView (owner, view ) {
  
 		
 		
@@ -34,14 +34,44 @@
 		
 	}
 	
+	
+	
+	function analyseSingleView( owner, view ) {
+		
+		analyseView(owner, view );
+		loadViews(5, document.getElementById('offset').value);
+	}
+	
+	
+
+	
+	function analyseAll() {
+		
+		var table = document.getElementById('VIEW_TABLE');
+		
+		
+		for (var i = 1, row; row = table.rows[i]; i++ ) {
+			
+	 
+			var col_owner = row.cells[2].innerHTML;
+			var col_view = row.cells[3].innerHTML;
+			
+			analyseView(col_owner, col_view);
+		}
+		
+		loadViews(5, document.getElementById('offset').value );
+	}
+		
+	
+	
 	function goToInformation (viewId) {
 		
 		app.goToInformation(viewId);
 	}
 	
 	
-	function loadViews() {
-		var str_views = app.loadViews();
+	function loadViews(limit, offset) {
+		var str_views = app.loadViews(limit, offset);
 		
 		
 		
@@ -77,16 +107,40 @@
 			cell =  row.insertCell(3);
 			cell.innerHTML = view_json[i].view_name;
 			
-			
 			cell =  row.insertCell(4);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseViews(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > EXAMINE </button>';
+			cell.innerHTML = view_json[i].examine_time;
+			
+			
+			cell =  row.insertCell(5);
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSingleView(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\')" > EXAMINE </button>';
 			
 
-			cell =  row.insertCell(5);
+			cell =  row.insertCell(6);
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + view_json[i].id + '\')" > INFORMATION </button>';
 		}
 		
 	}
+	
+	
+	
+	function previous() {
+		
+		
+		if (parseInt(document.getElementById('offset').value) <= 0) return false;
+		
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		
+		 loadViews('5', document.getElementById('offset').value);
+		
+	}
+	
+	function next() {
+		
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		
+		 loadViews('5', document.getElementById('offset').value);
+		
+	}	
 	
 	
 		
@@ -109,13 +163,22 @@
 			<th>VIEW_ID</th>
 			<th>OWNER</th>
 			<th>VIEW_NAME</th>
+			<th>EXAMINE_TIME</th>
 			<th>ANALYSE</th>
 			<th>INFORMATION</th>
 		</tr>
 	
 	</table>	
 	
-	
+	<center>
+		<button class="btn btn-primary"   onclick="analyseAll();" > ANALYSE_ALL </button></br>
+		
+		 <br/>
+		 
+		 <button class="btn btn-primary"   onclick="previous();" > PREVIOUS </button>
+		 <input id="offset" type="number" value="0" disabled /> 
+		 <button class="btn btn-primary"   onclick="next();" > NEXT </button></br>
+	</center>	
 	
 
 

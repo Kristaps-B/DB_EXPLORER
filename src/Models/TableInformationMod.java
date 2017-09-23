@@ -27,7 +27,7 @@ public class TableInformationMod {
 		
 		TableResult rs = new TableResult();
 		
-		String sql = "SELECT id, table_id, owner, table_name FROM all_tables WHERE id = " + tableId;
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM all_tables WHERE id = " + tableId;
 		
 		System.out.println(sql);
 		

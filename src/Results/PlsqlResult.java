@@ -22,7 +22,8 @@ public class PlsqlResult extends Result {
 					rs.getInt("PLSQL_ID"),
 					rs.getString("OWNER"),
 					rs.getString("NAME"),
-					rs.getString("TYPE")
+					rs.getString("TYPE"),
+					rs.getString("EXAMINE_TIME")
 					));			
 			
 		}
@@ -47,14 +48,16 @@ public class PlsqlResult extends Result {
 			public String owner;
 			public String name;	
 			public String type;
+			public String examine_time;
 			
 			
-			public Row (int id, int plsql_id, String owner,  String name, String type) {
-				this.id = id;
-				this.plsql_id = plsql_id;
-				this.owner = owner;
-				this.name = name;
-				this.type = type;
+			public Row (int id, int plsql_id, String owner,  String name, String type, String examine_time) {
+				this.id           = id;
+				this.plsql_id     = plsql_id;
+				this.owner        = owner;
+				this.name         = name;
+				this.type         = type;
+				this.examine_time = examine_time;
 			}
 			
 

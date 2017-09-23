@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	function create () {
 		
-		loadPlsql();
+		loadPlsql(5, document.getElementById('offset').value);
 	}
 	
 	
@@ -20,7 +20,7 @@
 		
 		app.updatePlsql();
 		
-		loadPlsql();
+		loadPlsql(5, document.getElementById('offset').value);
 	}
 	
 	
@@ -30,20 +30,48 @@
 	}
 	
 	
-	
-	function analysePlsql(id, owner, name) {
+	function analyseSinglePlsql(owner, name) {
+		analysePlsql(owner, name);
 		
-		
-		// app.analyseTable(tableId, tableOwner, tableName);
+		loadPlsql(5, document.getElementById('offset').value);
 		
 	}
 	
 	
 	
-	function loadPlsql () {
+	function analysePlsql( owner, name ) {
 		
 		
-		var str_json = app.loadPlsql();
+		app.analysePlsql (owner, name);
+		
+		
+		
+	}
+	
+	
+	function analyseAll() {
+		
+		var table = document.getElementById('PLSQL_TABLE');
+		
+		
+		for (var i = 1, row; row = table.rows[i]; i++ ) {
+			
+	 
+			var col_owner = row.cells[2].innerHTML;
+			var col_view = row.cells[3].innerHTML;
+			
+			analysePlsql(col_owner, col_view);
+		}
+		
+		loadPlsql(5, document.getElementById('offset').value );
+	}	
+	
+	
+	
+	function loadPlsql (limit, offset) {
+		
+		
+		var str_json = app.loadPlsql(limit, offset);
 		
 		
 		var tableHeaderRowCount = 1;
@@ -81,11 +109,14 @@
 			cell =  row.insertCell(4);
 			cell.innerHTML = table_json[i].type;
 			
-			
 			cell =  row.insertCell(5);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="analysePlsql(\'' + table_json[i].id + '\', \'' + table_json[i].owner + '\', \'' + table_json[i].name + '\')" > EXAMINE </button>';
+			cell.innerHTML = table_json[i].examine_time;
+			
 			
 			cell =  row.insertCell(6);
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSinglePlsql(\''  + table_json[i].owner + '\', \'' + table_json[i].name + '\')" > EXAMINE </button>';
+			
+			cell =  row.insertCell(7);
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
 				
 			
@@ -94,6 +125,29 @@
 		
 		
 	}
+	
+	
+	
+	function previous() {
+		
+		
+		if (parseInt(document.getElementById('offset').value) <= 0) return false;
+		
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		
+		 loadPlsql(5, document.getElementById('offset').value);
+		
+	}
+	
+	function next() {
+		
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		
+		 loadPlsql(5, document.getElementById('offset').value);
+		
+	}	
+		
+	
 	
 </script>
 
@@ -119,12 +173,23 @@
 			<th>OWNER</th>
 			<th>PLSQL_NAME</th>
 			<th>PLSQL_TYPE</th>
+			<th>EXAMINE_TIME</th>
 			<th>ANALYSE</th>
 			<th>INFORMATION</th>
 		</tr>
 	
 	</table>	
-	
+
+	<center>
+		<button class="btn btn-primary"   onclick="analyseAll();" > ANALYSE_ALL </button></br>
+		
+		 <br/>
+		 
+		 <button class="btn btn-primary"   onclick="previous();" > PREVIOUS </button>
+		 <input id="offset" type="number" value="0" disabled /> 
+		 <button class="btn btn-primary"   onclick="next();" > NEXT </button></br>
+	</center>	
+		
 	
 
 </body>
