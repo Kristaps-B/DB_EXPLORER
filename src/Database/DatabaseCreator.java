@@ -1,5 +1,6 @@
 package Database;
 
+import java.io.File;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.Statement;
@@ -20,7 +21,9 @@ public class DatabaseCreator {
 	public void createMainDatabase () {
 		System.out.println("1 - DatabaseCreator.createMainDatabase");
 		
-		
+		File dbfile=new File(".");
+		DBGlobal.dBMainString = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"\\db\\MAIN.db";
+		dbName = DBGlobal.dBMainString;
 		
 		try ( Connection c = DriverManager.getConnection(dbName);
 				Statement stmt = c.createStatement();
@@ -59,6 +62,8 @@ public class DatabaseCreator {
 	
 	public void createUserDatabase () {
 		System.out.println("1 - DatabaseCreator.createUserDatabase");
+		
+ 
 
 		
 		try ( Connection c = DriverManager.getConnection(Session.dBUserString);

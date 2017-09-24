@@ -1,5 +1,6 @@
 package Controllers;
 
+import java.io.File;
 import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -89,7 +90,11 @@ public class ConnectDBContr {
 			Session.sid = sid;
 			Session.username = username;
 			Session.password = password;
-			Session.dBUserString = "jdbc:sqlite:" + sid + ".db";
+			
+			
+			File dbfile=new File(".");
+			Session.dBUserString = "jdbc:sqlite:"+dbfile.getAbsolutePath()+"\\db\\" + sid + ".db";
+ 
 			
 			
 			

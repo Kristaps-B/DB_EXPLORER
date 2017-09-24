@@ -126,7 +126,7 @@ public class AllPlsqlMod {
 			
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("AllPlsqlMod.updatePlsql: " + e.getMessage());
 		}
 		
 		
@@ -140,7 +140,7 @@ public class AllPlsqlMod {
 		SQLLite  sqlLite = new SQLLite();
 		
 		String sql = "insert into all_plsql "
-		+ "(plsql_id, owner, name, type) "
+		+ "(plsql_id, owner, name, type, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.plsql_id  + "',"
 		+ "'" + row.owner  + "',"

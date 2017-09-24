@@ -26,7 +26,14 @@ public class AllUsersMod {
 		UsersResult  rs = new UsersResult();
 		
 		
-		String sql = "SELECT rownum id, user_id, username, '' active FROM all_users";
+		String sql = "SELECT rownum id, user_id, username, '' active FROM all_users"
+				+ " WHERE username NOT IN ('ANONYMOUS','CTXSYS','DBSNMP','EXFSYS', 'APEX_040200', 'AUDSYS', 'SYSBACKUP', 'SYSDG', 'SYSKM', "
+				+ " 'LBACSYS', 'MDSYS','MGMT_VIEW','OLAPSYS','OWBSYS','ORDPLUGINS', 'GSMADMIN_INTERNAL', 'GSMUSER', 'APPQOSSYS',  "
+				+ "  'ORDSYS','OUTLN', 'SI_INFORMTN_SCHEMA','SYS','SYSMAN','SYSTEM', 'GSMCATUSER', 'OJVMSYS', 'ORDDATA', "
+				+ "  'TSMSYS','WK_TEST','WKSYS', 'WKPROXY','WMSYS','XDB','APEX_040000', 'DVSYS', 'APEX_040200', 'DVF', 'SH',  "
+				+ "  'APEX_PUBLIC_USER','DIP', 'FLOWS_30000','FLOWS_FILES','MDDATA', 'PDBADMIN',    "
+				+ "  'ORACLE_OCM','SPATIAL_CSW_ADMIN_USR', 'SPATIAL_WFS_ADMIN_USR', "
+				+ "  'XS$NULL','PUBLIC')  ";
 		
 		
 		
