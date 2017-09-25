@@ -10,6 +10,7 @@ import Controllers.AllTablesContr;
 import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
+import Controllers.GraphPageContr;
 import Controllers.MainMenuContr;
 import Controllers.PlsqlInformationContr;
 import Controllers.TableInformationContr;
@@ -168,6 +169,11 @@ public class Main extends Application {
 		            	
 		            	System.out.println("PAGE: PLSQL_INFORMATION");
 		            	window.setMember("app", new PlsqlInformationContr(engine));
+		            	engine.executeScript("create()"); 
+		            } else if (page.equals("graph_page.html")) {
+		            	
+		            	System.out.println("PAGE: GRAPH_PAGE");
+		            	window.setMember("app", new GraphPageContr(engine));
 		            	engine.executeScript("create()"); 
 		            }
 		            

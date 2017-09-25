@@ -49,6 +49,12 @@ public class MainMenuContr {
 		engine.load(url.toExternalForm());		
 	}
 	
+	public void graphPage () {
+		URL url = Main.class.getResource("../WEB/html/graph_page.html");
+		engine.load(url.toExternalForm());			
+		
+	}
+	
 	
 	public String getDBInformation () {
 		

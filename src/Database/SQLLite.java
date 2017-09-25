@@ -79,35 +79,7 @@ public class SQLLite {
 			
 			copyToResult(rSet, rs); 
 			
-			/*
-			while (rs.next()) {
 
-				result += "{";
-				
-				result += "\"id\":\"" + rs.getString("id") + "\",";
-				result += "\"ip\":\"" + rs.getString("ip") + "\",";
-				result += "\"port\":\"" + rs.getString("port") + "\","; 
-				result += "\"sid\":\"" + rs.getString("sid") + "\",";
-				result += "\"username\":\"" + rs.getString("username") + "\",";
-				result += "\"password\":\"" + rs.getString("password") + "\"";
-			 
-				
-				
-				result += "},";
-			}
-			
-			if (result.length() > 1) {
-				result = result.substring(0, result.length() - 1);
-			}
-				
-			
-			result += "]";
-			*/
-			
-			//result = "[{a:a},{a:b}]";
-			
-			//c.commit();
-			
 			
 		} catch (ClassNotFoundException e) {
 			System.out.println("Exception: " + e.getMessage());
