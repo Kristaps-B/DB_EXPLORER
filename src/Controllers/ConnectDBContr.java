@@ -12,6 +12,7 @@ import Main.Main;
 import Models.ConnectDBMod;
 import SQLParser.FromTable;
 import SQLParser.SelectParser;
+import Utils.GuiUtils;
 import javafx.scene.web.WebEngine;
 
 public class ConnectDBContr {
@@ -24,10 +25,20 @@ public class ConnectDBContr {
 	public ConnectDBContr(WebEngine engine) {
 		this.engine = engine;
 		
+		 
 		
+	 
 		
-		testSQLParsing();
+	 
 		
+	}
+	
+	public void alert(String message) {
+		new GuiUtils().alert(message);
+	}
+	
+	public int confirm(String message) {
+		return new GuiUtils().confirmation (message);
 	}
 	
 	public void test(String val) {

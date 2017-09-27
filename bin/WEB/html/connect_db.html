@@ -65,7 +65,7 @@
 		
 		
 		function pageAlert(str) {
-			alert(str);
+			app.alert(str);
 		}
 		
 		
@@ -109,9 +109,9 @@
 		function deleteDatabase (id) {
 			//alert("Delete id: " + id);
 			
-			var r = confirm ("Delete Database with ID: " + id);
+			var r = app.confirm ("Delete Database with ID: " + id);
 			
-			if (r == false) {
+			if (r == 0) {
 				return;
 			}
 			
