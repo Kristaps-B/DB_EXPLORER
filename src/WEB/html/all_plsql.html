@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	function create () {
 		
-		loadPlsql(5, document.getElementById('offset').value);
+		loadPlsql(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -20,7 +20,7 @@
 		
 		app.updatePlsql();
 		
-		loadPlsql(5, document.getElementById('offset').value);
+		loadPlsql(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -33,7 +33,7 @@
 	function analyseSinglePlsql(owner, name) {
 		analysePlsql(owner, name);
 		
-		loadPlsql(5, document.getElementById('offset').value);
+		loadPlsql(10, document.getElementById('offset').value);
 		
 	}
 	
@@ -63,7 +63,7 @@
 			analysePlsql(col_owner, col_view);
 		}
 		
-		loadPlsql(5, document.getElementById('offset').value );
+		loadPlsql(10, document.getElementById('offset').value );
 	}	
 	
 	
@@ -133,17 +133,17 @@
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
 		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
 		
-		 loadPlsql(5, document.getElementById('offset').value);
+		 loadPlsql(10, document.getElementById('offset').value);
 		
 	}
 	
 	function next() {
 		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
 		
-		 loadPlsql(5, document.getElementById('offset').value);
+		 loadPlsql(10, document.getElementById('offset').value);
 		
 	}	
 		
@@ -159,7 +159,7 @@
 	
 	
 	<center>
-	<button class="btn btn-primary"   onclick="updatePlsql();" > UPDATE_PLSQL </button>
+	<button class="btn btn-primary"   onclick="updatePlsql();" > UPDATE_PLSQL_LIST </button>
 	<button class="btn btn-primary"   onclick="toMenu();" > TO_MENU </button></br>
 	</br>
 	</center>

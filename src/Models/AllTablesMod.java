@@ -1,10 +1,14 @@
 package Models;
 
+import Database.DbUtils;
 import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
 import Results.ColumnResult;
+import Results.CountResult;
+import Results.FkResult;
+import Results.IdResult;
 import Results.TableResult;
 import Results.UsersResult;
 import Utils.UserUtils;
@@ -209,10 +213,15 @@ public class AllTablesMod {
 			
 			update_examine_time ( owner, table );
 			
+			queryFk(owner, table);
+			
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
+		
+		
+		
 		
 	}
 	
@@ -253,6 +262,86 @@ public class AllTablesMod {
 		}
 		
 	}
+	
+	private void queryFk ( String owner, String table) {
+		
+		
+		DbUtils dbUtils = new DbUtils ();
+		
+		String sql = "SELECT a.owner left_owner, a.table_name left_table, a.column_name left_column, a.constraint_name,  "
+      + " b.owner right_owner, b.table_name right_table, b.column_name right_column "
+      + " FROM all_cons_columns a "
+      + " JOIN all_constraints c ON a.owner = c.owner AND a.constraint_name = c.constraint_name "
+      + " join all_cons_columns b on c.owner = b.owner and c.r_constraint_name = b.constraint_name "
+      +  " WHERE c.constraint_type = 'R' "
+      + " AND ((a.table_name = '" + table + "' "
+      + " AND a.owner = '" + owner +"' ) OR ("
+      + " b.table_name = '" + table +"' "
+      + " AND b.owner = '" + owner + "' )) ";
+		
+		
+		System.out.println("Query FK! " + sql);
+		SQLOracle oQuerie = new SQLOracle();
+		
+		FkResult rs = new FkResult();	
+		
+		
+		
+		
+		try {
+			
+			oQuerie.queryDatabase(sql, rs);
+			
+			
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				FkResult.Row row = rs.getColumns().get(i);
+				
+				System.out.println("FK name: " + row.constraintName);
+				
+				
+				int left_table_id = dbUtils.getTableId(row.leftOwner, row.leftTableName);
+				int left_column_id = dbUtils.getColumnId(left_table_id, row.leftColumnName);
+				
+				
+				int right_table_id = dbUtils.getTableId(row.rightOwner, row.rightTableName);
+				int right_column_id = dbUtils.getColumnId(right_table_id, row.rightColumnName);
+				
+				
+				System.out.println(row.leftTableName + "." + row.leftColumnName + "   -   "  +  row.rightTableName + "." + row.rightColumnName  );
+				
+				if (dbUtils.joinExists(left_table_id, right_table_id, left_column_id, right_column_id) == false) {
+					System.out.println("Saving join");
+					dbUtils.saveTableJoin(left_table_id, right_table_id, left_column_id, right_column_id);
+				} else {
+					System.out.println("Join already exists!");
+				}
+				
+			}				
+			
+			 
+			
+			
+	 
+			
+			// saveColumns(rs);
+			
+			
+			
+			// update_examine_time ( owner, table );
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		
+		
+		
+	}
+	
+	
+
 	
 }
 

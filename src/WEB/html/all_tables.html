@@ -6,7 +6,7 @@
 <script type="text/javascript">
 	function create () {
 		
-		loadTables('5', document.getElementById('offset').value);
+		loadTables(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -20,7 +20,7 @@
 		
 		app.updateTables();
 		
-		loadTables('5', document.getElementById('offset').value);
+		loadTables(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -40,7 +40,7 @@
 	function analyseSingleTable(tableId, tableOwner, tableName) {
 		
 		analyseTable(tableId, tableOwner, tableName);
-		loadTables('5', document.getElementById('offset').value);
+		loadTables(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -58,7 +58,7 @@
 			analyseTable(col_id, col_owner, col_table);
 		}
 		
-		loadTables('5', document.getElementById('offset').value );
+		loadTables(10, document.getElementById('offset').value );
 	}
 	
 	
@@ -123,17 +123,17 @@
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
 		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
 		
-		 loadTables('5', document.getElementById('offset').value);
+		 loadTables(10, document.getElementById('offset').value);
 		
 	}
 	
 	function next() {
 		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
 		
-		 loadTables('5', document.getElementById('offset').value);
+		 loadTables(10, document.getElementById('offset').value);
 		
 	}	
 	

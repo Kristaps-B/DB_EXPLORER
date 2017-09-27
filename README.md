@@ -1,4 +1,4 @@
 "# DB_EXPLORER" 
 
-# Failu "/lib/jfxrt.jar" jānomaina uz "jfxrt.jar" versiju no savas sistēmas Java (JDK/JRE) instalācijas.
-# Programmu var izpildīt lietojot failu "run_db_explorer.bat"
+1 - Build application with: build_db_explorer.bat
+2 - Run program: run_db_explorer.bat

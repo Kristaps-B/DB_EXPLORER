@@ -2,6 +2,7 @@ package Models;
 
 import java.util.ArrayList;
 
+import Database.DbUtils;
 import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
@@ -254,8 +255,10 @@ public class AllViewsMod {
 		
 		SelectQuery selectQuery = selectParser.getSelectQuery();
 		
+		DbUtils dbUtils = new DbUtils();
 		
-		int viewId = getViewId(view);
+		
+		int viewId = getViewId(owner, view);
 		
 		System.out.println("viewId: " + viewId);
 		
@@ -270,7 +273,7 @@ public class AllViewsMod {
 			String alias = ft.getAlias();
 			
 			
-			int tableId = getTableId(table);
+			int tableId = dbUtils.getTableId(owner, table);
 			
 			System.out.println("Table: " + table + " alias: " + alias + " tableId: " + tableId);
 			
@@ -293,8 +296,8 @@ public class AllViewsMod {
 			
 			
 			
-			int tableId = this.getTableId(table);
-			int columnId = this.getColumnId(tableId, column);
+			int tableId = dbUtils.getTableId(owner, table);
+			int columnId = dbUtils.getColumnId(tableId, column);
 			
 			this.saveColumnSource(viewId, tableId, columnId);
 			
@@ -322,11 +325,11 @@ public class AllViewsMod {
 			
 			
 			
-			int leftTableId     = this.getTableId(leftTable);
-			int rightTableId    = this.getTableId(rightTable);
+			int leftTableId     = dbUtils.getTableId(owner, leftTable);
+			int rightTableId    = dbUtils.getTableId(owner, rightTable);
 			
-			int leftColumnId    = this.getColumnId(leftTableId, leftColumn);
-			int rightColumnId    = this.getColumnId(rightTableId, rightColumn);
+			int leftColumnId    = dbUtils.getColumnId(leftTableId, leftColumn);
+			int rightColumnId    = dbUtils.getColumnId(rightTableId, rightColumn);
 			
 			
 			 
@@ -335,13 +338,13 @@ public class AllViewsMod {
 			System.out.println("");
 			
 			// Check if Join Exists
-			if (!this.joinExists(leftTableId,
+			if (!dbUtils.joinExists(leftTableId,
 				rightTableId,
 				leftColumnId,
 				rightColumnId)) {
 				
 				// Save Join
-				this.saveTableJoin (
+				dbUtils.saveTableJoin (
 					leftTableId,
 					rightTableId,
 					leftColumnId,
@@ -357,7 +360,7 @@ public class AllViewsMod {
 			
 			
 			// Find Join ID
-			int joinId = this.findJoinId(					
+			int joinId = dbUtils.findJoinId(					
 			leftTableId,
 			rightTableId,
 			leftColumnId,
@@ -379,13 +382,13 @@ public class AllViewsMod {
 	}
 	
 	
-	private int getViewId (String view) {
+	private int getViewId (String owner, String view) {
 		int result = -1;
 		
 		
 		
 		
-		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "'";
+		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -413,75 +416,8 @@ public class AllViewsMod {
 	}
 	
 	
-	private int getTableId (String table) {
-		int result = -1;
-		
-		
-		
-		
-		String sql = "SELECT id FROM all_tables WHERE table_name = '" + table + "'";
-		
-		
-		SQLLite sqlLite = new SQLLite();
-		
-		IdResult rs = new IdResult();
-		
-		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
-			
-			result = rs.getColumns().get(0).id;
-			
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-			
-		}
-		
-		
-		
-		
-		return result;
-		
-		
-	}
-	
-	
-	private int getColumnId (int table_id, String column) {
-		int result = -1;
-		
-		
-		
-		
-		String sql = "SELECT id FROM all_columns " + 
-		" WHERE table_id = " + table_id + " " +
-		" AND column_name = '" + column + "'";
-				;
-		
-		
-		SQLLite sqlLite = new SQLLite();
-		
-		IdResult rs = new IdResult();
-		
-		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
-			
-			result = rs.getColumns().get(0).id;
-			
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-			
-		}
-		
-		
-		
-		
-		return result;
-		
-		
-	}	
+ 
+ 
 	
 	
 	
@@ -512,141 +448,13 @@ public class AllViewsMod {
 	
 	
 	
-	private void saveTableJoin (
-		int leftTableId,
-		int rightTableId,
-		int leftColumnId,
-		int rightColumnId
-			) {
-		
-		SQLLite  sqlLite = new SQLLite();
-		
-		String sql = "insert into all_table_joins "
-		+ "(left_table_id, right_table_id, left_column_id, right_column_id) "
-		+ "VALUES (" 
-		+ "" + leftTableId  + ","
-		+ "" + rightTableId  + ","
-		+ "" + leftColumnId  + ","
-		+ "" + rightColumnId  + ""
-		+ ")"
-		;
-		
-		
-		
-		try {
-			sqlLite.insertUpdate(sql, Session.dBUserString);
-			
-			System.out.println("TABLE_JOIN created! ");
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		
-		
-		
-	}
+
 	
 	
-	private boolean joinExists (
-			int leftTableId,
-			int rightTableId,
-			int leftColumnId,
-			int rightColumnId	
-			) {
-		boolean result = false;
-		
-		
-		String sql = "SELECT COUNT(1) CNT FROM all_table_joins " + 
-		" WHERE " +
-		" ( left_table_id = " + leftTableId + " " +
-		" AND right_table_id = " + rightTableId + " " +
-		" AND left_column_id = " + leftColumnId + " " +
-		" AND right_column_id = " + rightColumnId + " " +
-		" ) OR " +
-		" ( left_table_id = " + rightTableId + " " +
-		" AND right_table_id = " + leftTableId + " " +
-		" AND left_column_id = " + rightColumnId + " " +
-		" AND right_column_id = " + leftColumnId + " " +
-		" ) "
-		;
-				
-		
-		
-		SQLLite sqlLite = new SQLLite();
-		
-		CountResult rs = new CountResult();
-		
-		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
-			
-			int cnt = rs.getColumns().get(0).cnt;
-			
-			if (cnt > 0) {
-				result = true;
-			}
-			
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-			
-		}
-		
-		
-		
-		return result;
-		
-	}
+
 	
 	
-	private int findJoinId (
-		int leftTableId,
-		int rightTableId,
-		int leftColumnId,
-		int rightColumnId		
-			
-	 ) {
-		int result = -1;
-		
-		String sql = "SELECT ID  FROM all_table_joins " + 
-		" WHERE " +
-		" ( left_table_id = " + leftTableId + " " +
-		" AND right_table_id = " + rightTableId + " " +
-		" AND left_column_id = " + leftColumnId + " " +
-		" AND right_column_id = " + rightColumnId + " " +
-		" ) OR " +
-		" ( left_table_id = " + rightTableId + " " +
-		" AND right_table_id = " + leftTableId + " " +
-		" AND left_column_id = " + rightColumnId + " " +
-		" AND right_column_id = " + leftColumnId + " " +
-		" ) "
-		;
-				
-		
-		
-		SQLLite sqlLite = new SQLLite();
-		
-		IdResult rs = new IdResult();
-		
-		try {
-			sqlLite.query(sql, rs, Session.dBUserString);
-			
-			result = rs.getColumns().get(0).id;
-			
-		 
-			
-			
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-			
-			
-		}		
-		
-		
-		return result;
-		
-	}
-	
+
 	
 	
 	private void saveJoinLink (

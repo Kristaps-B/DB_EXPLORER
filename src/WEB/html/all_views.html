@@ -8,7 +8,7 @@
 	
 	function create () {
 		
-		  loadViews(5, document.getElementById('offset').value );
+		  loadViews(10, document.getElementById('offset').value );
 	}
 	
 	
@@ -22,7 +22,7 @@
 		
 		app.updateViews();
 		
-		loadViews(5, document.getElementById('offset').value );
+		loadViews(10, document.getElementById('offset').value );
 	}
 	
 	
@@ -39,7 +39,7 @@
 	function analyseSingleView( owner, view ) {
 		
 		analyseView(owner, view );
-		loadViews(5, document.getElementById('offset').value);
+		loadViews(10, document.getElementById('offset').value);
 	}
 	
 	
@@ -59,7 +59,7 @@
 			analyseView(col_owner, col_view);
 		}
 		
-		loadViews(5, document.getElementById('offset').value );
+		loadViews(10, document.getElementById('offset').value );
 	}
 		
 	
@@ -128,17 +128,17 @@
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
 		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 5;
+		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
 		
-		 loadViews('5', document.getElementById('offset').value);
+		 loadViews(10, document.getElementById('offset').value);
 		
 	}
 	
 	function next() {
 		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 5;
+		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
 		
-		 loadViews('5', document.getElementById('offset').value);
+		 loadViews(10, document.getElementById('offset').value);
 		
 	}	
 	
@@ -150,7 +150,7 @@
 	
 	
 	<center>
-	<button class="btn btn-primary"   onclick="updateViews()" > UPDATE_VIEWS </button>
+	<button class="btn btn-primary"   onclick="updateViews()" > UPDATE_VIEW_LIST </button>
 	<button class="btn btn-primary"   onclick="toMenu()" > TO_MENU </button></br>
 	</br>
 	</center>

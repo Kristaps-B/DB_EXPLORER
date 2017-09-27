@@ -18,7 +18,6 @@ public class JoinResult extends Result {
 
 			
 			columns.add(new Row(
-					rs.getInt("ID"),
 					rs.getString  ("LEFT_TABLE_NAME"), 
 					rs.getString ("RIGHT_TABLE_NAME"),
 					rs.getString("LEFT_COLUMN_NAME"),
@@ -44,7 +43,7 @@ public class JoinResult extends Result {
 	 public class Row {
 			
 			
-			public int id;
+
 			public String left_table_name;
 			public String right_table_name;	
 			public String left_column_name;
@@ -53,8 +52,8 @@ public class JoinResult extends Result {
 			public String right_owner;
 			
 			
-			public Row (int id, String left_table_name, String right_table_name, String left_column_name, String right_column_name, String left_owner, String right_owner) {
-				this.id = id;
+			public Row (String left_table_name, String right_table_name, String left_column_name, String right_column_name, String left_owner, String right_owner) {
+			
 				this.left_table_name    = left_table_name;
 				this.right_table_name   = right_table_name;
 				this.left_column_name   = left_column_name;

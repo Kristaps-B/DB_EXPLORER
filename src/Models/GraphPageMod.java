@@ -85,10 +85,15 @@ public class GraphPageMod {
 		int id = 0;
 		
 		
-	 sql = "SELECT js.id, tl.table_name left_table_name, tr.table_name right_table_name, cl.column_name left_column_name, cr.column_name right_column_name, tl.owner left_owner, tr.owner right_owner " + 
-		" FROM all_table_joins j, all_tables tl, all_tables tr, all_columns cl, all_columns cr, join_sources js  " + 
+	 sql = "SELECT  "
+	 		+ "tl.table_name left_table_name, "
+	 		+ "tr.table_name right_table_name, "
+	 		+ "cl.column_name left_column_name, "
+	 		+ "cr.column_name right_column_name, "
+	 		+ "tl.owner left_owner, "
+	 		+ "tr.owner right_owner " + 
+		" FROM all_table_joins j, all_tables tl, all_tables tr, all_columns cl, all_columns cr  " + 
 		" WHERE 1=1 " + 
-		" AND j.id                = js.join_id " +
 		" AND j.left_table_id     = tl.id " +
 		" AND j.right_table_id    = tr.id " +
 		" AND j.left_column_id    = cl.id " +
