@@ -2,6 +2,8 @@
 <head>
 
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/db_explorer.js"></script>
+	
 	<title>ALL_USERS</title>
 	
 	
@@ -10,17 +12,26 @@
 	
 		function create() {
 			
+			flashBlock();
 			
-			loadUsers();
+			setTimeout(function(){
+				loadUsers();
+			 }, 100);   	
+				
 			
 		}
 		
 		
 		
 		function updateUsers() {
+			flashBlock();
 			
-			app.updateUsers();
-			loadUsers();
+			setTimeout(function(){
+				app.updateUsers();
+				loadUsers();
+			 }, 100);   	
+				
+				
 		}
 		
 		function toMenu () {
@@ -30,14 +41,18 @@
 		
 		function chckBoxCl (id) {
 			
+			flashBlock();
 			
-			var chk = document.getElementById("chkbox" + id).checked;
-			
-
-			//alert("CheckBox " + id + " " + chk);
-			
-			app.updateActive(id, chk);
-			
+			setTimeout(function(){
+				var chk = document.getElementById("chkbox" + id).checked;
+				
+	
+				//alert("CheckBox " + id + " " + chk);
+				
+				app.updateActive(id, chk);
+				
+				flashUnBlock ();
+			 }, 100);   
 			
 		}
 		
@@ -91,6 +106,9 @@
 				
 			}
 			
+			
+			flashUnBlock ();
+			
 		}
 		
 		
@@ -98,12 +116,13 @@
 
 </head>
 <body>
+	<div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>ALL_USERS</h1></center>
 	
 	</br>
 	
 	<center>
-		<button class="btn btn-primary"   onclick="updateUsers();" > UPDATE_USERS </button>
+		<button class="btn btn-primary"   onclick="updateUsers();" > UPDATE_USER_LIST </button>
 		<button class="btn btn-primary"   onclick="toMenu();" > TO_MENU </button></br>
 	</center>
 

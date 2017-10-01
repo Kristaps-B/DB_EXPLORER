@@ -86,20 +86,15 @@ public class GraphPageMod {
 		
 		
 	 sql = "SELECT  "
-	 		+ "tl.table_name left_table_name, "
-	 		+ "tr.table_name right_table_name, "
-	 		+ "cl.column_name left_column_name, "
-	 		+ "cr.column_name right_column_name, "
-	 		+ "tl.owner left_owner, "
-	 		+ "tr.owner right_owner " + 
-		" FROM all_table_joins j, all_tables tl, all_tables tr, all_columns cl, all_columns cr  " + 
-		" WHERE 1=1 " + 
-		" AND j.left_table_id     = tl.id " +
-		" AND j.right_table_id    = tr.id " +
-		" AND j.left_column_id    = cl.id " +
-		" AND j.right_column_id   = cr.id "
-		
-	   
+	 		+ "j.left_table left_table, "
+	 		+ "j.right_table right_table, "
+	 		+ "j.left_column left_column, "
+	 		+ "j.right_column right_column, "
+	 		+ "j.left_owner left_owner, "
+	 		+ "j.right_owner right_owner " + 
+		" FROM all_joins j" + 
+		" WHERE 1=1 " 
+
 		;
 		
 		try {
@@ -119,16 +114,16 @@ public class GraphPageMod {
 				
 			
 				 
-				aJson.addValue("id", row.left_owner + "." + row.left_table_name + "." + row.left_column_name + "." + id);
-				aJson.addValue("label",  row.left_column_name);
+				aJson.addValue("id", row.left_owner + "." + row.left_table + "." + row.left_column + "." + id);
+				aJson.addValue("label",  row.left_column);
 				
 				 
 				
 				aJson.newRow();
 				
 				
-				aJson.addValue("id", row.right_owner + "." + row.right_table_name + "." + row.right_column_name+ "." + id);
-				aJson.addValue("label",  row.right_column_name);
+				aJson.addValue("id", row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id);
+				aJson.addValue("label",  row.right_column);
 				
 				
 				
@@ -138,20 +133,20 @@ public class GraphPageMod {
 				
 				// -- {"from": "1", "to": "3"} 
 				
-				bJson.addValue("from", row.left_owner + "." + row.left_table_name + "." + row.left_column_name+ "." + id);
-				bJson.addValue("to", row.right_owner + "." + row.right_table_name + "." + row.right_column_name+ "." + id);
+				bJson.addValue("from", row.left_owner + "." + row.left_table + "." + row.left_column+ "." + id);
+				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id);
 				
 				
 				bJson.newRow();
 				
 				
-				bJson.addValue("from", row.right_owner + "." +row.right_table_name);
-				bJson.addValue("to", row.right_owner + "." + row.right_table_name + "." + row.right_column_name+ "." + id);
+				bJson.addValue("from", row.right_owner + "." +row.right_table);
+				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column + "." + id);
 				
 				bJson.newRow();
 				
-				bJson.addValue("from", row.left_owner + "." +row.left_table_name);
-				bJson.addValue("to", row.left_owner + "." + row.left_table_name + "." + row.left_column_name+ "." + id);				
+				bJson.addValue("from", row.left_owner + "." +row.left_table);
+				bJson.addValue("to", row.left_owner + "." + row.left_table + "." + row.left_column + "." + id);				
 				
 				
 				bJson.newRow();
@@ -165,7 +160,7 @@ public class GraphPageMod {
 			
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("GenerateGraph Nodes: " + e.getMessage());
 			
 			
 		}

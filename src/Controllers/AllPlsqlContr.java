@@ -53,10 +53,12 @@ public class AllPlsqlContr {
 	}
 	
 	
-	public void goToInformation(String id) {
+	public void goToInformation(String owner, String plsqlName) {
 		
 		
-		Session.currentPlsqlId = id;
+		Session.owner = owner;
+		Session.plsqlName = plsqlName;
+		
 		System.out.println("AllTableContr.goToInformation");
 		URL url = Main.class.getResource("../WEB/html/plsql_information.html");
 		engine.load(url.toExternalForm());

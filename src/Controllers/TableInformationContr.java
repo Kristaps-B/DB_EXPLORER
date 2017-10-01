@@ -30,8 +30,8 @@ public class TableInformationContr {
 	public String getTableName () {
 		String result = "Table_Name";
 		
-		String tableId = Session.currentTableId;
-		result = tableInformationMod.getTableName(tableId);
+		 result = Session.owner + "." + Session.tableName;
+		//result = tableInformationMod.getTableName(tableId);
 		
 		return result;
 		

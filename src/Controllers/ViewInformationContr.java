@@ -28,8 +28,7 @@ public class ViewInformationContr {
 	public String getViewName () {
 		String result = "View_Name";
 		
-		String viewId = Session.currentViewId;
-		result = viewInformationMod.getViewName(viewId);
+		  result = Session.owner + "." + Session.viewName;
 		
 		return result;
 		

@@ -52,10 +52,10 @@ public class AllTablesContr {
 	}
 	
 	
-	public void goToInformation(String tableId) {
+	public void goToInformation(String owner, String tableName) {
 		
-		
-		Session.currentTableId = tableId;
+		Session.owner = owner;
+		Session.tableName= tableName;
 		System.out.println("AllTableContr.goToInformation");
 		URL url = Main.class.getResource("../WEB/html/table_information.html");
 		engine.load(url.toExternalForm());

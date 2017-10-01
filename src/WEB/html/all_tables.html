@@ -1,12 +1,23 @@
 <html>
 <head>
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/db_explorer.js"></script>
 <title>ALL_TABLES</title>
 
 <script type="text/javascript">
+
+	var size = 10;
+
 	function create () {
 		
-		loadTables(10, document.getElementById('offset').value);
+	    flashBlock();
+	    
+	    setTimeout(function(){
+	    	loadTables(size, document.getElementById('offset').value);
+
+		 }, 100); 
+		
+		
 	}
 	
 	
@@ -18,15 +29,27 @@
 	
 	function updateTables() {
 		
-		app.updateTables();
 		
-		loadTables(10, document.getElementById('offset').value);
+		flashBlock ();
+		
+		
+		setTimeout(function(){
+			app.updateTables();
+			
+			loadTables(size, document.getElementById('offset').value);
+
+		 }, 100); 
+		
+		
+		
+		
+	
 	}
 	
 	
-	function goToInformation (tableId) {
+	function goToInformation (owner, tableName) {
 		
-		app.goToInformation(tableId);
+		app.goToInformation(owner, tableName);
 	}
 	
 	
@@ -39,26 +62,46 @@
 	
 	function analyseSingleTable(tableId, tableOwner, tableName) {
 		
-		analyseTable(tableId, tableOwner, tableName);
-		loadTables(10, document.getElementById('offset').value);
+		
+		flashBlock ();
+		
+		setTimeout(function(){
+			
+			analyseTable(tableId, tableOwner, tableName);
+			loadTables(size, document.getElementById('offset').value);
+			
+		 }, 100); 
 	}
 	
 	
 	function analyseAll() {
 		
-		var table = document.getElementById('TABLE_TABLE');
+		
+		flashBlock ();
 		
 		
-		for (var i = 1, row; row = table.rows[i]; i++ ) {
+		setTimeout(function(){
+			var table = document.getElementById('TABLE_TABLE');
 			
-			var col_id = row.cells[1].innerHTML;
-			var col_owner = row.cells[2].innerHTML;
-			var col_table = row.cells[3].innerHTML;
 			
-			analyseTable(col_id, col_owner, col_table);
-		}
+			for (var i = 1, row; row = table.rows[i]; i++ ) {
+				
+				var col_id = row.cells[1].innerHTML;
+				var col_owner = row.cells[2].innerHTML;
+				var col_table = row.cells[3].innerHTML;
+				
+				analyseTable(col_id, col_owner, col_table);
+			}
+			
+			loadTables(size, document.getElementById('offset').value ); 
+
+		 }, 100); 
 		
-		loadTables(10, document.getElementById('offset').value );
+		
+
+		
+		
+		
 	}
 	
 	
@@ -108,12 +151,12 @@
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSingleTable(\'' + table_json[i].table_id + '\', \'' + table_json[i].owner + '\', \'' + table_json[i].table_name + '\')" > EXAMINE </button>';
 			
 			cell =  row.insertCell(6);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].owner + '\', \'' + table_json[i].table_name + '\')" > INFORMATION </button>';
 				
 			
 		}
 		
-		
+		flashUnBlock ();
 		
 	}
 	
@@ -123,19 +166,43 @@
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
 		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+		flashBlock ();
 		
-		 loadTables(10, document.getElementById('offset').value);
+		setTimeout(function(){
+		 
+
+			
+			 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+			
+			 loadTables(size, document.getElementById('offset').value);
+		 }, 100); 
+		
+		
+		
+
 		
 	}
 	
 	function next() {
 		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
 		
-		 loadTables(10, document.getElementById('offset').value);
+		flashBlock ();
+		
+		
+		setTimeout(function(){
+			 
+			document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
+			
+			 loadTables(size, document.getElementById('offset').value);
+		 }, 100); 
+		
+		
+
 		
 	}	
+	
+	
+
 	
 </script>
 
@@ -143,6 +210,7 @@
 
 </head>
 <body>
+	<div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>ALL_TABLES</h1></center>
 	
 	

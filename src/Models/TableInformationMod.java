@@ -1,5 +1,6 @@
 package Models;
 
+import Database.DbUtils;
 import Database.SQLLite;
 import Global.Session;
 import Json.ArrayJson;
@@ -9,6 +10,11 @@ import Results.TableResult;
 import Results.ViewsResult;
 
 public class TableInformationMod {
+	
+	
+	
+	private DbUtils dbUtils = new DbUtils();
+	
 	public TableInformationMod () {
 		
 		
@@ -59,7 +65,9 @@ public class TableInformationMod {
 		
 		ColumnResult rs = new ColumnResult();
 		
-		String sql = "SELECT id, column_id, table_id, column_name, data_type FROM all_columns  WHERE table_id = " + Session.currentTableId + " ORDER BY column_id ASC";
+		int tableId = dbUtils.getTableId(Session.owner, Session.tableName);
+		
+		String sql = "SELECT id, column_id, table_id, column_name, data_type FROM all_columns  WHERE table_id = " + tableId + " ORDER BY column_id ASC";
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -119,18 +127,29 @@ public class TableInformationMod {
 		
 		TableJoinResult rs = new TableJoinResult();
 		
-		String sql = "SELECT j.id, tl.table_name left_table_name, tr.table_name right_table_name, cl.column_name left_column_name, cr.column_name right_column_name " + 
-		" FROM all_table_joins j, all_tables tl, all_tables tr, all_columns cl, all_columns cr  " + 
+		
+		//String tableName = dbUtils.getTableName(Session.dBUserString , Integer.parseInt(Session.currentTableId) );
+		
+		
+		
+		
+		
+		String sql = "SELECT j.id,"
+				+ " j.left_table left_table_name, "
+				+ " j.right_table right_table_name,"
+				+ " j.left_column left_column_name,"
+				+ " j.right_column right_column_name " + 
+		" FROM all_joins j " + 
 		" WHERE 1=1 " + 
-		" AND j.left_table_id     = tl.id " +
-		" AND j.right_table_id    = tr.id " +
-		" AND j.left_column_id    = cl.id " +
-		" AND j.right_column_id   = cr.id " +
-		" AND ( " +
-		" j.left_table_id      = " + Session.currentTableId +
-		" OR j.right_table_id   = " + Session.currentTableId +
-		" )"
+	    
+		"AND '" + Session.owner + "' IN (j.left_owner, j.right_owner) " +
+		"AND '" + Session.tableName + "' IN (j.left_table, j.right_table) " +
+	
+		""
 		;
+		
+		System.out.println("SQL: " + sql);
+		
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);

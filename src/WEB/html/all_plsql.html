@@ -1,39 +1,63 @@
 <html>
 <head>
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/db_explorer.js"></script>
 <title>ALL_TABLES</title>
 
 <script type="text/javascript">
+
+   var size = 10;
+
+
 	function create () {
-		
-		loadPlsql(10, document.getElementById('offset').value);
+	    flashBlock();
+	    
+	    setTimeout(function(){
+			loadPlsql(10, document.getElementById('offset').value);
+			
+		 }, 100); 
 	}
 	
 	
 	function toMenu () {
-		
-		app.toMenu();
+ 
+		 	app.toMenu();
+		 	 	
+		 	
 	}
 	
 	
 	function updatePlsql() {
 		
-		app.updatePlsql();
+	    flashBlock();
+	    
+	    setTimeout(function(){
 		
-		loadPlsql(10, document.getElementById('offset').value);
+			app.updatePlsql();
+			
+			loadPlsql(size, document.getElementById('offset').value);
+		 }, 100); 	
+			
 	}
 	
 	
-	function goToInformation (id) {
+	function goToInformation (owner, plsql) {
 		
-		app.goToInformation(id);
+		app.goToInformation(owner, plsql);
 	}
 	
 	
 	function analyseSinglePlsql(owner, name) {
-		analysePlsql(owner, name);
 		
-		loadPlsql(10, document.getElementById('offset').value);
+		
+	    flashBlock();
+	    
+	    setTimeout(function(){	
+			analysePlsql(owner, name);
+			
+			loadPlsql(size, document.getElementById('offset').value);
+		 }, 100); 
+			
 		
 	}
 	
@@ -51,19 +75,25 @@
 	
 	function analyseAll() {
 		
-		var table = document.getElementById('PLSQL_TABLE');
 		
-		
-		for (var i = 1, row; row = table.rows[i]; i++ ) {
+	    flashBlock();
+	    
+	    setTimeout(function(){	
+			var table = document.getElementById('PLSQL_TABLE');
 			
-	 
-			var col_owner = row.cells[2].innerHTML;
-			var col_view = row.cells[3].innerHTML;
 			
-			analysePlsql(col_owner, col_view);
-		}
-		
-		loadPlsql(10, document.getElementById('offset').value );
+			for (var i = 1, row; row = table.rows[i]; i++ ) {
+				
+		 
+				var col_owner = row.cells[2].innerHTML;
+				var col_view = row.cells[3].innerHTML;
+				
+				analysePlsql(col_owner, col_view);
+			}
+			
+			loadPlsql(size, document.getElementById('offset').value );
+			
+		 }, 100); 	
 	}	
 	
 	
@@ -117,12 +147,12 @@
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSinglePlsql(\''  + table_json[i].owner + '\', \'' + table_json[i].name + '\')" > EXAMINE </button>';
 			
 			cell =  row.insertCell(7);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].id + '\')" > INFORMATION </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].owner + '\', \'' + table_json[i].name + '\' )" > INFORMATION </button>';
 				
 			
 		}
 		
-		
+		flashUnBlock ();
 		
 	}
 	
@@ -132,18 +162,29 @@
 		
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
-		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
-		
-		 loadPlsql(10, document.getElementById('offset').value);
+	    flashBlock();
+	    
+	    setTimeout(function(){	
+
+			
+			 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+			
+			 loadPlsql(size, document.getElementById('offset').value);
+				
+		 }, 100); 	
 		
 	}
 	
 	function next() {
-		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
-		
-		 loadPlsql(10, document.getElementById('offset').value);
+	    flashBlock();
+	    
+	    setTimeout(function(){	
+			document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
+			
+			 loadPlsql(size, document.getElementById('offset').value);
+			 
+				
+		 }, 100); 	
 		
 	}	
 		
@@ -155,6 +196,8 @@
 
 </head>
 <body>
+
+	<div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>ALL_PLSQL</h1></center>
 	
 	

@@ -18,10 +18,10 @@ public class JoinResult extends Result {
 
 			
 			columns.add(new Row(
-					rs.getString  ("LEFT_TABLE_NAME"), 
-					rs.getString ("RIGHT_TABLE_NAME"),
-					rs.getString("LEFT_COLUMN_NAME"),
-					rs.getString("RIGHT_COLUMN_NAME"),
+					rs.getString  ("LEFT_TABLE"), 
+					rs.getString ("RIGHT_TABLE"),
+					rs.getString("LEFT_COLUMN"),
+					rs.getString("RIGHT_COLUMN"),
 					rs.getString("LEFT_OWNER"),
 					rs.getString("RIGHT_OWNER")
 					));			
@@ -44,20 +44,20 @@ public class JoinResult extends Result {
 			
 			
 
-			public String left_table_name;
-			public String right_table_name;	
-			public String left_column_name;
-			public String right_column_name;
+			public String left_table;
+			public String right_table;	
+			public String left_column;
+			public String right_column;
 			public String left_owner;
 			public String right_owner;
 			
 			
-			public Row (String left_table_name, String right_table_name, String left_column_name, String right_column_name, String left_owner, String right_owner) {
+			public Row (String left_table, String right_table, String left_column, String right_column, String left_owner, String right_owner) {
 			
-				this.left_table_name    = left_table_name;
-				this.right_table_name   = right_table_name;
-				this.left_column_name   = left_column_name;
-				this.right_column_name  = right_column_name;
+				this.left_table    = left_table;
+				this.right_table   = right_table;
+				this.left_column   = left_column;
+				this.right_column  = right_column;
 				this.left_owner         = left_owner;
 				this.right_owner        = right_owner;
 			}

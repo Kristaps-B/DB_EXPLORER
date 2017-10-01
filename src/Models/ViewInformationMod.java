@@ -1,5 +1,6 @@
 package Models;
 
+import Database.DbUtils;
 import Database.SQLLite;
 import Global.Session;
 import Json.ArrayJson;
@@ -13,7 +14,7 @@ import Results.ViewsResult;
 public class ViewInformationMod {
 	
 	
-	
+	private DbUtils dbUtils = new DbUtils();
 	
 	public String getViewName (String viewId ) {
 		
@@ -55,7 +56,7 @@ public class ViewInformationMod {
 		
 		String result = "";
 		
-		String viewId = Session.currentViewId;
+		int viewId = dbUtils.getViewId(Session.owner, Session.viewName);
 		
 		
 		
@@ -123,21 +124,22 @@ public class ViewInformationMod {
 		String result = "";
 		
 		
-		String viewId = Session.currentViewId;
+		int viewId = dbUtils.getViewId(Session.owner, Session.viewName);
 		
 		SQLLite sqlLite = new SQLLite();
 		
 		ViewJoinResult rs = new ViewJoinResult();
 		
-		String sql = "SELECT js.id, tl.table_name left_table_name, tr.table_name right_table_name, cl.column_name left_column_name, cr.column_name right_column_name " + 
-		" FROM all_table_joins j, all_tables tl, all_tables tr, all_columns cl, all_columns cr, join_sources js  " + 
+		String sql = "SELECT js.id, "
+				+ "j.left_owner,"
+				+ "j.right_owner,"
+				+ "j.left_owner || '.' || j.left_table left_table_name,"
+				+ "j.right_owner || '.' || j.right_table right_table_name,"
+				+ "j.left_column left_column_name,"
+				+ "j.right_column right_column_name " + 
+		" FROM all_joins j, join_sources js  " + 
 		" WHERE 1=1 " + 
 		" AND j.id                = js.join_id " +
-		" AND j.left_table_id     = tl.id " +
-		" AND j.right_table_id    = tr.id " +
-		" AND j.left_column_id    = cl.id " +
-		" AND j.right_column_id   = cr.id " +
-		" AND js.source_type      = 'VIEW'" +
 		" AND js.source_id        = " + viewId 
 		;
 		
@@ -197,7 +199,7 @@ public class ViewInformationMod {
 		
 
 		
-		String viewId = Session.currentViewId;
+		int viewId = dbUtils.getViewId(Session.owner, Session.viewName);
 		
 		
 		

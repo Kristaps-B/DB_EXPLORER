@@ -29,4 +29,14 @@ public class PlsqlInformationContr {
 	
 	
 	
+	public String getPlsqlName() {
+		String result = "";
+				
+		result = Session.owner + "." + Session.plsqlName;		
+				
+		return result;		
+	}
+	
+	
+	
 }

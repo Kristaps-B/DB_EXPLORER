@@ -301,19 +301,19 @@ public class AllTablesMod {
 				System.out.println("FK name: " + row.constraintName);
 				
 				
-				int left_table_id = dbUtils.getTableId(row.leftOwner, row.leftTableName);
-				int left_column_id = dbUtils.getColumnId(left_table_id, row.leftColumnName);
+				// int left_table_id = dbUtils.getTableId(row.leftOwner, row.leftTableName);
+				// int left_column_id = dbUtils.getColumnId(left_table_id, row.leftColumnName);
 				
 				
-				int right_table_id = dbUtils.getTableId(row.rightOwner, row.rightTableName);
-				int right_column_id = dbUtils.getColumnId(right_table_id, row.rightColumnName);
+				// int right_table_id = dbUtils.getTableId(row.rightOwner, row.rightTableName);
+				// int right_column_id = dbUtils.getColumnId(right_table_id, row.rightColumnName);
 				
 				
 				System.out.println(row.leftTableName + "." + row.leftColumnName + "   -   "  +  row.rightTableName + "." + row.rightColumnName  );
 				
-				if (dbUtils.joinExists(left_table_id, right_table_id, left_column_id, right_column_id) == false) {
+				if (dbUtils.joinExists(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName) == false) {
 					System.out.println("Saving join");
-					dbUtils.saveTableJoin(left_table_id, right_table_id, left_column_id, right_column_id);
+					dbUtils.saveTableJoin(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName);
 				} else {
 					System.out.println("Join already exists!");
 				}

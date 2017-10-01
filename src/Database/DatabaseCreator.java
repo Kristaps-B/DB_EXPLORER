@@ -186,13 +186,15 @@ public class DatabaseCreator {
 			
 			// Create table all_view_tables
 
-			sql = "CREATE TABLE IF NOT EXISTS all_table_joins (" +
+			sql = "CREATE TABLE IF NOT EXISTS all_joins (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
-			"left_table_id         INTEGER," +
-			"right_table_id        INTEGER," +
-			"left_column_id        INTEGER," +
-			"right_column_id        INTEGER," +
-			"unique (left_table_id, right_table_id, left_column_id, right_column_id)"  +
+			"left_owner            CHAR(30)," +
+			"right_owner           CHAR(30)," +
+			"left_table            CHAR(30)," +
+			"right_table           CHAR(30)," +
+			"left_column           CHAR(30)," +
+			"right_column          CHAR(30)," +
+			"unique (left_table, right_table, left_column, right_column)"  +
 			")"
 			;
 			

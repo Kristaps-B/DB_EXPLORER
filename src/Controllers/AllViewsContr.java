@@ -67,10 +67,12 @@ public class AllViewsContr {
 	
 	
 	
-	public void goToInformation(String viewId) {
+	public void goToInformation(String owner, String viewName) {
 		
 		
-		Session.currentViewId = viewId;
+		Session.owner = owner;
+		Session.viewName = viewName;
+		
 		System.out.println("AllViewsContr.goToInformation");
 		URL url = Main.class.getResource("../WEB/html/view_information.html");
 		engine.load(url.toExternalForm());

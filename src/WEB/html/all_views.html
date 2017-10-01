@@ -2,13 +2,23 @@
 <head>
 
 	<link rel="stylesheet" href="css/bootstrap.css">
+	<script src="js/db_explorer.js"></script>
+	
 	<title>ALL_VIEWS</title>
 
 	<script type="text/javascript">
 	
+	
+	var size = 10;
+	
 	function create () {
 		
-		  loadViews(10, document.getElementById('offset').value );
+		flashBlock();
+		
+		setTimeout(function(){
+		 	 loadViews(size, document.getElementById('offset').value );
+		 }, 100);   
+		  
 	}
 	
 	
@@ -20,9 +30,16 @@
 	
 	function updateViews() {
 		
-		app.updateViews();
 		
-		loadViews(10, document.getElementById('offset').value );
+		flashBlock();
+		
+		setTimeout(function(){
+		
+			app.updateViews();
+			
+			loadViews(size, document.getElementById('offset').value );
+		 }, 100);   			
+			
 	}
 	
 	
@@ -38,8 +55,14 @@
 	
 	function analyseSingleView( owner, view ) {
 		
-		analyseView(owner, view );
-		loadViews(10, document.getElementById('offset').value);
+		flashBlock();
+		
+		setTimeout(function(){
+		
+			analyseView(owner, view );
+			loadViews(size, document.getElementById('offset').value);
+			
+		 }, 100);   	
 	}
 	
 	
@@ -47,26 +70,32 @@
 	
 	function analyseAll() {
 		
-		var table = document.getElementById('VIEW_TABLE');
+		flashBlock();
 		
+		setTimeout(function(){
 		
-		for (var i = 1, row; row = table.rows[i]; i++ ) {
+			var table = document.getElementById('VIEW_TABLE');
 			
-	 
-			var col_owner = row.cells[2].innerHTML;
-			var col_view = row.cells[3].innerHTML;
 			
-			analyseView(col_owner, col_view);
-		}
-		
-		loadViews(10, document.getElementById('offset').value );
+			for (var i = 1, row; row = table.rows[i]; i++ ) {
+				
+		 
+				var col_owner = row.cells[2].innerHTML;
+				var col_view = row.cells[3].innerHTML;
+				
+				analyseView(col_owner, col_view);
+			}
+			
+			loadViews(size, document.getElementById('offset').value );
+			
+		 }, 100);   	
 	}
 		
 	
 	
-	function goToInformation (viewId) {
+	function goToInformation (owner, view) {
 		
-		app.goToInformation(viewId);
+		app.goToInformation(owner, view);
 	}
 	
 	
@@ -116,8 +145,11 @@
 			
 
 			cell =  row.insertCell(6);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + view_json[i].id + '\')" > INFORMATION </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + view_json[i].owner + '\', \'' + view_json[i].view_name + '\'  )" > INFORMATION </button>';
 		}
+		
+		
+		flashUnBlock ();
 		
 	}
 	
@@ -128,17 +160,31 @@
 		
 		if (parseInt(document.getElementById('offset').value) <= 0) return false;
 		
-		 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+		flashBlock();
 		
-		 loadViews(10, document.getElementById('offset').value);
+		setTimeout(function(){
 		
+			
+			
+			 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+			
+			 loadViews(size, document.getElementById('offset').value);
+				
+		 }, 100);   
 	}
 	
 	function next() {
 		
-		document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
+		flashBlock();
 		
-		 loadViews(10, document.getElementById('offset').value);
+		setTimeout(function(){
+		
+			document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
+			
+			 loadViews(size, document.getElementById('offset').value);
+			 
+				
+		 }, 100);   	 
 		
 	}	
 	
@@ -146,6 +192,8 @@
 		
 	</script>
 </head>
+
+	<div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>ALL_VIEWS</h1></center>
 	
 	

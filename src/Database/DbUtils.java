@@ -3,6 +3,7 @@ package Database;
 import Global.Session;
 import Results.CountResult;
 import Results.IdResult;
+import Results.NameResult;
 
 public class DbUtils {
 	public DbUtils () {
@@ -39,6 +40,63 @@ public class DbUtils {
 		
 		return result;
 		
+		
+	}
+	
+	
+	public int getViewId (String owner, String view) {
+		int result = -1;
+		
+		
+		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		IdResult rs = new IdResult();
+		
+		try {
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			result = rs.getColumns().get(0).id;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}		
+		
+		return result;
+		
+	}
+	
+	
+	public String getTableName (String  owner, int tableId) {
+		String result = null;
+		
+
+		String sql = "SELECT table_name name FROM all_tables WHERE id = " + tableId + " AND owner = '" + owner + "' ";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		NameResult rs = new NameResult();
+		
+		try {
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			result = rs.getColumns().get(0).name;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}		
+		
+		
+		return result;
 		
 	}
 	
@@ -81,27 +139,39 @@ public class DbUtils {
 	
 	
 	public  boolean joinExists (
-			int leftTableId,
-			int rightTableId,
-			int leftColumnId,
-			int rightColumnId	
+			String leftOwner,
+			String rightOwner,
+			String leftTable,
+			String rightTable,
+			String leftColumn,
+			String rightColumn
 			) {
 		boolean result = false;
 		
 		
-		String sql = "SELECT COUNT(1) CNT FROM all_table_joins " + 
+		
+		System.out.println("JoinExists");
+		
+		String sql = "SELECT COUNT(1) CNT FROM all_joins " + 
 		" WHERE " +
-		" ( left_table_id = " + leftTableId + " " +
-		" AND right_table_id = " + rightTableId + " " +
-		" AND left_column_id = " + leftColumnId + " " +
-		" AND right_column_id = " + rightColumnId + " " +
+		" ( left_owner = '" + leftOwner + "' " +
+		" AND right_owner = '" + rightOwner + "' " +
+		" AND left_table = '" + leftTable + "' " +
+		" AND right_table = '" + rightTable + "' " +
+		" AND left_column = '" + leftColumn + "' " +
+		" AND right_column = '" + rightColumn + "' " +
 		" ) OR " +
-		" ( left_table_id = " + rightTableId + " " +
-		" AND right_table_id = " + leftTableId + " " +
-		" AND left_column_id = " + rightColumnId + " " +
-		" AND right_column_id = " + leftColumnId + " " +
+		" ( " +
+		"  left_owner = '" + rightOwner + "' " +
+		" AND right_owner = '" + leftOwner + "' " +
+		" AND left_table = '" + rightTable + "' " +
+		" AND right_table = '" + leftTable + "' " +
+		" AND left_column = '" + rightColumn + "' " +
+		" AND right_column = '" + leftColumn + "' " +
 		" ) "
 		;
+		
+		System.out.println(sql);
 				
 		
 		
@@ -120,7 +190,7 @@ public class DbUtils {
 			
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("DbUtils.joinExists: " + e.getMessage());
 			
 			
 		}
@@ -134,25 +204,36 @@ public class DbUtils {
 	
 	
 	public int findJoinId (
-			int leftTableId,
-			int rightTableId,
-			int leftColumnId,
-			int rightColumnId		
+			String leftOwner,
+			String rightOwner,
+			String leftTable,
+			String rightTable,
+			String leftColumn,
+			String rightColumn	
 				
 		 ) {
 			int result = -1;
 			
-			String sql = "SELECT ID  FROM all_table_joins " + 
+			
+			System.out.println("FindJoinId");
+			
+			String sql = "SELECT ID  "
+					+ "FROM all_joins " + 
 			" WHERE " +
-			" ( left_table_id = " + leftTableId + " " +
-			" AND right_table_id = " + rightTableId + " " +
-			" AND left_column_id = " + leftColumnId + " " +
-			" AND right_column_id = " + rightColumnId + " " +
+			" ( left_owner = '" + leftOwner + "' " +
+			" AND right_owner = '" + rightOwner + "' " +
+			" AND left_table = '" + leftTable + "' " +
+			" AND right_table = '" + rightTable + "' " +
+			" AND left_column = '" + leftColumn + "' " +
+			" AND right_column = '" + rightColumn + "' " +
 			" ) OR " +
-			" ( left_table_id = " + rightTableId + " " +
-			" AND right_table_id = " + leftTableId + " " +
-			" AND left_column_id = " + rightColumnId + " " +
-			" AND right_column_id = " + leftColumnId + " " +
+			" ( " +
+			" left_owner = '" + rightOwner + "' " +
+			" AND right_owner = '" + leftOwner + "' " +
+			" AND left_table = '" + rightTable + "' " +
+			" AND right_table = '" + leftTable + "' " +
+			" AND left_column = '" + rightColumn + "' " +
+			" AND right_column = '" + leftColumn + "' " +
 			" ) "
 			;
 					
@@ -171,7 +252,7 @@ public class DbUtils {
 				
 				
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("DbUtils.findJoinId: " + e.getMessage());
 				
 				
 			}		
@@ -184,21 +265,27 @@ public class DbUtils {
 	
 	
 	public void saveTableJoin (
-			int leftTableId,
-			int rightTableId,
-			int leftColumnId,
-			int rightColumnId
+			String leftOwner,
+			String rightOwner,
+			String leftTable,
+			String rightTable,
+			String leftColumn,
+			String rightColumn	
 				) {
 			
 			SQLLite  sqlLite = new SQLLite();
 			
-			String sql = "insert into all_table_joins "
-			+ "(left_table_id, right_table_id, left_column_id, right_column_id) "
+			System.out.println("SaveTableJoin");
+			
+			String sql = "insert into all_joins "
+			+ "(left_owner, right_owner, left_table, right_table, left_column, right_column) "
 			+ "VALUES (" 
-			+ "" + leftTableId  + ","
-			+ "" + rightTableId  + ","
-			+ "" + leftColumnId  + ","
-			+ "" + rightColumnId  + ""
+			+ " '" + leftOwner  + "', "
+		    + " '" + rightOwner  + "', "
+		    + " '" + leftTable  + "', "
+		    + " '" + rightTable  + "', "
+		    + " '" + leftColumn  + "', "
+		    + " '" + rightColumn  + "' "
 			+ ")"
 			;
 			
@@ -210,12 +297,16 @@ public class DbUtils {
 				System.out.println("TABLE_JOIN created! ");
 				
 			} catch (Exception e) {
-				System.out.println(e.getMessage());
+				System.out.println("DbUtils.saveTableJoin: " +e.getMessage());
 			}
 			
 			
 			
 		}
+	
+	
+	
+	
 	
 	
 }

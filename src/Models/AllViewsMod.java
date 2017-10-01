@@ -323,35 +323,40 @@ public class AllViewsMod {
 			String leftTable     = selectQuery.getTableByAlias(leftAlias).getTable();
 			String rightTable    = selectQuery.getTableByAlias(rightAlias).getTable();
 			
+			String leftOwner     = owner;
+			String rightOwner    = owner;
 			
-			
-			int leftTableId     = dbUtils.getTableId(owner, leftTable);
-			int rightTableId    = dbUtils.getTableId(owner, rightTable);
-			
-			int leftColumnId    = dbUtils.getColumnId(leftTableId, leftColumn);
-			int rightColumnId    = dbUtils.getColumnId(rightTableId, rightColumn);
+	
 			
 			
 			 
 			
-			System.out.println("Left table: " + leftTable + " (" + leftTableId +") Right Table: " + rightTable + " ("+ rightTableId +") Left Column: " + leftColumn + " (" + leftColumnId + ") Right Column: " + rightColumn + " (" + rightColumnId + ") Expression: " + expression);
-			System.out.println("");
+			// System.out.println("Left table: " + leftTable + " (" + leftTableId +") Right Table: " + rightTable + " ("+ rightTableId +") Left Column: " + leftColumn + " (" + leftColumnId + ") Right Column: " + rightColumn + " (" + rightColumnId + ") Expression: " + expression);
+			System.out.println("-------------------------");
 			
 			// Check if Join Exists
-			if (!dbUtils.joinExists(leftTableId,
-				rightTableId,
-				leftColumnId,
-				rightColumnId)) {
+			if (!dbUtils.joinExists(
+
+				leftOwner,
+				rightOwner,
+				leftTable,
+				rightTable,
+				leftColumn,
+				rightColumn
+					)) {
 				
 				// Save Join
+				System.out.println("Join not exists!");
 				dbUtils.saveTableJoin (
-					leftTableId,
-					rightTableId,
-					leftColumnId,
-					rightColumnId
+						leftOwner,
+						rightOwner,
+						leftTable,
+						rightTable,
+						leftColumn,
+						rightColumn
 				);
 				
-				System.out.println();
+				System.out.println("Saved Join");
 				
 				
 			} else {
@@ -361,10 +366,12 @@ public class AllViewsMod {
 			
 			// Find Join ID
 			int joinId = dbUtils.findJoinId(					
-			leftTableId,
-			rightTableId,
-			leftColumnId,
-			rightColumnId);
+					leftOwner,
+					rightOwner,
+					leftTable,
+					rightTable,
+					leftColumn,
+					rightColumn);
 			
 			System.out.println("Found Join_ID: " + joinId);
 			
@@ -402,7 +409,7 @@ public class AllViewsMod {
 			
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("AllViewsMod.getViewId: " + e.getMessage());
 			
 			
 		}
@@ -441,7 +448,7 @@ public class AllViewsMod {
 			System.out.println("VIEW_TABLE viewID: " + viewId + " tableID: " + tableId + " was inserted!");
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("AllViewsMod.saveViewTable: " + e.getMessage());
 		}
 		
 	}
@@ -481,7 +488,7 @@ public class AllViewsMod {
 			System.out.println("Inserted into JOIN_SOURCES table value join_id: " + joinId + " view_id: " + viewId);
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("AllViewsMod.saveJoinLink: " + e.getMessage());
 		}		
 		
 		
@@ -510,7 +517,7 @@ public class AllViewsMod {
 			System.out.println("Inserted into COLUMN_SOURCES table value column_id: " + columnId + " table_id: " + tableId + " viewId: " + viewId);
 			
 		} catch (Exception e) {
-			System.out.println(e.getMessage());
+			System.out.println("AllViewsModel.saveColumnSource: " + e.getMessage());
 		}		
 		
 		
