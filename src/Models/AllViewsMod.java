@@ -231,7 +231,22 @@ public class AllViewsMod {
 			String sqlView = rs.getColumns().get(0).text;
 			
 			System.out.println("VIEW TEXT: " + sqlView);
+			
+			
+			
+			
+			System.out.println("##############################################################################");
+			System.out.println("##############################################################################");
+			System.out.println("###                       PARSE START                                       ##");
+			System.out.println("##############################################################################");
+			System.out.println("##############################################################################");
 			SelectParser selectParser = new SelectParser(sqlView);
+			
+			System.out.println("##############################################################################");
+			System.out.println("##############################################################################");
+			System.out.println("##                        PARSE END                                         ##");
+			System.out.println("##############################################################################");
+			System.out.println("##############################################################################");
 			
 			
 			update_examine_time (owner, view_name);
@@ -268,14 +283,19 @@ public class AllViewsMod {
 		System.out.println("----------------- TABLES ---------------------");
 		
 		for (FromTable ft: tableList) {
-			
+			String tabOwner = ft.getOwner();
 			String table = ft.getTable();
 			String alias = ft.getAlias();
 			
+			// Set default owner
+			if (tabOwner.equals("")) {
+				tabOwner = owner;
+			}
 			
-			int tableId = dbUtils.getTableId(owner, table);
 			
-			System.out.println("Table: " + table + " alias: " + alias + " tableId: " + tableId);
+			int tableId = dbUtils.getTableId(tabOwner, table);
+			
+			System.out.println("Owner: " + tabOwner + "Table: " + table + " alias: " + alias + " tableId: " + tableId);
 			
 			
 			saveViewTable(viewId, tableId, alias);
@@ -290,9 +310,13 @@ public class AllViewsMod {
 			
 			
  
-			String table = selectQuery.getTableByAlias(cs.getTable()).getTable();
+			String table = selectQuery.getColumnTable( cs.getTableAlias(), cs.getColumn() ).getTable();
 			String column = cs.getColumn();
 			String alias = cs.getAlias();
+			
+			System.out.println("table: " + table);
+			System.out.println("column: " + column);
+			System.out.println("alias: " + alias);
 			
 			
 			
@@ -306,7 +330,7 @@ public class AllViewsMod {
 		}	
 		
 		
-		System.out.println("------------- WHERE --------------------------");
+		System.out.println("------------- JOINS --------------------------");
 		ArrayList <WhereExpression> whereList = selectQuery.getWhereList();
 		
 		

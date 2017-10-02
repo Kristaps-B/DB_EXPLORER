@@ -198,6 +198,9 @@ public class SelectQuery {
 		
 		
 		tables.addAll(this.fromClause.getTables());
+		
+		
+		tables.addAll(this.selectClause.getTables());
 	
 		
 		return tables;
@@ -226,6 +229,34 @@ public class SelectQuery {
 	public String getQuery () {
 		return this.sql;
 	}
+	
+	
+	public FromTable getColumnTable(String tableAlias, String column) {
+		FromTable fromTable = null;
+		
+		
+		System.out.println("SelectQuery.getColumnTable: tableAlias " + tableAlias + " Column: " + column);
+		
+		fromTable = this.fromClause.getColumnTable( tableAlias,  column);
+		
+		
+		return fromTable;
+		
+		
+	}
+	
+	
+	public ColumnSelect getColumnSelect(String alias) {
+		
+		
+		System.out.println("Get columnSelect: alias: " + alias);
+		ColumnSelect columnSelect = null;
+		
+		columnSelect = this.selectClause.getColumnSelect(alias);
+		
+		return columnSelect;
+	}
+	
 	
 
 }

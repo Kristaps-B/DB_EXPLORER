@@ -212,6 +212,52 @@ public class FromClause {
 	}
 	
 	
+	public FromTable getColumnTable( String tableAlias, String column) {
+		FromTable fromTable = null;
+		
+		
+		
+		for (FromTable ft: fromTableList) {
+			
+			
+			if (ft.getIsSubstring() == false) {
+				if (ft.getAlias().equals(tableAlias.toUpperCase())) {
+					
+					System.out.println("Get by alias (not substring)");
+					fromTable = ft;
+					return fromTable;
+					
+				}
+			} else {
+				
+				System.out.println("Substring query: " + ft.getSubquery().getQuery());
+				
+				
+				//fromTable = ft.getSubquery().getTableByAlias(alias);
+				
+				
+				ColumnSelect columnSelect = ft.getSubquery().getColumnSelect(column);
+				
+				fromTable = ft.getSubquery().getColumnTable(columnSelect.getTableAlias(), columnSelect.getColumn());
+				
+				
+				
+				if (fromTable != null) {
+					return fromTable;
+				}
+				
+				
+			}
+			
+			
+				
+		}
+		
+		
+		return fromTable;
+	}
+	
+	
 	
  
 	

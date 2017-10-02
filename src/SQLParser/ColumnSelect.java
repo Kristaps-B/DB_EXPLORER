@@ -11,6 +11,9 @@ public class ColumnSelect {
 	ParserUtils parserUtils;
 	
 	
+	private boolean isSubquery = false;
+	
+	
 	public ColumnSelect (String sql) {
 		
 		this.sql = sql;
@@ -36,6 +39,15 @@ public class ColumnSelect {
 		}
 		
 		
+		// Set alias equal to table, if no alias is present
+		if (this.alias.equals("")) {
+			this.alias = this.column;
+		}
+		
+		
+		// Check if column is subselect
+		
+		
 		
 		
 		System.out.println("table:  "  + this.table);
@@ -45,7 +57,7 @@ public class ColumnSelect {
 	}
 	
 	
-	public String getTable () {
+	public String getTableAlias () {
 		return this.table;
 	}
 	

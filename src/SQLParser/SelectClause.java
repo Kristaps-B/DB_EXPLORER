@@ -33,25 +33,7 @@ public class SelectClause {
 	private void splitSelectClause (String sql) {
 		
 		
-		/*
-		
-		String [] selectArray = this.sql.split(",");
-		
-		System.out.println("Split SELECT");
-		
-		for (String str: selectArray) {
-			
-			str = str.trim();
-			
-			// selectColumnList.add(str);
-			
-			columnSelectList.add(new ColumnSelect(str));
-			
-			System.out.println(str);
-		}
-		
-		
-		*/
+	
 		
 		ArrayList <String> list = parserUtils.parseString(sql, ",");
 		
@@ -67,6 +49,35 @@ public class SelectClause {
 	public ArrayList <ColumnSelect> getColumnList () {
 		return this.columnSelectList;
 	}
+	
+	
+	
+	public ArrayList <FromTable> getTables () {
+		ArrayList <FromTable> tableList = new ArrayList <> ();
+		
+		
+		
+		return tableList;
+	}
+	
+	
+	public ColumnSelect  getColumnSelect (String alias) {
+		ColumnSelect columnSelect = null;
+		
+		
+		for (ColumnSelect cs: columnSelectList) {
+			
+			if (cs.getAlias().equals(alias)) {
+				System.out.println("SelectClause.getColumnSelect FOUND MATCH to ALIAS: " + alias);
+				columnSelect = cs;
+			}
+			
+		}
+		
+		
+		return columnSelect;
+	}
+
 
 	
 	

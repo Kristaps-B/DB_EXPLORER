@@ -4,7 +4,7 @@ public class FromTable {
 	
 	private String sql;
 	
-	
+	private String owner = "";
 	private String alias = "";
 	private String table = "";
 	
@@ -21,6 +21,8 @@ public class FromTable {
 		this.sql = sql;
 		
 		this.sql = this.sql.trim();
+		this.sql = this.sql.replaceAll(" AS ", " ");
+		
 		this.mainQuery = mainQuery;
 		parserUtils = new ParserUtils();
 	
@@ -29,7 +31,22 @@ public class FromTable {
 		
 		this.table = parserUtils.getFirstPart(this.sql, " ");
 		this.alias = parserUtils.getSecondPart(this.sql, " ");
+		
+		
+		
+		// Get Owner if exists
+		this.owner = parserUtils.getFirstPart(this.table, ".");
+		this.table = parserUtils.getSecondPart(this.table, ".");
+		
+		if (this.table.equals("")) {
+			this.table= this.owner;
+			this.owner = "";
+		}
+		
+		
+ 
 		 
+		 System.out.println("owner: " + this.owner);
 		 System.out.println("table: " + this.table);
 		 System.out.println("alias: " + this.alias);
 		 
@@ -48,6 +65,10 @@ public class FromTable {
 	
 	public String getTable () {
 		return this.table;
+	}
+	
+	public String getOwner () {
+		return this.owner;
 	}
 	
 	
