@@ -95,7 +95,7 @@ public class AllPlsqlMod {
 		
 		
 		
-		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, '' examine_time " +
+		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, '' examine_time" +
 		" FROM all_objects " +
 		" WHERE 1=1 " +
 		activeUsers +
@@ -146,7 +146,7 @@ public class AllPlsqlMod {
 		+ "'" + row.owner  + "',"
 		+ "'" + row.name  + "',"
 		+ "'" + row.type  + "',"
-		+ "DATETIME('now', 'localtime')"
+		+ "NULL"
 		+ ")"
 		;
 		

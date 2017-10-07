@@ -64,7 +64,7 @@ public class ViewInformationMod {
 		
 		ViewTableResult rs = new ViewTableResult();
 		
-		String sql = "SELECT vt.id, vt.view_id, vt.table_id, t.table_name, vt.alias "  + 
+		String sql = "SELECT vt.id, vt.view_id, vt.table_id, t.owner, t.table_name, vt.alias "  + 
 		" FROM all_view_tables vt, all_tables t" +
 		" WHERE t.table_id = vt.table_id " +
 		" AND vt.view_id = " + viewId +
@@ -90,7 +90,8 @@ public class ViewInformationMod {
 				aJson.addValue("id", "" + row.id);
 				aJson.addValue("view_id", "" + row.view_id);
 				aJson.addValue("table_id", "" + row.table_id);
-				aJson.addValue("table_name", "" + row.table_name);
+				// aJson.addValue("owner", row.owner);
+				aJson.addValue("table_name", "" + row.owner + "." +row.table_name);
 				aJson.addValue("alias", "" + row.alias);
 				
 				aJson.newRow();
@@ -207,7 +208,7 @@ public class ViewInformationMod {
 		
 		ViewColumnResult rs = new ViewColumnResult();
 		
-		String sql = "SELECT ac.id, at.table_name, ac.column_name, ac.data_type"  + 
+		String sql = "SELECT ac.id, at.owner, at.table_name, ac.column_name, ac.data_type"  + 
 		" FROM column_sources cs, all_columns ac, all_tables at" +
 		" WHERE cs.column_id = ac.id " +
 		" AND at.id = ac.table_id " +
@@ -236,7 +237,7 @@ public class ViewInformationMod {
 				 
 				
 				aJson.addValue("id", "" + row.id);
-				aJson.addValue("table_name",  row.table_name);
+				aJson.addValue("table_name",  row.owner + "." + row.table_name);
 				aJson.addValue("column_name", "" + row.column_name);
 				aJson.addValue("data_type", "" + row.data_type);
 				

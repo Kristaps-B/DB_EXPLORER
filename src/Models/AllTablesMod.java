@@ -82,7 +82,7 @@ public class AllTablesMod {
 		+ "'" + row.table_id  + "',"
 		+ "'" + row.owner  + "',"
 		+ "'" + row.table_name  + "',"
-		+ "DATETIME('now', 'localtime')"
+		+ "NULL"
 		+ ")"
 		;
 		

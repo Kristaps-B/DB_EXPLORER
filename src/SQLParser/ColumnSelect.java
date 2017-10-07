@@ -45,14 +45,18 @@ public class ColumnSelect {
 		}
 		
 		
-		// Check if column is subselect
-		
-		
-		
 		
 		System.out.println("table:  "  + this.table);
 		System.out.println("column: " + this.column);
-		System.out.println("alias:  "  + this.alias);
+		System.out.println("alias:  "  + this.alias);		
+		
+		
+		// Check if column is subquery
+		checkIsSubquery( this.column );
+		
+		
+		
+
 		
 	}
 	
@@ -67,6 +71,13 @@ public class ColumnSelect {
 	
 	public String getAlias () {
 		return this.alias;
+	}
+	
+	
+	private void checkIsSubquery (String column) {
+		
+		// parserUtils.
+		
 	}
 	
 	

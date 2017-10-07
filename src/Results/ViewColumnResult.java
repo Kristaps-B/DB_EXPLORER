@@ -19,6 +19,7 @@ public class ViewColumnResult extends Result {
 			
 			columns.add(new Row(
 					rs.getInt("ID"),
+					rs.getString("OWNER"),
 					rs.getString("TABLE_NAME"),
 					rs.getString("COLUMN_NAME"), 
 					rs.getString("DATA_TYPE")
@@ -42,14 +43,16 @@ public class ViewColumnResult extends Result {
 			
 			
 			public int id;
+			public String owner;
 			public String table_name;
 			public String column_name;
 			public String data_type;	
  
 			
 			
-			public Row (int id, String tableName, String columnName, String dataType) {
+			public Row (int id, String owner, String tableName, String columnName, String dataType) {
 				this.id = id;
+				this.owner = owner;
 				this.table_name = tableName;
 				this.column_name  = columnName;
 				this.data_type = dataType;

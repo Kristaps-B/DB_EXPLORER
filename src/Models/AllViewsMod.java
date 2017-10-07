@@ -113,7 +113,7 @@ public class AllViewsMod {
 		+ "'" + row.view_id  + "',"
 		+ "'" + row.owner  + "',"
 		+ "'" + row.view_name  + "',"
-		+ "DATETIME('now', 'localtime')"
+		+ "NULL"
 		+ ")"
 		;
 		
