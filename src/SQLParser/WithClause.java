@@ -8,10 +8,12 @@ public class WithClause {
 	private ParserUtils parserUtils = new ParserUtils();
 	
 	private ArrayList <WithTable> tableList = new ArrayList <>();
+	
+	private SelectQuery mainQuery;
 
 	
-	public WithClause() {
-		 
+	public WithClause(SelectQuery mainQuery) {
+		 this.mainQuery = mainQuery;
 	}
 	
 	

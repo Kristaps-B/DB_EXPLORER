@@ -11,9 +11,14 @@ public class SelectClause {
 	
 	private ParserUtils parserUtils;
 	private FromClause fromClause;
+	
+	
+	private SelectQuery mainQuery;
 
-	public SelectClause () {
+	public SelectClause (SelectQuery mainQuery) {
 		parserUtils = new ParserUtils();
+		this.mainQuery = mainQuery;
+		
 		
 	}
 	
@@ -39,7 +44,7 @@ public class SelectClause {
 		
 		for (String s: list) {
 			
-			columnSelectList.add(new ColumnSelect(s));
+			columnSelectList.add(new ColumnSelect(s, this.mainQuery));
 		}
 		
 		
@@ -47,7 +52,21 @@ public class SelectClause {
 	
 	
 	public ArrayList <ColumnSelect> getColumnList () {
-		return this.columnSelectList;
+		
+		ArrayList <ColumnSelect> colList = new ArrayList <> ();
+		
+		
+		for (ColumnSelect cs: this.columnSelectList) {
+			
+			if (cs.getIsSimpleColumn() == true) {
+				colList.add(cs);
+			}
+			
+		}
+		
+		
+		
+		return colList;
 	}
 	
 	
@@ -76,6 +95,28 @@ public class SelectClause {
 		
 		
 		return columnSelect;
+	}
+	
+	
+	
+	
+	
+	public ArrayList <WhereExpression> getExpressionList() {
+		
+		ArrayList <WhereExpression> whereList = new ArrayList <> ();
+		
+		System.out.println("SelectClause - getExpressionList");
+		for (ColumnSelect cs: columnSelectList) {
+			
+			if (cs.getIsSubquery() == true) {
+				whereList.addAll( cs.getSubquery().getWhereList());
+			}
+			
+		}
+		
+		
+		return whereList;
+		
 	}
 
 

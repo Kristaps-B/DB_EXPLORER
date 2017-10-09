@@ -115,7 +115,7 @@ public class FromClause {
 			fromTableList.add(new FromTable(tablePart, this.mainQuery));
 			
 			
-			ansiWhereList.add(new WhereClause(wherePart, this));
+			ansiWhereList.add(new WhereClause(wherePart, this.mainQuery));
 			
 			
 			
@@ -180,6 +180,22 @@ public class FromClause {
 				
 				
 					
+			}
+			
+			System.out.println("Dont found Table by ALIAS!");
+			
+			
+			if ( fromTable == null ) {
+				System.out.println("1");
+				SelectQuery outerQuery = this.mainQuery.getOuterQuery();
+				
+				
+				if (outerQuery != null) {
+					System.out.println("Get table by ALIAS from outer table");
+					
+					fromTable = outerQuery.getFrom().getTableByAlias(alias);
+				}
+				
 			}
 	
 			

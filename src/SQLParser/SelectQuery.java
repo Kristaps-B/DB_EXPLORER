@@ -7,8 +7,8 @@ public class SelectQuery {
 	
 	private ArrayList <SelectQuery> selectUnionList = new ArrayList <>();
 	
-	private WithClause   withClause     = new WithClause();
-	private SelectClause selectClause   = new SelectClause();
+	private WithClause   withClause     = new WithClause(this);
+	private SelectClause selectClause   = new SelectClause(this);
 	private FromClause   fromClause     = new FromClause(this);
 	private WhereClause  whereClause;
 	
@@ -17,8 +17,12 @@ public class SelectQuery {
 	
 	private String sql;
 	
-	public SelectQuery () {
+	private SelectQuery outerQuery;
+	
+	public SelectQuery (SelectQuery outerQuery) {
 		parserUtils = new ParserUtils();
+		
+		this.outerQuery = outerQuery;
 	}
 	
 	
@@ -179,7 +183,7 @@ public class SelectQuery {
 		
 		
 		if (whereClause.equals("") != true) {
-			this.whereClause = new WhereClause(whereClause, this.fromClause); 	
+			this.whereClause = new WhereClause(whereClause, this); 	
 		}
 		
 		
@@ -223,7 +227,25 @@ public class SelectQuery {
 	}
 	
 	public ArrayList <WhereExpression> getWhereList () {
-		return this.whereClause.getExpressionList();
+		
+		System.out.println("SelectQuery.getWhereList");
+		
+		ArrayList <WhereExpression> whereList = new ArrayList <> ();
+		
+		System.out.println("Get from where clause");
+		
+		
+		if (this.whereClause != null) {
+			whereList.addAll(this.whereClause.getExpressionList());
+			
+		}
+	
+		
+		System.out.println("Get from select clause");
+		whereList.addAll( this.selectClause.getExpressionList() );
+		
+		
+		return whereList;
 	}
 	
 	public String getQuery () {
@@ -255,6 +277,11 @@ public class SelectQuery {
 		columnSelect = this.selectClause.getColumnSelect(alias);
 		
 		return columnSelect;
+	}
+	
+	
+	public SelectQuery getOuterQuery () {
+		return this.outerQuery;
 	}
 	
 	

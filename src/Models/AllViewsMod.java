@@ -344,8 +344,8 @@ public class AllViewsMod {
 			String leftColumn    =  we.getLeftColumn();
 			String rightColumn   =  we.getRightColumn();
 			
-			String leftTable     = selectQuery.getTableByAlias(leftAlias).getTable();
-			String rightTable    = selectQuery.getTableByAlias(rightAlias).getTable();
+			String leftTable     =  we.getLeftTable();
+			String rightTable    =  we.getRightTable();
 			
 			String leftOwner     = owner;
 			String rightOwner    = owner;

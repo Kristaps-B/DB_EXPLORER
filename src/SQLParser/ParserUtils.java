@@ -2,6 +2,8 @@ package SQLParser;
 
 import java.util.ArrayList;
 
+import org.sqlite.util.StringUtils;
+
 public class ParserUtils {
 	public ParserUtils() {
 		
@@ -13,6 +15,7 @@ public class ParserUtils {
 		ArrayList <String> result = new ArrayList <> ();
 		
 		int numberOfBrackets = 0;
+		boolean isInsideString = false;
 		String pieceOfText = "";
 		
 		for (int i = 0; i < text.length(); i++) {
@@ -32,9 +35,15 @@ public class ParserUtils {
 			}
 			
 			
+			if (this.atLocation(i, "'", text) == true ) {
+				isInsideString = !isInsideString;
+			}
+			
+			
 			if (
 					numberOfBrackets == 0 &&
 					this.atLocation(i, parseBy, text) == true
+ 					&& isInsideString == false                          // Is inside String?
 					
 				) {
 				
@@ -107,6 +116,9 @@ public class ParserUtils {
 	
 	
 	
+	
+	
+	
 	public boolean isTextInside(String text, String findText) {
 		boolean result = false;
 		
@@ -161,12 +173,17 @@ public class ParserUtils {
 	
 	public String getBracketsContent (String str) {
 		
+		
+
+		
 		String result = "";
 		
 		
 		int start = str.indexOf("(");
 		
 		int end = str.lastIndexOf(")");
+		
+		System.out.println("Get Brackets content: start: " + start + " end: " + end);		
 		
 		
 		result = str.substring(start + 1, end);
@@ -179,6 +196,78 @@ public class ParserUtils {
 	public static boolean isNumeric(String str)
 	{
 	  return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+	}
+	
+	
+	public boolean  isQuery (String sql) {
+		boolean subquery = true;
+		
+		sql = sql.trim();
+		
+		
+		if (!this.isTextInside(sql, "SELECT")) {
+			subquery = false;
+		}
+		
+		if (!this.isTextInside(sql, "FROM")) {
+			subquery = false;
+		}
+		
+		
+		if (sql.charAt(0) != '(') {
+			subquery = false;
+		}
+		
+		if (sql.charAt(sql.length() - 1) != ')') {
+			subquery = false;
+		}		
+		
+		
+		return subquery;
+		
+	}
+	
+	
+	public boolean isSimpleColumn (String column) {
+		boolean result = true;
+		
+		
+		if (isTextInside(column, "(") == true || isTextInside(column, ")") == true || isTextInside(column, "||") == true ) {
+			result = false;
+		}
+		
+		
+		if ( countCharMatch(column, ".") > 0  || countCharMatch(column, " ") > 0) {
+			result = false;
+		}
+		
+		
+		
+		return result;
+		
+		
+	}
+	
+	
+	
+	private int countCharMatch(String str, String c) {
+		
+		return (str.length() - str.replaceAll(c, "").length()) / c.length();
+		
+	}
+	
+	
+	public String removeSpacesNextTo(String str, String s) {
+		String result = str;
+		
+		result = result.replaceAll(" " + s + " ", s);
+		result = result.replaceAll(s + " ", s);
+		result = result.replaceAll(" " + s, s);
+		
+		
+		return result;
+		
+		
 	}
 	
 	

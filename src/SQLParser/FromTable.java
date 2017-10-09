@@ -94,12 +94,12 @@ public class FromTable {
 	
 	private void  checkSubquery(String table) {
 		
-		if (table.charAt(0) == '(') {
+		if (parserUtils.isQuery(table) == true) {
 			
 			System.out.println("Its subquery");
 			isSubquery = true;
 			
-			String subquery =  table.substring(1, table.length() - 1);
+			String subquery = parserUtils.getBracketsContent(table);  //  table.substring(1, table.length() - 1);
 			
 			System.out.println("Subquery: " + subquery);
 			

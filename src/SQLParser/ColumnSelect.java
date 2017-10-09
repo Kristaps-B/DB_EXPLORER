@@ -10,39 +10,69 @@ public class ColumnSelect {
 	
 	ParserUtils parserUtils;
 	
+	private SelectParser selectParser;
 	
 	private boolean isSubquery = false;
+	private boolean isSimpleColumn = true;
+	SelectQuery mainQuery;
 	
 	
-	public ColumnSelect (String sql) {
+	public ColumnSelect (String sql, SelectQuery mainQuery) {
 		
 		this.sql = sql;
 		
 		parserUtils = new ParserUtils();
+		
+		
+		this.mainQuery = mainQuery;
 		
 		this.sql = this.sql.trim();
 		
 		
 		String tableColumn = "";
 		
-		tableColumn = parserUtils.getFirstPart(this.sql, " ");
 		
-		this.table = parserUtils.getFirstPart(tableColumn, ".");
-		this.column = parserUtils.getSecondPart(tableColumn, ".");
-		
-		this.alias = parserUtils.getSecondPart(this.sql, " ");
-		
-		
-		if (this.column.equals("")) {
-			this.column = this.table;
-			this.table = "";
+		if (parserUtils.isSimpleColumn(this.sql)) {
+			
+			
+			this.isSimpleColumn = true;
+			
+			tableColumn = parserUtils.getFirstPart(this.sql, " ");
+			
+			this.table = parserUtils.getFirstPart(tableColumn, ".");
+			this.column = parserUtils.getSecondPart(tableColumn, ".");
+			
+			this.alias = parserUtils.getSecondPart(this.sql, " ");
+			
+			
+			if (this.column.equals("")) {
+				this.column = this.table;
+				this.table = "";
+			}
+			
+			
+			// Set alias equal to table, if no alias is present
+			if (this.alias.equals("")) {
+				this.alias = this.column;
+			}			
+			
+		} else {
+			
+			this.isSimpleColumn = false;
+			
+			this.sql = parserUtils.removeSpacesNextTo(this.sql, "\\|\\|");
+			this.sql = parserUtils.removeSpacesNextTo(this.sql, "\\+");
+			this.sql = parserUtils.removeSpacesNextTo(this.sql, "-");
+			this.sql = parserUtils.removeSpacesNextTo(this.sql, "\\*");
+			this.sql = parserUtils.removeSpacesNextTo(this.sql, "/");
+			
+			
+			this.column = parserUtils.getFirstPart(this.sql, " ");
+			this.alias = parserUtils.getSecondPart(this.sql, " ");
+			
+			
 		}
-		
-		
-		// Set alias equal to table, if no alias is present
-		if (this.alias.equals("")) {
-			this.alias = this.column;
-		}
+
 		
 		
 		
@@ -78,6 +108,42 @@ public class ColumnSelect {
 		
 		// parserUtils.
 		
+		
+		
+		if (parserUtils.isQuery(column) == true) {
+			
+			System.out.println("Column: " + column + " is subquery!");
+			
+			isSubquery = true;
+			
+			String subquery = parserUtils.getBracketsContent(column); 
+			
+			
+			System.out.println("Inside brackets content: " + subquery);
+			
+			
+			this.selectParser = new SelectParser(subquery, this.mainQuery);
+			
+			
+			
+		}
+		
+		
+		
+	}
+	
+	
+	public boolean getIsSimpleColumn () {
+		return this.isSimpleColumn;
+	}
+	
+	public boolean getIsSubquery () {
+		return this.isSubquery;
+	}
+	
+	
+	public SelectQuery getSubquery () {
+		return this.selectParser.getSelectQuery();
 	}
 	
 	

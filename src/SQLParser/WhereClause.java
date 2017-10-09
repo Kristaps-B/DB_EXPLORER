@@ -10,10 +10,12 @@ public class WhereClause {
 	
 	private ArrayList <WhereExpression> whereExpressionList = new ArrayList <> ();	
 	private FromClause fromClause;
+	private SelectQuery mainQuery;
 	
-	public WhereClause (String sql, FromClause fromClause) {
+	public WhereClause (String sql, SelectQuery mainQuery) {
 		this.sql = sql;
-		this.fromClause = fromClause;
+		this.mainQuery = mainQuery;
+		this.fromClause = mainQuery.getFrom();
 		splitWhereClauses(sql);
 	}
 	

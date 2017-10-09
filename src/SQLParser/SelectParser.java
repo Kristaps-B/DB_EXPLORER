@@ -27,7 +27,7 @@ public class SelectParser {
 		
 		
 		
-		selectQuery = new SelectQuery();
+		selectQuery = new SelectQuery(null);
 		selectQuery.createSelect(this.sql);
 		
 		
@@ -38,6 +38,16 @@ public class SelectParser {
 		//splitFromClauses();
 		
 		//splitWhereClauses();
+	}
+	
+	public SelectParser (String sql, SelectQuery outerQuery) {
+		this.sql = sql;
+		// splitClauses();
+		
+		
+		
+		selectQuery = new SelectQuery(outerQuery);
+		selectQuery.createSelect(this.sql);
 	}
 	
 	
