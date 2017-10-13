@@ -47,13 +47,13 @@
 	}
 	
 	
-	function analyseSinglePlsql(owner, name) {
+	function analyseSinglePlsql(owner, name, type) {
 		
 		
 	    flashBlock();
 	    
 	    setTimeout(function(){	
-			analysePlsql(owner, name);
+			analysePlsql(owner, name, type);
 			
 			loadPlsql(size, document.getElementById('offset').value);
 		 }, 100); 
@@ -63,10 +63,10 @@
 	
 	
 	
-	function analysePlsql( owner, name ) {
+	function analysePlsql( owner, name, type ) {
 		
 		
-		app.analysePlsql (owner, name);
+		app.analysePlsql ( owner, name, type );
 		
 		
 		
@@ -87,8 +87,9 @@
 		 
 				var col_owner = row.cells[2].innerHTML;
 				var col_view = row.cells[3].innerHTML;
+				var col_type = row.cells[4].innerHTML;
 				
-				analysePlsql(col_owner, col_view);
+				analysePlsql(col_owner, col_view, col_type);
 			}
 			
 			loadPlsql(size, document.getElementById('offset').value );
@@ -144,7 +145,7 @@
 			
 			
 			cell =  row.insertCell(6);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSinglePlsql(\''  + table_json[i].owner + '\', \'' + table_json[i].name + '\')" > EXAMINE </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSinglePlsql(\''  + table_json[i].owner + '\', \'' + table_json[i].name + '\', \'' + table_json[i].type + '\')" > EXAMINE </button>';
 			
 			cell =  row.insertCell(7);
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].owner + '\', \'' + table_json[i].name + '\' )" > INFORMATION </button>';
@@ -210,6 +211,7 @@
 	
 	
 	<table id = "PLSQL_TABLE"   class="table" >
+	
 		<tr>
 			<th>ID</th>
 			<th>PLSQL_ID</th>

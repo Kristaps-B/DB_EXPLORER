@@ -122,7 +122,7 @@ public class AllViewsMod {
 		try {
 			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
-			System.out.println("VIEW " + row.view_name + " was inserted!");
+			System.out.println("VIEW " + row.view_name + " was inserted!!");
 			
 		} catch (Exception e) {
 			System.out.println("saveView exception: " +e.getMessage());

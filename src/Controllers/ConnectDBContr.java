@@ -5,6 +5,7 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+import java.util.List;
 
 import Database.DatabaseCreator;
 import Global.Session;
@@ -14,6 +15,13 @@ import SQLParser.FromTable;
 import SQLParser.SelectParser;
 import Utils.GuiUtils;
 import javafx.scene.web.WebEngine;
+import net.sf.jsqlparser.JSQLParserException;
+import net.sf.jsqlparser.parser.CCJSqlParserUtil;
+import net.sf.jsqlparser.statement.Statement;
+import net.sf.jsqlparser.statement.Statements;
+import net.sf.jsqlparser.statement.select.Select;
+import net.sf.jsqlparser.util.TablesNamesFinder;
+import net.sf.jsqlparser.util.*;
 
 public class ConnectDBContr {
 	
@@ -28,7 +36,7 @@ public class ConnectDBContr {
 		 
 		
 	 
-		
+		testSQLParsing();
 	 
 		
 	}
@@ -158,39 +166,32 @@ public class ConnectDBContr {
 	
 	
 	public void testSQLParsing() {
-		System.out.println("=======================================================");
-		System.out.println("             Test SQL Parsing");
-		System.out.println("=======================================================");
 		
+		System.out.println("------------------------- PARSER ---------------------------------");
 		
-		String sql = "WITH tabb123 AS (SELECT t1.column1 FROM tab1 t1)" +
-		 " SELECT tab2 t2 /* Test comment removal  */ , (select t3.column2, t3.column3 FROM tab3 t3 ) " + 
-		" FROM tab4 t4, tab5 t5, (SELECT t6.col5 FROM tab6 t6 ) sq1, tab7 t7 -- FROM TAG \n " +
-		", tab8 t8 INNER JOIN tab9 t9  ON (t8.col1 = t9.col2) " +
-		" WHERE t4.id = t5.id  -- End comment";
-		
-		
-		SelectParser selectParser = new SelectParser(sql);
-		
-		
-		
-		System.out.println("--------------------------------------------------------------------");
-		System.out.println("                   SQL Information");
-		System.out.println("--------------------------------------------------------------------");
-		
-		
-		for (FromTable t: selectParser.getSelectQuery().getTables() ) {
-			System.out.println("Table: " + t.getTable());
+		 try {
+			Statement stmts = CCJSqlParserUtil.parse("SELECT * FROM tab1");
+			
+			Select selectStatement = (Select) stmts;
+			
+			TablesNamesFinder tablesNamesFinder = new TablesNamesFinder();
+			
+			List<String> tableList = tablesNamesFinder.getTableList(selectStatement);
+			
+			
+			
+			for (String t: tableList) {
+				System.out.println("Table: " + t);
+			}
+			
+			
+		} catch (JSQLParserException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		
-		
-		System.out.println("Get table of alias D: " + selectParser.getSelectQuery().getTableByAlias("t8").getTable());
-		
-		
-		
-		
-		System.out.println("#####################################################################");
+		 
+		 
+		 System.out.println("------------------------- PARSER ---------------------------------");
 	}
 	
 	

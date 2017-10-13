@@ -251,6 +251,7 @@ public class DatabaseCreator {
 			"owner                 CHAR(30)," +
 			"name                  CHAR(30)," +
 			"type                  CHAR(30)," +
+			"parent                CHAR(30)," +
 			"examine_time         DATETIME," +
 			"unique (owner, name)"  +
 			")"

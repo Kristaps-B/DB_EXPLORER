@@ -11,6 +11,7 @@ C:\Users\KB00408\workspace\DB_EXPLORER\src\Controllers\ViewInformationContr.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\Database.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\DatabaseCreator.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\DBGlobal.java
+C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\DbUtils.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\SQLLite.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\SQLLiteOld.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Database\SQLOracle.java
@@ -29,8 +30,10 @@ C:\Users\KB00408\workspace\DB_EXPLORER\src\Models\TableInformationMod.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Models\ViewInformationMod.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\ColumnResult.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\CountResult.java
+C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\FkResult.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\IdResult.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\JoinResult.java
+C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\NameResult.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\PlsqlResult.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\Result.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Results\TableJoinResult.java

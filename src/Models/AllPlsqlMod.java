@@ -29,7 +29,10 @@ public class AllPlsqlMod {
 		
 		PlsqlResult rs = new PlsqlResult();
 		
-		String sql = "SELECT id, plsql_id, owner, name, type, examine_time FROM all_plsql  LIMIT " + limit + "  OFFSET " + offset;
+		String sql = "SELECT id, plsql_id, owner, name, type, parent, examine_time "
+				+ " FROM all_plsql "
+				+ " WHERE  parent IS NULL "
+				+ "  LIMIT " + limit + "  OFFSET " + offset;
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -95,12 +98,12 @@ public class AllPlsqlMod {
 		
 		
 		
-		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, '' examine_time" +
+		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, null parent, '' examine_time" +
 		" FROM all_objects " +
 		" WHERE 1=1 " +
 		activeUsers +
 		" and object_type IN " +
-		" ('PROCEDURE', 'FUNCTION') ";
+		" ('PROCEDURE', 'FUNCTION', 'PACKAGE') ";
 		
 		SQLOracle oQuerie = new SQLOracle();
 		
@@ -121,6 +124,10 @@ public class AllPlsqlMod {
 				
 				 
 				this.savePlsql(row);
+				
+				
+			
+				
 			}
 			
 			
@@ -134,18 +141,22 @@ public class AllPlsqlMod {
 	}
 	
 	
+
+	
+	
 	
 	private void savePlsql (PlsqlResult.Row row) {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
 		String sql = "insert into all_plsql "
-		+ "(plsql_id, owner, name, type, examine_time) "
+		+ "(plsql_id, owner, name, type, parent, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.plsql_id  + "',"
 		+ "'" + row.owner  + "',"
 		+ "'" + row.name  + "',"
 		+ "'" + row.type  + "',"
+		+ "'" + row.parent  + "',"
 		+ "NULL"
 		+ ")"
 		;
@@ -190,11 +201,16 @@ public class AllPlsqlMod {
 	}
 	
 	
-	public void analysePlsql(String owner, String name) {
+	public void analysePlsql(String owner, String name, String type) {
 		
 		try {
 			
 			update_examine_time(owner, name);
+			
+			
+			if (type.equals("PACKAGE")) {
+				analysePackage(owner, name, type);
+			}
 			
 			
 			
@@ -204,6 +220,96 @@ public class AllPlsqlMod {
 		}
 	}
 	
+	
+	
+	private void analysePackage (String owner, String name, String type) {
+		
+		
+		
+		System.out.println("Analyse package: " + owner + "." + name);
+		
+		
+        PlsqlResult rs = new PlsqlResult();
+
+
+		SQLOracle oQuerie = new SQLOracle();
+		
+		String sql =  "select "
+				+ "p.object_id id, "
+				+ "p.object_id plsql_id, "
+				+ "p.owner, "
+				+ "p.procedure_name name, "
+				+ "NVL2(a.object_id, 'FUNCTION', 'PROCEDURE') type, "
+				+ "p.object_name parent, "
+				+ "'' examine_time "
+				+ " FROM " 
+		        + " all_procedures p " 
+				+ " LEFT JOIN all_arguments a "
+				+ " ON ("
+				+ "  a.object_id = p.object_id"
+				+ "  AND a.subprogram_id = p.subprogram_id"
+				+ "  AND a.position = 0"
+				+ ") "
+				+ " WHERE "
+				+ " p.owner = '" + owner +"' "
+				+ " AND p.object_name = '" + name + "' "
+				+ " AND p.object_type = '" + type + "' "
+		        + " AND p.procedure_name IS NOT NULL "
+		        ;
+		
+		System.out.println("SQL: " + sql);
+		
+		try {
+			 
+			oQuerie.queryDatabase(sql, rs);
+			
+			
+			System.out.println("---------LOAD_PLSQL--------------");
+			
+			
+		
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				PlsqlResult.Row row = rs.getColumns().get(i);
+				
+				// System.out.println(" " + row.table_name);
+				
+				System.out.println("Object_name: " + row.name);
+				System.out.println("Object_type: " + row.type);
+				
+				
+				
+				savePlsql (row);
+				 
+				/*
+				aJson.addValue("id", "" + row.id);
+				aJson.addValue("plsql_id", "" + row.plsql_id);
+				aJson.addValue("owner", row.owner);
+				aJson.addValue("name", row.name);
+				aJson.addValue("type", row.type);
+				aJson.addValue("examine_time", row.examine_time);
+				
+				aJson.newRow();
+				*/
+			}
+			
+			
+			
+			
+			// result = aJson.getJson();
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		
+		
+	}	
 	
 	
 }

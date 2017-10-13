@@ -66,10 +66,10 @@ public class AllPlsqlContr {
 	}
 	
 	
-	public void analysePlsql ( String owner, String name) {
+	public void analysePlsql ( String owner, String name, String type) {
 		System.out.println("AllPlsqlContr.analysePlsql");
 		
-		this.allPlsqlMod.analysePlsql(owner, name);
+		this.allPlsqlMod.analysePlsql(owner, name, type);
 		
 	}
 		
