@@ -262,7 +262,33 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_plsql'");			
+			System.out.println("Created table 'all_plsql'");		
+			
+			
+			
+			
+			// Create table all_arguments
+			sql = "CREATE TABLE IF NOT EXISTS all_arguments (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"plsql_id              INTEGER,"  +
+			"argument_name         CHAR(30)," +
+			"data_type             CHAR(30)," +
+			"position              INTEGER," +
+			"in_out                CHAR(30)," +
+			"unique (plsql_id, argument_name)"  +
+			")"
+			;
+			
+			
+			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'all_plsql'");				
+			
+			
+			
+			
 			
 		
 			
