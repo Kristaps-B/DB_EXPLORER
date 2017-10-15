@@ -1,15 +1,21 @@
 package Models;
 
+import Database.DbUtils;
 import Database.SQLLite;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
+import Results.ArgumentsResult;
 import Results.PlsqlResult;
 import Results.Result;
 import Results.TableResult;
 import Utils.UserUtils;
 
 public class AllPlsqlMod {
+	
+	
+	private DbUtils dbUtils = new DbUtils();
+	
 	public AllPlsqlMod () {
 		
 	}
@@ -124,6 +130,11 @@ public class AllPlsqlMod {
 				
 				 
 				this.savePlsql(row);
+				
+				
+				if ( row.type.equals("PROCEDURE") || row.type.equals("FUNCTION") ) {
+					this.getAllArguments(row.owner, row.name, row.plsql_id);
+				}
 				
 				
 			
@@ -275,23 +286,22 @@ public class AllPlsqlMod {
 				
 				// System.out.println(" " + row.table_name);
 				
-				System.out.println("Object_name: " + row.name);
-				System.out.println("Object_type: " + row.type);
+				System.out.println("Object_name: " + row.name + " Object_type: " + row.type);
+ 
 				
 				
 				
 				savePlsql (row);
-				 
-				/*
-				aJson.addValue("id", "" + row.id);
-				aJson.addValue("plsql_id", "" + row.plsql_id);
-				aJson.addValue("owner", row.owner);
-				aJson.addValue("name", row.name);
-				aJson.addValue("type", row.type);
-				aJson.addValue("examine_time", row.examine_time);
 				
-				aJson.newRow();
-				*/
+				System.out.println("AFTER SAVE PLSQL!");
+				
+				
+				// Get arguments
+				if ( row.type.equals("PROCEDURE") || row.type.equals("FUNCTION") ) {
+					this.getAllArguments(row.owner, row.name, row.plsql_id);
+				}
+				 
+			
 			}
 			
 			
@@ -304,12 +314,119 @@ public class AllPlsqlMod {
 			System.out.println(e.getMessage());
 			
 			
+			
+			
 		}
 		
 		
 		
 		
 	}	
+	
+	
+	private void getAllArguments (String owner, String procFunctName, int plsqlId) {
+		
+		System.out.println("GetAllArguments: " + owner + " name: " + procFunctName);
+		
+		
+        ArgumentsResult rs = new ArgumentsResult();
+
+
+		SQLOracle oQuerie = new SQLOracle();
+		
+		String sql = 
+				  "SELECT "
+				+ " a.object_id id,"
+				+ " a.object_id plsql_id,"
+				+ " a.owner,"
+				+ " a.argument_name,"
+				+ " a.data_type,"
+				+ " a.position,"
+				+ " a.in_out "
+				+ " FROM "
+				+ " all_arguments a"
+				+ " WHERE a.owner = '" + owner + "' "
+				+ " AND a.object_name = '" + procFunctName + "' "
+				+ " AND a.object_id = '" + plsqlId + "' "
+				+ " ORDER BY a.position "
+		        ;
+		
+		System.out.println("SQL: " + sql);
+		
+		try {
+			 
+			oQuerie.queryDatabase(sql, rs);
+			
+			
+	
+			
+			
+		
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				ArgumentsResult.Row row = rs.getColumns().get(i);
+				
+				// System.out.println(" " + row.table_name);
+				
+				// System.out.println("Object_name: " + row.name);
+				// System.out.println("Object_type: " + row.type);
+				
+				System.out.println("Argument_name: " + row.argument_name );
+				
+				
+				saveArguments ( row );
+				
+				// savePlsql (row);
+				
+			
+			}
+			
+			
+			
+			
+			// result = aJson.getJson();
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+			
+			
+		}		
+		
+		
+	}
+	
+	
+	private void saveArguments ( ArgumentsResult.Row row ) {
+		
+		SQLLite  sqlLite = new SQLLite();
+		
+		String sql = "insert into all_arguments "
+		+ "( plsql_id, argument_name, data_type, position, in_out ) "
+		+ "VALUES (" 
+		+ "'" + row.plsql_id        + "', "
+		+ "'" + row.argument_name   + "', "
+		+ "'" + row.data_type       + "', "
+		+ "'" + row.position        + "', "
+        + "'" + row.in_out          + "' "
+		+ ")"
+		;
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+			System.out.println("PLSQL " + row.argument_name + " was inserted!");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}		
+		
+	}
 	
 	
 }

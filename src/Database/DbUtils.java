@@ -72,6 +72,34 @@ public class DbUtils {
 	}
 	
 	
+	public int getPlsqlId (String owner, String name) {
+		int id = -1;
+		
+		String sql = "SELECT id FROM all_plsql WHERE name = '" + name + "' AND owner = '" + owner + "' ";
+		
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		IdResult rs = new IdResult();
+		
+		try {
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			id = rs.getColumns().get(0).id;
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		
+		return id;
+		
+	}
+	
+	
 	public String getTableName (String  owner, int tableId) {
 		String result = null;
 		
