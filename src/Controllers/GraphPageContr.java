@@ -6,7 +6,7 @@ import Main.Main;
 import Models.GraphPageMod;
 import javafx.scene.web.WebEngine;
 
-public class GraphPageContr {
+public class GraphPageContr extends Controller  {
 	
 	private WebEngine engine;
 	

@@ -23,7 +23,7 @@ import net.sf.jsqlparser.statement.select.Select;
 import net.sf.jsqlparser.util.TablesNamesFinder;
 import net.sf.jsqlparser.util.*;
 
-public class ConnectDBContr {
+public class ConnectDBContr extends Controller  {
 	
 	private WebEngine engine;
 	

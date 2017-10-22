@@ -13,7 +13,7 @@ import Results.ViewTableResult;
 import Results.ViewsResult;
 import javafx.scene.web.WebEngine;
 
-public class ViewInformationContr {
+public class ViewInformationContr extends Controller  {
 	private WebEngine engine;
 	
 	private ViewInformationMod viewInformationMod;

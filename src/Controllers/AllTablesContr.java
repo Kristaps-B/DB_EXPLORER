@@ -8,7 +8,7 @@ import Models.AllTablesMod;
  
 import javafx.scene.web.WebEngine;
 
-public class AllTablesContr {
+public class AllTablesContr extends Controller  {
 	
 	private WebEngine engine;
 	private AllTablesMod allTablesMod;

@@ -8,7 +8,7 @@ import Models.TableInformationMod;
 import Models.ViewInformationMod;
 import javafx.scene.web.WebEngine;
 
-public class TableInformationContr {
+public class TableInformationContr  extends Controller {
 	private WebEngine engine;
 	
 	private TableInformationMod tableInformationMod;

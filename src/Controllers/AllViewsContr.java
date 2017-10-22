@@ -7,7 +7,7 @@ import Main.Main;
 import Models.AllViewsMod;
 import javafx.scene.web.WebEngine;
 
-public class AllViewsContr {
+public class AllViewsContr extends Controller  {
 	
 	private WebEngine engine;
 	

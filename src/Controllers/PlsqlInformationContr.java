@@ -9,7 +9,7 @@ import Models.TableInformationMod;
 import Models.ViewInformationMod;
 import javafx.scene.web.WebEngine;
 
-public class PlsqlInformationContr {
+public class PlsqlInformationContr extends Controller  {
 	private WebEngine engine;
 	
 	private PlsqlInformationMod plsqlInformationMod;

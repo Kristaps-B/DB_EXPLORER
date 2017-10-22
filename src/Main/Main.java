@@ -10,6 +10,7 @@ import Controllers.AllTablesContr;
 import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
+import Controllers.Controller;
 import Controllers.GraphPageContr;
 import Controllers.MainMenuContr;
 import Controllers.PlsqlInformationContr;
@@ -37,6 +38,7 @@ import netscape.javascript.JSObject;
 public class Main extends Application {
 	
 	private String title = "DATABASE_EXPLORER (Oracle) project V.0.2 - KBA(2017)";
+	public static Controller controller;
 	
 	public static void main (String [] args) {
 		
@@ -127,53 +129,54 @@ public class Main extends Application {
 		            
 		            // Create PAGE Controllers
 		            if (page.equals("connect_db.html")) {
+		            	Main.controller = new ConnectDBContr(engine);
 		            	System.out.println("PAGE: CONNECT_DB");
-		            	window.setMember("app", new ConnectDBContr(engine));
+		            	window.setMember("app", new ConnectDBContr(engine) );
 		            	engine.executeScript("create()");
 		            } else if (page.equals("main_menu.html")) {
 		            	
 		            	System.out.println("PAGE: MAIN_MENU");
-		            	window.setMember("app", new MainMenuContr(engine));
+		            	window.setMember("app", new MainMenuContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("all_users.html")) {
 		            	
 		            	System.out.println("PAGE: ALL_USERS");
-		            	window.setMember("app", new AllUsersContr(engine));
+		            	window.setMember("app", new AllUsersContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("all_tables.html")) {
 		            	
 		            	System.out.println("PAGE: ALL_TABLES");
-		            	window.setMember("app", new AllTablesContr(engine));
+		            	window.setMember("app", new AllTablesContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("all_views.html")) {
 		            	
 		            	System.out.println("PAGE: ALL_VIEWS");
-		            	window.setMember("app", new AllViewsContr(engine));
+		            	window.setMember("app", new AllViewsContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("view_information.html")) {
 		            	
 		            	System.out.println("PAGE: VIEW_INFORMATION");
-		            	window.setMember("app", new ViewInformationContr(engine));
+		            	window.setMember("app", new ViewInformationContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("table_information.html")) {
 		            	
 		            	System.out.println("PAGE: TABLE_INFORMATION");
-		            	window.setMember("app", new TableInformationContr(engine));
+		            	window.setMember("app", new TableInformationContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("all_plsql.html")) {
 		            	
 		            	System.out.println("PAGE: ALL_PLSQL");
-		            	window.setMember("app", new AllPlsqlContr(engine));
+		            	window.setMember("app", new AllPlsqlContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("plsql_information.html")) {
 		            	
 		            	System.out.println("PAGE: PLSQL_INFORMATION");
-		            	window.setMember("app", new PlsqlInformationContr(engine));
+		            	window.setMember("app", new PlsqlInformationContr(engine) );
 		            	engine.executeScript("create()"); 
 		            } else if (page.equals("graph_page.html")) {
 		            	
 		            	System.out.println("PAGE: GRAPH_PAGE");
-		            	window.setMember("app", new GraphPageContr(engine));
+		            	window.setMember("app", new GraphPageContr(engine) );
 		            	engine.executeScript("create()"); 
 		            }
 		            

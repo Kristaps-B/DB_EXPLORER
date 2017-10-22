@@ -8,7 +8,7 @@ import Models.AllPlsqlMod;
 
 import javafx.scene.web.WebEngine;
 
-public class AllPlsqlContr {
+public class AllPlsqlContr extends Controller {
 	private WebEngine engine;
 	private AllPlsqlMod allPlsqlMod;
 	

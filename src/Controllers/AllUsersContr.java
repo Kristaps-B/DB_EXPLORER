@@ -7,7 +7,7 @@ import Main.Main;
 import Models.AllUsersMod;
 import javafx.scene.web.WebEngine;
 
-public class AllUsersContr {
+public class AllUsersContr extends Controller  {
 	
 	private WebEngine engine;
 	private AllUsersMod allUsersMod;

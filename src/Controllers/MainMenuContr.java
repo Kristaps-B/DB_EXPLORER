@@ -6,7 +6,7 @@ import Global.Session;
 import Main.Main;
 import javafx.scene.web.WebEngine;
 
-public class MainMenuContr {
+public class MainMenuContr  extends Controller {
 	
 	private WebEngine engine;
 	
