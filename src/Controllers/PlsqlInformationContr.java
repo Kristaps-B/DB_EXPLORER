@@ -39,4 +39,15 @@ public class PlsqlInformationContr extends Controller  {
 	
 	
 	
+	public String loadProcFunc () {
+		String result = "";
+		
+		result = this.plsqlInformationMod.loadProcFunc(Session.owner, Session.plsqlName);
+		
+		return result;
+		
+	}
+	
+	
+	
 }

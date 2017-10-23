@@ -11,6 +11,9 @@
 				 document.getElementById('plsql_name').innerHTML = app.getPlsqlName();
 				 
 				 
+				 
+				 loadPlsql();
+				 
 				 // loadColumns();
 				 // loadJoins();
 			}
@@ -19,6 +22,45 @@
 			function allPlsql() {
 				
 				 app.toAllPlsql() ;
+				
+			}
+			
+			
+			function loadPlsql () {
+				
+				var str_json = app.loadProcFunc ();
+				
+				var tableHeaderRowCount = 1;
+				var table = document.getElementById('PLSQL_TABLE');
+				var rowCount = table.rows.length;
+				for (var i = tableHeaderRowCount; i < rowCount; i++) {
+				    table.deleteRow(tableHeaderRowCount);
+				}	
+				
+				
+				
+				
+				var table_json = JSON.parse(str_json);
+				
+				
+				
+				
+				for (var i = 0; i < table_json.length; i++) {
+					
+					var row = table.insertRow(i + 1);
+				 
+					
+					cell =  row.insertCell(0);
+					cell.innerHTML = table_json[i].name;
+					
+					cell =  row.insertCell(1);
+					cell.innerHTML = table_json[i].type;
+			 
+						
+					
+				}				
+				
+				
 				
 			}
 			
@@ -39,6 +81,16 @@
 		<center>
 			<button  class="btn btn-primary"  onclick="allPlsql();" > ALL_PLSQL </button>
 		</center>
+		
+		    <h2>Procedures/Functions</h2>
+			<table id = "PLSQL_TABLE"   class="table" >
+	
+				<tr>
+					<th>NAME</th>
+					<th>TYPE</th>
+				</tr>
+			
+			</table>	
 		
 
 		

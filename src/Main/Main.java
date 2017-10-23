@@ -129,55 +129,75 @@ public class Main extends Application {
 		            
 		            // Create PAGE Controllers
 		            if (page.equals("connect_db.html")) {
+		            	
 		            	Main.controller = new ConnectDBContr(engine);
 		            	System.out.println("PAGE: CONNECT_DB");
-		            	window.setMember("app", new ConnectDBContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()");
+		            	
 		            } else if (page.equals("main_menu.html")) {
 		            	
+		            	Main.controller =  new MainMenuContr(engine) ;
 		            	System.out.println("PAGE: MAIN_MENU");
-		            	window.setMember("app", new MainMenuContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("all_users.html")) {
 		            	
+		            	Main.controller =  new AllUsersContr(engine);
 		            	System.out.println("PAGE: ALL_USERS");
-		            	window.setMember("app", new AllUsersContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("all_tables.html")) {
 		            	
+		            	Main.controller = new AllTablesContr(engine);
 		            	System.out.println("PAGE: ALL_TABLES");
-		            	window.setMember("app", new AllTablesContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("all_views.html")) {
 		            	
+		            	Main.controller = new AllViewsContr(engine);
 		            	System.out.println("PAGE: ALL_VIEWS");
-		            	window.setMember("app", new AllViewsContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("view_information.html")) {
 		            	
+		            	Main.controller = new ViewInformationContr(engine);
 		            	System.out.println("PAGE: VIEW_INFORMATION");
-		            	window.setMember("app", new ViewInformationContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("table_information.html")) {
 		            	
+		            	Main.controller = new TableInformationContr(engine);
 		            	System.out.println("PAGE: TABLE_INFORMATION");
-		            	window.setMember("app", new TableInformationContr(engine) );
+		            	window.setMember("app", Main.controller  );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("all_plsql.html")) {
 		            	
+		            	Main.controller = new AllPlsqlContr(engine);
 		            	System.out.println("PAGE: ALL_PLSQL");
-		            	window.setMember("app", new AllPlsqlContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("plsql_information.html")) {
 		            	
+		            	Main.controller = new PlsqlInformationContr(engine);
 		            	System.out.println("PAGE: PLSQL_INFORMATION");
-		            	window.setMember("app", new PlsqlInformationContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            } else if (page.equals("graph_page.html")) {
 		            	
+		            	Main.controller = new GraphPageContr(engine);
 		            	System.out.println("PAGE: GRAPH_PAGE");
-		            	window.setMember("app", new GraphPageContr(engine) );
+		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
+		            	
 		            }
 		            
 		            
