@@ -41,9 +41,9 @@
 	}
 	
 	
-	function goToInformation (owner, plsql) {
+	function goToInformation (owner, plsql, type) {
 		
-		app.goToInformation(owner, plsql);
+		app.goToInformation(owner, plsql, type);
 	}
 	
 	
@@ -148,7 +148,7 @@
 			cell.innerHTML =   '<button  class="btn btn-default" onclick="analyseSinglePlsql(\''  + table_json[i].owner + '\', \'' + table_json[i].name + '\', \'' + table_json[i].type + '\')" > EXAMINE </button>';
 			
 			cell =  row.insertCell(7);
-			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].owner + '\', \'' + table_json[i].name + '\' )" > INFORMATION </button>';
+			cell.innerHTML =   '<button  class="btn btn-default" onclick="goToInformation(\'' + table_json[i].owner + '\', \'' + table_json[i].name + '\',  \'' + table_json[i].type + '\')" > INFORMATION </button>';
 				
 			
 		}

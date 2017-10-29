@@ -13,5 +13,6 @@ public class Session {
 	public static String viewName = "";
 	
 	public static String plsqlName = "";
+	public static String type = "";
 	
 }

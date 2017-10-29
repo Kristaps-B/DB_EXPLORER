@@ -53,11 +53,12 @@ public class AllPlsqlContr extends Controller {
 	}
 	
 	
-	public void goToInformation(String owner, String plsqlName) {
+	public void goToInformation(String owner, String plsqlName, String type) {
 		
 		
 		Session.owner = owner;
 		Session.plsqlName = plsqlName;
+		Session.type = type;
 		
 		System.out.println("AllTableContr.goToInformation");
 		URL url = Main.class.getResource("../WEB/html/plsql_information.html");

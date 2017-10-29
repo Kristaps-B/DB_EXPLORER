@@ -49,5 +49,34 @@ public class PlsqlInformationContr extends Controller  {
 	}
 	
 	
+	public String loadArguments () {
+		String result = "";
+		
+		result = this.plsqlInformationMod.getArguments(Session.owner, Session.plsqlName);
+		
+		return result;
+		
+	}
+	
+	
+	public String getType() {
+		return Session.type;
+	}
+	
+	
+	public void goToInformation(String owner, String plsqlName, String type) {
+		
+		
+		Session.owner = owner;
+		Session.plsqlName = plsqlName;
+		Session.type = type;
+		
+		System.out.println("AllTableContr.goToInformation");
+		URL url = Main.class.getResource("../WEB/html/plsql_information.html");
+		engine.load(url.toExternalForm());
+		
+	}	
+	
+	
 	
 }
