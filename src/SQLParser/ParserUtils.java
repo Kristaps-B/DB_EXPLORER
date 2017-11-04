@@ -232,13 +232,21 @@ public class ParserUtils {
 		boolean result = true;
 		
 		
+		
+		System.out.println("COLUMN: " + column);
+		column = column.trim();
+		
+		
 		if (isTextInside(column, "(") == true || isTextInside(column, ")") == true || isTextInside(column, "||") == true ) {
 			result = false;
+			
+			System.out.println("False 1");
 		}
 		
 		
-		if ( countCharMatch(column, ".") > 0  || countCharMatch(column, " ") > 0) {
+		if ( countCharMatch(column, ".") > 1  || countCharMatch(column, " ") > 1) {
 			result = false;
+			System.out.println("False 2 " + countCharMatch(column, ".") + " " + countCharMatch(column, " "));
 		}
 		
 		
@@ -252,7 +260,7 @@ public class ParserUtils {
 	
 	private int countCharMatch(String str, String c) {
 		
-		return (str.length() - str.replaceAll(c, "").length()) / c.length();
+		return (str.length() - str.replace(c, "").length()) / c.length();
 		
 	}
 	

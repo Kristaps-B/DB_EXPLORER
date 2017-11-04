@@ -62,50 +62,7 @@ public class SelectQuery {
 	
 	
 	
-	private String removeComments (String inSql) {
-		String outSql = "";
-		
-		System.out.println("Remove comments");
-		
-		boolean isComment = false;
-		
-		
-		for (int  i = 0; i < this.sql.length(); i ++) {
-			
-			char c = this.sql.charAt(i);
-			
-			// System.out.println("Character: " + c);
-			
-			if (parserUtils.atLocation(i, "--", this.sql) || parserUtils.atLocation(i, "/*", this.sql)) {
-				
-				isComment = true;
-				// System.out.println("Comment starts");
-			}
-			
-			
-			if (isComment == false) {
-				outSql += c;
-			} else {
-				if ( i > 0 && parserUtils.atLocation(i-1, "*/", this.sql)) {
-					
-					isComment = false;
-					
-				}
-				
-				if (c == '\n'  || c == '\r' ) {
-					isComment = false;
-				}
-			}
-			
-			
-		}
-		
-		
-		
-		
-		return outSql;
-		
-	}
+
 	
 	
 	
@@ -113,18 +70,7 @@ public class SelectQuery {
 	
 	private void splitClauses() {
 		
-		this.sql = this.sql.toUpperCase();
-		
-		System.out.println("SQL before removing comments: " + this.sql);
-		
-		this.sql = this.removeComments(this.sql);
-		
-		System.out.println("SQL after removing comments: " + this.sql);
-		
-		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
-		
-		
-		this.sql = " " + this.sql.trim().replaceAll(" +", " ") + " ";
+
 		
 		String withClause = "";
 		String selectClause = "";

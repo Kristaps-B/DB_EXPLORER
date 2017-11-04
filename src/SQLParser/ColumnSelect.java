@@ -85,7 +85,7 @@ public class ColumnSelect {
 		checkIsSubquery( this.column );
 		
 		
-		
+		System.out.println("  Is simple columns: " + this.isSimpleColumn);
 
 		
 	}

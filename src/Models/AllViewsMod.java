@@ -306,6 +306,8 @@ public class AllViewsMod {
 		//ArrayList <>  = selectQuery.
 		ArrayList <ColumnSelect> columnList = selectQuery.getColumnList();
 		
+		System.out.println("[[ Got " + columnList.size() + " columns!");
+		
 		for (ColumnSelect cs: columnList) {
 			
 			
