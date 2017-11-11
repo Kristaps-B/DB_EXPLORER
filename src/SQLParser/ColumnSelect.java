@@ -2,15 +2,16 @@ package SQLParser;
 
 public class ColumnSelect {
 	
-	private String sql = "";
+	private String sql = null;
 	
-	private String table = "";
-	private String column = "";
-	private String alias = "";
+	private String table = null;
+	private String tableAlias = null;
+	private String column = null;
+	private String alias = null;
 	
 	ParserUtils parserUtils;
 	
-	private SelectParser selectParser;
+	private MainSelectQuery selectParser;
 	
 	private boolean isSubquery = false;
 	private boolean isSimpleColumn = true;
@@ -39,15 +40,18 @@ public class ColumnSelect {
 			
 			tableColumn = parserUtils.getFirstPart(this.sql, " ");
 			
-			this.table = parserUtils.getFirstPart(tableColumn, ".");
+			this.tableAlias = parserUtils.getFirstPart(tableColumn, ".");
 			this.column = parserUtils.getSecondPart(tableColumn, ".");
 			
 			this.alias = parserUtils.getSecondPart(this.sql, " ");
 			
 			
+			this.table = this.mainQuery.getTableByAlias(tableAlias).getTable();
+			
+			
 			if (this.column.equals("")) {
-				this.column = this.table;
-				this.table = "";
+				this.column = this.tableAlias;
+				this.tableAlias = "";
 			}
 			
 			
@@ -76,7 +80,7 @@ public class ColumnSelect {
 		
 		
 		
-		System.out.println("table:  "  + this.table);
+		System.out.println("table:  "  + this.tableAlias);
 		System.out.println("column: " + this.column);
 		System.out.println("alias:  "  + this.alias);		
 		
@@ -92,6 +96,10 @@ public class ColumnSelect {
 	
 	
 	public String getTableAlias () {
+		return this.tableAlias;
+	}
+	
+	public String getTable () {
 		return this.table;
 	}
 	
@@ -122,7 +130,7 @@ public class ColumnSelect {
 			System.out.println("Inside brackets content: " + subquery);
 			
 			
-			this.selectParser = new SelectParser(subquery, this.mainQuery);
+			this.selectParser = new MainSelectQuery(subquery, this.mainQuery);
 			
 			
 			
@@ -142,8 +150,8 @@ public class ColumnSelect {
 	}
 	
 	
-	public SelectQuery getSubquery () {
-		return this.selectParser.getSelectQuery();
+	public MainSelectQuery getSubSelect () {
+		return this.selectParser;
 	}
 	
 	

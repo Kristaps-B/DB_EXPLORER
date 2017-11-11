@@ -2,7 +2,7 @@ package SQLParser;
 
 import java.util.ArrayList;
 
-public class SelectParser {
+public class MainSelectQuery {
 	private String sql = "";
 	
 	
@@ -26,7 +26,7 @@ public class SelectParser {
 	private ArrayList <SelectQuery> selectQueryList = new ArrayList <> ();
 	
 	
-	public SelectParser (String sql) {
+	public MainSelectQuery (String sql) {
 		this(sql, null);
 		
 		
@@ -50,7 +50,7 @@ public class SelectParser {
 		//splitWhereClauses();
 	}
 	
-	public SelectParser (String sql, SelectQuery outerQuery) {
+	public MainSelectQuery (String sql, SelectQuery outerQuery) {
 		this.sql = sql;
 		// splitClauses();
 		
@@ -86,7 +86,11 @@ public class SelectParser {
 	}
 	
 	
-	public SelectQuery getSelectQuery () {
+	public ArrayList <SelectQuery> getSelectQueryList () {
+		return selectQueryList;
+	}
+	
+	public SelectQuery getFirstQuery () {
 		return selectQueryList.get(0);
 	}
 	
@@ -141,6 +145,69 @@ public class SelectParser {
 		
 	}
 	
+	
+	
+	public ArrayList <FromTable> getTableList () {
+		ArrayList <FromTable> tableList = new ArrayList <> ();
+		
+		
+		for (SelectQuery sq: selectQueryList) {
+			
+			
+			tableList.addAll(sq.getTables());
+			
+		}
+		
+		
+		return tableList;
+	}
+	
+	
+	public ArrayList <ColumnSelect> getColumnList () {
+		
+		ArrayList <ColumnSelect> columnList = new ArrayList <> ();
+		
+		for (SelectQuery sq: selectQueryList) {
+			
+			
+			columnList.addAll(sq.getColumnList());
+			
+		}		
+		
+		
+		return columnList;
+		
+		
+	}
+	
+	
+	
+	public ArrayList <WhereExpression> getWhereList () {
+		
+		ArrayList <WhereExpression> whereList = new ArrayList <> ();
+		
+		
+		for (SelectQuery sq: selectQueryList) {
+			
+			
+			whereList.addAll(sq.getWhereList());
+			
+		}	
+		
+		return whereList;
+		
+		
+	}
+	
+	
+	public FromTable getColumnTable () {
+		
+		FromTable table = null;
+		
+		
+		return table;
+		
+	}
 	
 
 	

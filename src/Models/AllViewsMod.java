@@ -15,7 +15,7 @@ import Results.ViewTextResult;
 import Results.ViewsResult;
 import SQLParser.ColumnSelect;
 import SQLParser.FromTable;
-import SQLParser.SelectParser;
+import SQLParser.MainSelectQuery;
 import SQLParser.SelectQuery;
 import SQLParser.WhereExpression;
 
@@ -240,7 +240,7 @@ public class AllViewsMod {
 			System.out.println("###                       PARSE START                                       ##");
 			System.out.println("##############################################################################");
 			System.out.println("##############################################################################");
-			SelectParser selectParser = new SelectParser(sqlView);
+			MainSelectQuery selectParser = new MainSelectQuery(sqlView);
 			
 			System.out.println("##############################################################################");
 			System.out.println("##############################################################################");
@@ -266,9 +266,9 @@ public class AllViewsMod {
 	}
 	
 	
-	private void saveViewInformation (SelectParser selectParser, String owner, String view) {
+	private void saveViewInformation (MainSelectQuery selectParser, String owner, String view) {
 		
-		SelectQuery selectQuery = selectParser.getSelectQuery();
+		// SelectQuery selectQuery = selectParser.getSelectQuery();
 		
 		DbUtils dbUtils = new DbUtils();
 		
@@ -278,7 +278,7 @@ public class AllViewsMod {
 		System.out.println("viewId: " + viewId);
 		
 		
-		ArrayList <FromTable> tableList =  selectQuery.getTables();
+		ArrayList <FromTable> tableList =  selectParser.getTableList();
 		
 		System.out.println("----------------- TABLES ---------------------");
 		
@@ -304,7 +304,7 @@ public class AllViewsMod {
 		
 		System.out.println("----------------- COLUMNS ---------------------");
 		//ArrayList <>  = selectQuery.
-		ArrayList <ColumnSelect> columnList = selectQuery.getColumnList();
+		ArrayList <ColumnSelect> columnList = selectParser.getColumnList();
 		
 		System.out.println("[[ Got " + columnList.size() + " columns!");
 		
@@ -312,7 +312,8 @@ public class AllViewsMod {
 			
 			
  
-			String table = selectQuery.getColumnTable( cs.getTableAlias(), cs.getColumn() ).getTable();
+			// String table = selectParser.getColumnTable( cs.getTableAlias(), cs.getColumn()).getTable();
+			String table = cs.getTable();
 			String column = cs.getColumn();
 			String alias = cs.getAlias();
 			
@@ -333,7 +334,7 @@ public class AllViewsMod {
 		
 		
 		System.out.println("------------- JOINS --------------------------");
-		ArrayList <WhereExpression> whereList = selectQuery.getWhereList();
+		ArrayList <WhereExpression> whereList = selectParser.getWhereList();
 		
 		
 		for (WhereExpression we: whereList) {

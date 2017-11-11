@@ -49,8 +49,8 @@ public class WithClause {
 	
 	
 	
-	public SelectParser getSelectParser(String tableName) {
-		SelectParser selectParser = null;
+	public MainSelectQuery getSelectParser(String tableName) {
+		MainSelectQuery selectParser = null;
 		
 		for (WithTable sq: tableList) {
 			

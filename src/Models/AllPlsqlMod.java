@@ -8,6 +8,7 @@ import Json.ArrayJson;
 import Results.ArgumentsResult;
 import Results.PlsqlResult;
 import Results.Result;
+import Results.SourceResult;
 import Results.TableResult;
 import Utils.UserUtils;
 
@@ -132,9 +133,7 @@ public class AllPlsqlMod {
 				this.savePlsql(row);
 				
 				
-				if ( row.type.equals("PROCEDURE") || row.type.equals("FUNCTION") ) {
-					this.getAllArguments(row.owner, row.name, row.plsql_id);
-				}
+				
 				
 				
 			
@@ -222,6 +221,16 @@ public class AllPlsqlMod {
 			if (type.equals("PACKAGE")) {
 				analysePackage(owner, name, type);
 			}
+			
+			
+			if ( type.equals("PROCEDURE") || type.equals("FUNCTION") ) {
+				
+				int plsqlId = dbUtils.getPlsqlId(owner, name);
+				this.getAllArguments(owner, name, plsqlId);
+			}
+			
+			
+			analyseSource ( owner, name );
 			
 			
 			
@@ -425,6 +434,69 @@ public class AllPlsqlMod {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
+		
+	}
+	
+	
+	private void analyseSource (String owner, String name) {
+		
+
+		SQLOracle oQuerie = new SQLOracle();
+		
+		SourceResult rs = new SourceResult();
+		
+		String sql = 
+				  " SELECT line, text"
+				  + " FROM all_source "
+				  + " WHERE owner = '" + owner + "' "
+				  + " AND name = '" + name + "' "
+				  + " ORDER BY line ASC "
+		        ;
+		
+		System.out.println("SQL: " + sql);
+		
+		try {
+			 
+			oQuerie.queryDatabase(sql, rs);
+			
+			
+	
+			
+			
+		
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				SourceResult.Row row = rs.getColumns().get(i);
+				
+				// System.out.println(" " + row.table_name);
+				
+				// System.out.println("Object_name: " + row.name);
+				// System.out.println("Object_type: " + row.type);
+				
+				System.out.println("Line: " + row.line + " text: " + row.text );
+				
+			 
+				
+				// savePlsql (row);
+				
+			
+			}
+			
+			
+			
+			
+			// result = aJson.getJson();
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+			
+			
+		}				
+		
 		
 	}
 	

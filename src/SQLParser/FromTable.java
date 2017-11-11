@@ -11,7 +11,7 @@ public class FromTable {
 	private boolean isSubquery = false;
 	
 	
-	private SelectParser selectParser;
+	private MainSelectQuery selectParser;
 	private ParserUtils parserUtils;
 	
 	private SelectQuery mainQuery;
@@ -77,12 +77,12 @@ public class FromTable {
 		
 		WithClause withClause = mainQuery.getWith();
 		
-		SelectParser withTableParser = withClause.getSelectParser(table);
+		MainSelectQuery withTableParser = withClause.getSelectParser(table);
 		
 		if (withTableParser != null) {
 			
 			System.out.println("With SUBSTITUTION!!! table: " + table);
-			System.out.println("Table Query: " + withTableParser.getSelectQuery().getQuery());
+			// System.out.println("Table Query: " + withTableParser.getSelectQuery().getQuery());
 			
 			isSubquery = true;
 			this.selectParser = withTableParser;
@@ -104,7 +104,7 @@ public class FromTable {
 			System.out.println("Subquery: " + subquery);
 			
 			
-			this.selectParser = new SelectParser(subquery);
+			this.selectParser = new MainSelectQuery(subquery);
 		}
 		
 	}
@@ -115,9 +115,9 @@ public class FromTable {
 	}
 	
 	
-	public SelectQuery getSubquery () {
+	public MainSelectQuery getSubquery () {
 		
-		return selectParser.getSelectQuery();
+		return selectParser;
 		
 	}
 	

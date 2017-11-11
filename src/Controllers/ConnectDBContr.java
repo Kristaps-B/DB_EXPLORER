@@ -12,7 +12,7 @@ import Global.Session;
 import Main.Main;
 import Models.ConnectDBMod;
 import SQLParser.FromTable;
-import SQLParser.SelectParser;
+import SQLParser.MainSelectQuery;
 import Utils.GuiUtils;
 import javafx.scene.web.WebEngine;
 import net.sf.jsqlparser.JSQLParserException;

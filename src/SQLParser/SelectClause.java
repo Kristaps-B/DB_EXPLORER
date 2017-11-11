@@ -109,7 +109,7 @@ public class SelectClause {
 		for (ColumnSelect cs: columnSelectList) {
 			
 			if (cs.getIsSubquery() == true) {
-				whereList.addAll( cs.getSubquery().getWhereList());
+				whereList.addAll( cs.getSubSelect().getWhereList()   );
 			}
 			
 		}

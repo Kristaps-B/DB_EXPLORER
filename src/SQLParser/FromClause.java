@@ -130,7 +130,7 @@ public class FromClause {
 		
 		for ( FromTable t: this.fromTableList ) {
 			if ( t.getIsSubstring() == true ) {
-				tables.addAll(t.getSubquery().getTables());
+				tables.addAll(t.getSubquery().getTableList());
 			} else {
 				tables.add(t);
 				
@@ -165,10 +165,10 @@ public class FromClause {
 					}
 				} else {
 					System.out.println("Get by alias: " + alias + " from substring");
-					System.out.println("Substring query: " + ft.getSubquery().getQuery());
+					// System.out.println("Substring query: " + ft.getSubquery().getQuery());
 					
 					
-					fromTable = ft.getSubquery().getTableByAlias(alias);
+					fromTable = ft.getSubquery().getFirstQuery().getTableByAlias(alias);
 					
 					
 					if (fromTable != null) {
@@ -246,15 +246,15 @@ public class FromClause {
 				}
 			} else {
 				
-				System.out.println("Substring query: " + ft.getSubquery().getQuery());
+				// System.out.println("Substring query: " + ft.getSubquery().getQuery());
 				
 				
 				//fromTable = ft.getSubquery().getTableByAlias(alias);
 				
 				
-				ColumnSelect columnSelect = ft.getSubquery().getColumnSelect(column);
+				ColumnSelect columnSelect = ft.getSubquery().getFirstQuery().getColumnSelect(column);
 				
-				fromTable = ft.getSubquery().getColumnTable(columnSelect.getTableAlias(), columnSelect.getColumn());
+				fromTable = ft.getSubquery().getFirstQuery().getColumnTable(columnSelect.getTableAlias(), columnSelect.getColumn());
 				
 				
 				
