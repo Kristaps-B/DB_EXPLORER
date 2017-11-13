@@ -20,5 +20,10 @@
 	<classpathentry kind="lib" path="lib/jsqlparser-1.1.jar"/>
 	<classpathentry kind="lib" path="lib/ojdbc6.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.11.2.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/fontbox-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/pdfbox-tools-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/preflight-2.0.8.jar"/>
+	<classpathentry kind="lib" path="lib/xmpbox-2.0.8.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

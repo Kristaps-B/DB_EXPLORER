@@ -56,6 +56,12 @@ public class MainMenuContr  extends Controller {
 	}
 	
 	
+	public void exportDocumentation() {
+		URL url = Main.class.getResource("../WEB/html/export_documentation.html");
+		engine.load(url.toExternalForm());	
+	}
+	
+	
 	public String getDBInformation () {
 		
 		String result = "{";

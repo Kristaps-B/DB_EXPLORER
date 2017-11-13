@@ -11,6 +11,7 @@ import Controllers.AllUsersContr;
 import Controllers.AllViewsContr;
 import Controllers.ConnectDBContr;
 import Controllers.Controller;
+import Controllers.ExportDocContr;
 import Controllers.GraphPageContr;
 import Controllers.MainMenuContr;
 import Controllers.PlsqlInformationContr;
@@ -40,6 +41,8 @@ public class Main extends Application {
 	private String title = "DATABASE_EXPLORER (Oracle) project V.0.2 - KBA(2017)";
 	public static Controller controller;
 	
+	private static Stage primaryStage;
+	
 	public static void main (String [] args) {
 		
 		System.out.println("==================================================");
@@ -56,7 +59,7 @@ public class Main extends Application {
 		primaryStage.setTitle(title);
 		StackPane layout = new StackPane();
 		
-		
+		this.primaryStage = primaryStage;
 		
 		
 		//Add view
@@ -195,6 +198,13 @@ public class Main extends Application {
 		            	
 		            	Main.controller = new GraphPageContr(engine);
 		            	System.out.println("PAGE: GRAPH_PAGE");
+		            	window.setMember("app", Main.controller );
+		            	engine.executeScript("create()"); 
+		            	
+		            } else if (page.equals("export_documentation.html")) {
+		            	
+		            	Main.controller = new ExportDocContr(engine, primaryStage);
+		            	System.out.println("PAGE: EXPORT_DOCUMENTATION");
 		            	window.setMember("app", Main.controller );
 		            	engine.executeScript("create()"); 
 		            	
