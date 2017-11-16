@@ -22,7 +22,19 @@
 		
 		function export_doc () {
 			
-			app.exportDoc();
+			app.exportDoc(document.getElementById('PATH').value);
+			
+		}
+		
+		function setPath () {
+			
+			var result = app.setPath();
+			
+			
+			document.getElementById('PATH').value = result;
+			
+			
+			
 			
 		}
 		
@@ -31,7 +43,11 @@
 	</script>
 	
 </head>
-<body  >
+<body>
+
+
+
+
 	<center>
 		<h1>EXPORT_DOCUMENTATION</h1>
 	</center>
@@ -42,9 +58,19 @@
 		<button class="btn btn-primary"   onclick="toMenu()" > TO_MENU </button></br>
  
 	</center>
+	<br/>
 	
+	<div class="input-group">	
+					<input class="form-control"  id="PATH" type="text" value = "" />
+					<span class="input-group-btn">
+					<button class="btn btn-primary"   onclick="setPath()" > LOCATION </button>
+					</span>
+	</div>
+	</br>
+	<center>
+		<button class="btn btn-primary"   onclick="export_doc()" > EXPORT </button></br>
+	</center>
 	
-	<button class="btn btn-primary"   onclick="export_doc()" > EXPORT </button></br>
 
 
 	
