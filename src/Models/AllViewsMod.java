@@ -30,7 +30,7 @@ public class AllViewsMod {
 		
 		UsersResult rs = new UsersResult();
 		
-		String sql = "SELECT id, user_id, username, active FROM all_users WHERE active='Y'";
+		String sql = "SELECT id, user_id, username, active FROM users WHERE active='Y'";
 		
 		
 		try {
@@ -107,7 +107,7 @@ public class AllViewsMod {
 	public void saveView (ViewsResult.Row row) {
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_views"
+		String sql = "insert into views"
 		+ "(view_id, owner, view_name, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.view_id  + "',"
@@ -141,7 +141,7 @@ public class AllViewsMod {
 		
 		ViewsResult rs = new ViewsResult();
 		
-		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM all_views LIMIT " + limit + "  OFFSET " + offset;
+		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM views LIMIT " + limit + "  OFFSET " + offset;
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -194,7 +194,7 @@ public class AllViewsMod {
 	private void update_examine_time (String owner, String viewName) throws Exception {
 		SQLLite sqlLite = new SQLLite();
 		
-		String sql  = "UPDATE all_views " +
+		String sql  = "UPDATE views " +
 		"SET examine_time = DATETIME('now', 'localtime')" +
 	    "WHERE owner = '" + owner +"' AND view_name = '" + viewName + "' ";
 		
@@ -422,7 +422,7 @@ public class AllViewsMod {
 		
 		
 		
-		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
+		String sql = "SELECT id FROM views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -458,7 +458,7 @@ public class AllViewsMod {
 	private void saveViewTable (int viewId, int tableId, String alias) {
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_view_tables"
+		String sql = "insert into view_tables"
 		+ "(view_id, table_id, alias) "
 		+ "VALUES (" 
 		+ "" + viewId  + ","

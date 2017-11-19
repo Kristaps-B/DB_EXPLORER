@@ -10,6 +10,7 @@ import Results.PlsqlResult;
 import Results.Result;
 import Results.SourceResult;
 import Results.TableResult;
+import SQLParser.PlsqlParser;
 import Utils.UserUtils;
 
 public class AllPlsqlMod {
@@ -37,9 +38,11 @@ public class AllPlsqlMod {
 		PlsqlResult rs = new PlsqlResult();
 		
 		String sql = "SELECT id, plsql_id, owner, name, type, parent, examine_time "
-				+ " FROM all_plsql "
-				+ " WHERE  parent IS NULL "
+				+ " FROM plsql "
+				+ " WHERE  parent = 'null' "
 				+ "  LIMIT " + limit + "  OFFSET " + offset;
+		
+		System.out.println(sql);
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -105,7 +108,7 @@ public class AllPlsqlMod {
 		
 		
 		
-		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, null parent, '' examine_time" +
+		String sql = "select object_id id, object_id plsql_id, owner, object_name name, object_type type, '' parent, '' examine_time" +
 		" FROM all_objects " +
 		" WHERE 1=1 " +
 		activeUsers +
@@ -159,7 +162,7 @@ public class AllPlsqlMod {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_plsql "
+		String sql = "insert into plsql "
 		+ "(plsql_id, owner, name, type, parent, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.plsql_id  + "',"
@@ -190,7 +193,7 @@ public class AllPlsqlMod {
 	private void update_examine_time (String owner, String name) throws Exception {
 		SQLLite sqlLite = new SQLLite();
 		
-		String sql  = "UPDATE all_plsql " +
+		String sql  = "UPDATE plsql " +
 		"SET examine_time = DATETIME('now', 'localtime')" +
 	    "WHERE owner = '" + owner +"' AND name = '" + name + "' ";
 		
@@ -413,7 +416,7 @@ public class AllPlsqlMod {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_arguments "
+		String sql = "insert into arguments "
 		+ "( plsql_id, argument_name, data_type, position, in_out ) "
 		+ "VALUES (" 
 		+ "'" + row.plsql_id        + "', "
@@ -440,6 +443,12 @@ public class AllPlsqlMod {
 	
 	private void analyseSource (String owner, String name) {
 		
+		
+		
+		System.out.println("----------------------------------------------------------");
+		System.out.println("-------                   ANALYSE_SOURCE           -------");
+		System.out.println("----------------------------------------------------------");
+		
 
 		SQLOracle oQuerie = new SQLOracle();
 		
@@ -450,6 +459,7 @@ public class AllPlsqlMod {
 				  + " FROM all_source "
 				  + " WHERE owner = '" + owner + "' "
 				  + " AND name = '" + name + "' "
+				  + " AND type IN ('PACKAGE BODY', 'FUNCTION', 'PROCEDURE') "
 				  + " ORDER BY line ASC "
 		        ;
 		
@@ -462,25 +472,46 @@ public class AllPlsqlMod {
 			
 	
 			
-			
+			String plsqlSource = "";
 		
 			
 			for (int i = 0; i < rs.getColumns().size(); i++) {
 				
 				SourceResult.Row row = rs.getColumns().get(i);
 				
-				// System.out.println(" " + row.table_name);
+		 
 				
-				// System.out.println("Object_name: " + row.name);
-				// System.out.println("Object_type: " + row.type);
-				
-				System.out.println("Line: " + row.line + " text: " + row.text );
+				plsqlSource += row.text;
 				
 			 
 				
-				// savePlsql (row);
+		 
 				
 			
+			}
+			
+			 
+			
+			
+			PlsqlParser plsqlParser = new PlsqlParser (plsqlSource);
+			
+			
+			for (PlsqlParser.OwnerTableDml otd: plsqlParser.getDmls()) {
+				
+				String tabOwner = otd.getOwner();
+				
+				if (tabOwner.equals("")) {
+					tabOwner = owner;
+				}
+				
+				String tabName = otd.getTable();
+				String type = otd.getType();
+				
+				
+				System.out.println("Owner: " + tabOwner + " Table: " + tabName + " type: " + type);
+				
+				this.saveDml(tabOwner, tabName, type, owner, name);
+				
 			}
 			
 			
@@ -497,6 +528,40 @@ public class AllPlsqlMod {
 			
 		}				
 		
+		
+	}
+	
+	
+	private void saveDml (String tabOwner, String tabName, String type, String plsqlOwner, String plsqlName) {
+		
+		SQLLite  sqlLite = new SQLLite();
+		
+		
+		int tableId = dbUtils.getTableId(tabOwner, tabName);
+		int plsqlId = dbUtils.getPlsqlId(plsqlOwner, plsqlName);
+		
+		String sql = "insert into dml_statements "
+		+ "( plsql_id, table_id, type ) "
+		+ "VALUES (" 
+		+ " " + plsqlId        + ", "
+		+ " " + tableId   + " , "
+		+ " '" + type       + "'  "
+		+ ")"
+		;
+		
+		
+		System.out.println("INSERT: " + sql);
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+			System.out.println("DML " + tabOwner + "." + tabName + " " + type + " was inserted!");
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}		
 		
 	}
 	

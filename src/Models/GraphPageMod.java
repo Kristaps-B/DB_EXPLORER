@@ -28,7 +28,7 @@ public class GraphPageMod {
 		
 		
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM all_tables " ;
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables " ;
 		
 		
 		ArrayJson aJson = new ArrayJson ();
@@ -92,7 +92,7 @@ public class GraphPageMod {
 	 		+ "j.right_column right_column, "
 	 		+ "j.left_owner left_owner, "
 	 		+ "j.right_owner right_owner " + 
-		" FROM all_joins j" + 
+		" FROM joins j" + 
 		" WHERE 1=1 " 
 
 		;

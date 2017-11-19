@@ -279,4 +279,132 @@ public class ParserUtils {
 	}
 	
 	
+	public String removeComments (String inSql) {
+		String outSql = "";
+		
+		System.out.println("Remove comments");
+		
+		boolean isComment = false;
+		
+		
+		for (int  i = 0; i < inSql.length(); i ++) {
+			
+			char c = inSql.charAt(i);
+			
+			// System.out.println("Character: " + c);
+			
+			if (atLocation(i, "--", inSql) || atLocation(i, "/*", inSql)) {
+				
+				isComment = true;
+				// System.out.println("Comment starts");
+			}
+			
+			
+			if (isComment == false) {
+				outSql += c;
+			} else {
+				if ( i > 0 && atLocation(i-1, "*/", inSql)) {
+					
+					isComment = false;
+					
+				}
+				
+				if (c == '\n'  || c == '\r' ) {
+					isComment = false;
+				}
+			}
+			
+			
+		}
+		
+		
+		
+		
+		return outSql;
+		
+	}
+	
+	
+	public ArrayList <String> getWordsAfter (String fullStr, String findStr) {
+		ArrayList <String> result = new ArrayList <> ();
+		
+		String rightStr = fullStr;
+		
+		
+		while (isTextInside(rightStr, findStr) == true) {
+			
+			rightStr = getSecondPart(rightStr, findStr);
+			
+			// System.out.println("RightStr: " + rightStr);
+			
+			result.add(getNextWord(rightStr));
+			
+			// System.out.println("INSERT: " + getNextWord(rightStr) );
+			
+			
+		}
+		
+		
+		
+		
+		
+		
+		return result;
+		
+		
+	}
+	
+	
+	public String getNextWord (String str) {
+		String result = "";
+		
+		result = str.split("[ (]")[0];
+		
+		
+		return result;
+	}
+	
+	
+	
+	public String getOwner (String str) {
+		String result = "";
+		
+
+		String owner = this.getFirstPart(str, ".");
+		String table = this.getSecondPart(str, ".");
+		
+		if (table.equals("")) {
+			table= owner;
+			owner = "";
+		}
+		
+		result = owner;
+		
+		
+		return result;
+		
+	}
+	
+	public String getTable (String str) {
+		
+		String result = "";
+		
+		String owner = this.getFirstPart(str, ".");
+		String table = this.getSecondPart(str, ".");
+		
+		if (table.equals("")) {
+			table= owner;
+			owner = "";
+		}
+		
+		
+		result = table;
+		
+		
+		
+		return result;
+		
+	}
+	
+	
 }

@@ -3,7 +3,6 @@ package Models;
 import java.sql.ResultSet;
 
 import Database.SQLLite;
-import Database.SQLLiteOld;
 import Database.SQLOracle;
 import Global.Session;
 import Json.ArrayJson;
@@ -68,7 +67,7 @@ public class AllUsersMod {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_users"
+		String sql = "insert into users"
 		+ "(user_id, username, active) "
 		+ "VALUES (" 
 		+ "'" + row.user_id  + "',"
@@ -102,7 +101,7 @@ public class AllUsersMod {
 		
 		UsersResult rs = new UsersResult();
 		
-		String sql = "SELECT id, user_id, username, active FROM all_users";
+		String sql = "SELECT id, user_id, username, active FROM users";
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -148,7 +147,7 @@ public class AllUsersMod {
 		
 		try {
 			
-			String sql = "update all_users set active = '" + active + "' WHERE id = " + id;
+			String sql = "update users set active = '" + active + "' WHERE id = " + id;
 					
 					;
 			

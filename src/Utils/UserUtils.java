@@ -20,7 +20,7 @@ public class UserUtils {
 		
 		UsersResult rs = new UsersResult();
 		
-		String sql = "SELECT id, user_id, username, active FROM all_users WHERE active='Y'";
+		String sql = "SELECT id, user_id, username, active FROM users WHERE active='Y'";
 		
 		
 		try {

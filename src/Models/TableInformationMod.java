@@ -33,7 +33,7 @@ public class TableInformationMod {
 		
 		TableResult rs = new TableResult();
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM all_tables WHERE id = " + tableId;
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables WHERE id = " + tableId;
 		
 		System.out.println(sql);
 		
@@ -67,7 +67,7 @@ public class TableInformationMod {
 		
 		int tableId = dbUtils.getTableId(Session.owner, Session.tableName);
 		
-		String sql = "SELECT id, column_id, table_id, column_name, data_type FROM all_columns  WHERE table_id = " + tableId + " ORDER BY column_id ASC";
+		String sql = "SELECT id, column_id, table_id, column_name, data_type FROM columns  WHERE table_id = " + tableId + " ORDER BY column_id ASC";
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -139,7 +139,7 @@ public class TableInformationMod {
 				+ " j.right_table right_table_name,"
 				+ " j.left_column left_column_name,"
 				+ " j.right_column right_column_name " + 
-		" FROM all_joins j " + 
+		" FROM joins j " + 
 		" WHERE 1=1 " + 
 	    
 		"AND '" + Session.owner + "' IN (j.left_owner, j.right_owner) " +

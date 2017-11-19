@@ -16,7 +16,7 @@ public class DbUtils {
 		
 		
 		
-		String sql = "SELECT id FROM all_tables WHERE table_name = '" + table + "' AND owner = '" + owner + "' ";
+		String sql = "SELECT table_id id FROM tables WHERE table_name = '" + table + "' AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -48,7 +48,7 @@ public class DbUtils {
 		int result = -1;
 		
 		
-		String sql = "SELECT id FROM all_views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
+		String sql = "SELECT id FROM views WHERE view_name = '" + view + "' AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -75,7 +75,7 @@ public class DbUtils {
 	public int getPlsqlId (String owner, String name) {
 		int id = -1;
 		
-		String sql = "SELECT id FROM all_plsql WHERE name = '" + name + "' AND owner = '" + owner + "' ";
+		String sql = "SELECT plsql_id id FROM plsql WHERE name = '" + name + "' AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -104,7 +104,7 @@ public class DbUtils {
 		String result = null;
 		
 
-		String sql = "SELECT table_name name FROM all_tables WHERE id = " + tableId + " AND owner = '" + owner + "' ";
+		String sql = "SELECT table_name name FROM tables WHERE id = " + tableId + " AND owner = '" + owner + "' ";
 		
 		
 		SQLLite sqlLite = new SQLLite();
@@ -135,7 +135,7 @@ public class DbUtils {
 		
 		
 		
-		String sql = "SELECT id FROM all_columns " + 
+		String sql = "SELECT id FROM columns " + 
 		" WHERE table_id = " + table_id + " " +
 		" AND column_name = '" + column + "'";
 				;
@@ -180,7 +180,7 @@ public class DbUtils {
 		
 		System.out.println("JoinExists");
 		
-		String sql = "SELECT COUNT(1) CNT FROM all_joins " + 
+		String sql = "SELECT COUNT(1) CNT FROM joins " + 
 		" WHERE " +
 		" ( left_owner = '" + leftOwner + "' " +
 		" AND right_owner = '" + rightOwner + "' " +
@@ -246,7 +246,7 @@ public class DbUtils {
 			System.out.println("FindJoinId");
 			
 			String sql = "SELECT ID  "
-					+ "FROM all_joins " + 
+					+ "FROM joins " + 
 			" WHERE " +
 			" ( left_owner = '" + leftOwner + "' " +
 			" AND right_owner = '" + rightOwner + "' " +
@@ -305,7 +305,7 @@ public class DbUtils {
 			
 			System.out.println("SaveTableJoin");
 			
-			String sql = "insert into all_joins "
+			String sql = "insert into joins "
 			+ "(left_owner, right_owner, left_table, right_table, left_column, right_column) "
 			+ "VALUES (" 
 			+ " '" + leftOwner  + "', "

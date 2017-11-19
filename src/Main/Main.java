@@ -17,7 +17,7 @@ import Controllers.MainMenuContr;
 import Controllers.PlsqlInformationContr;
 import Controllers.TableInformationContr;
 import Controllers.ViewInformationContr;
-import Database.Database;
+ 
 import SQLParser.MainSelectQuery;
 //import Database.Database;
 import javafx.application.Application;

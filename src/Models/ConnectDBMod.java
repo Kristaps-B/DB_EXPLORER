@@ -20,7 +20,7 @@ public class ConnectDBMod {
 		SQLLite lInsert = new SQLLite();
 		
 		
-		String sql = "INSERT INTO all_databases (ip, port, sid, username, password) " +
+		String sql = "INSERT INTO databases (ip, port, sid, username, password) " +
 				" VALUES (" +
 				"'"+ ip + "'," +
 				"'"+ port + "'," +
@@ -98,7 +98,7 @@ public class ConnectDBMod {
 			
 				
 				String sql = "SELECT id, ip, port, sid, username, password " +
-				" FROM all_databases"
+				" FROM databases"
 						;
 				
 				
@@ -175,7 +175,7 @@ public class ConnectDBMod {
 						"'"+ password + "'" +
 						")";
 						*/
-						"DELETE FROM all_databases WHERE id = " + id;
+						"DELETE FROM databases WHERE id = " + id;
 					 
 						
 			 

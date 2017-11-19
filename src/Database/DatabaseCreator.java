@@ -35,9 +35,9 @@ public class DatabaseCreator {
 			int result = 0;
 			
 			
-			// Create table all_databases
+			// Create table databases
 			String sql = "";
-			sql = "CREATE TABLE IF NOT EXISTS all_databases (" +
+			sql = "CREATE TABLE IF NOT EXISTS databases (" +
 					"id          INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"ip          CHAR(30)," +
 					"port        CHAR(30)," +
@@ -48,7 +48,7 @@ public class DatabaseCreator {
 					;
 			
 			result = stmt.executeUpdate(sql);
-			System.out.println("Created table 'all_databases'");
+			System.out.println("Created table 'databases'");
 			
 		
 			
@@ -77,9 +77,9 @@ public class DatabaseCreator {
 			
 			String sql = "";
 			
-			// Create table all_tables
+			// Create table tables
 			
-			sql = "CREATE TABLE IF NOT EXISTS all_tables (" +
+			sql = "CREATE TABLE IF NOT EXISTS tables (" +
 			"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"table_id          INTEGER," +
 			"owner             CHAR(30)," +
@@ -94,10 +94,10 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_tables'");
+			System.out.println("Created table 'tables'");
 			
 			
-			sql = "CREATE TABLE IF NOT EXISTS all_users (" +
+			sql = "CREATE TABLE IF NOT EXISTS users (" +
 					"id                 INTEGER PRIMARY KEY AUTOINCREMENT," +
 					"user_id            CHAR(30)," +
 					"username           CHAR(30) unique," +
@@ -113,13 +113,13 @@ public class DatabaseCreator {
 			result = stmt.executeUpdate(sql);
 			
 			
-			System.out.println("Created table 'all_users'");
+			System.out.println("Created table 'users'");
 			
 			
 			
-			// Create table all_view
+			// Create table views
 			
-			sql = "CREATE TABLE IF NOT EXISTS all_views (" +
+			sql = "CREATE TABLE IF NOT EXISTS views (" +
 			"id                INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"view_id          INTEGER," +
 			"owner             CHAR(30)," +
@@ -137,13 +137,13 @@ public class DatabaseCreator {
 			
 			
 			
-			System.out.println("Created table 'all_columns'");
+			System.out.println("Created table 'columns'");
 			
 			
 			
-			// Create table all_columns
+			// Create table columns
 			
-			sql = "CREATE TABLE IF NOT EXISTS all_columns (" +
+			sql = "CREATE TABLE IF NOT EXISTS columns (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"column_id             INTEGER,"  +
 			"column_name           CHAR(30)," +
@@ -158,13 +158,13 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_columns'");
+			System.out.println("Created table 'columns'");
 			
 			
 			
-			// Create table all_view_tables
+			// Create table view_tables
 			
-			sql = "CREATE TABLE IF NOT EXISTS all_view_tables (" +
+			sql = "CREATE TABLE IF NOT EXISTS view_tables (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"view_id               INTEGER,"  +
 			"table_id              INTEGER," +
@@ -179,14 +179,14 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_view_tables'");
+			System.out.println("Created table 'view_tables'");
 			
 			
 			
 			
-			// Create table all_view_tables
+			// Create table view_tables
 
-			sql = "CREATE TABLE IF NOT EXISTS all_joins (" +
+			sql = "CREATE TABLE IF NOT EXISTS joins (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"left_owner            CHAR(30)," +
 			"right_owner           CHAR(30)," +
@@ -203,7 +203,7 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_table_joins'");
+			System.out.println("Created table 'table_joins'");
 			
 			
 			
@@ -244,8 +244,8 @@ public class DatabaseCreator {
 			System.out.println("Created table 'column_sources'");
 			
 			
-			// Create table all_plsql
-			sql = "CREATE TABLE IF NOT EXISTS all_plsql (" +
+			// Create table plsql
+			sql = "CREATE TABLE IF NOT EXISTS plsql (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"plsql_id              INTEGER,"  +
 			"owner                 CHAR(30)," +
@@ -262,13 +262,13 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_plsql'");		
+			System.out.println("Created table 'plsql'");		
 			
 			
 			
 			
-			// Create table all_arguments
-			sql = "CREATE TABLE IF NOT EXISTS all_arguments (" +
+			// Create table arguments
+			sql = "CREATE TABLE IF NOT EXISTS arguments (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"plsql_id              INTEGER,"  +
 			"argument_name         CHAR(30)," +
@@ -284,10 +284,25 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'all_plsql'");				
+			System.out.println("Created table 'plsql'");				
+			
+			
+			// Create table dml_statements
+			sql = "CREATE TABLE IF NOT EXISTS dml_statements (" +
+			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
+			"plsql_id              INTEGER,"  +
+			"table_id              INTEGER," +
+			"type                  CHAR(30)," +
+			"unique (plsql_id, table_id, type)"  +
+			")"
+			;
 			
 			
 			
+			
+			result = stmt.executeUpdate(sql);
+			
+			System.out.println("Created table 'dml_statements'");				
 			
 			
 		

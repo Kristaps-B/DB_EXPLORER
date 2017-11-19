@@ -76,7 +76,7 @@ public class AllTablesMod {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into all_tables"
+		String sql = "insert into tables"
 		+ "(table_id, owner, table_name, examine_time) "
 		+ "VALUES (" 
 		+ "'" + row.table_id  + "',"
@@ -104,7 +104,7 @@ public class AllTablesMod {
 	private void update_examine_time (String owner, String tableName) throws Exception {
 		SQLLite sqlLite = new SQLLite();
 		
-		String sql  = "UPDATE all_tables " +
+		String sql  = "UPDATE tables " +
 		"SET examine_time = DATETIME('now', 'localtime')" +
 	    "WHERE owner = '" + owner +"' AND table_name = '" + tableName + "' ";
 		
@@ -136,7 +136,7 @@ public class AllTablesMod {
 		
 		System.out.println("LIMIT: " + limit);
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM all_tables LIMIT " + limit + "  OFFSET " + offset;
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables LIMIT " + limit + "  OFFSET " + offset;
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -236,7 +236,7 @@ public class AllTablesMod {
 		
 		for (ColumnResult.Row row: columResult.getColumns()) {
 			
-			sql = "insert into all_columns"
+			sql = "insert into columns"
 					+ "(column_id, column_name, data_type, table_id) "
 					+ "VALUES (" 
 					+ "'" + row.column_id  + "',"

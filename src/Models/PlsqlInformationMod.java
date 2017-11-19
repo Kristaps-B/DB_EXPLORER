@@ -36,7 +36,7 @@ public class PlsqlInformationMod {
 		PlsqlResult rs = new PlsqlResult();
 		
 		String sql = "SELECT id, plsql_id, owner, name, type, parent, examine_time "
-				+ " FROM all_plsql "
+				+ " FROM plsql "
 				+ " WHERE 1=1 "
 				+ " AND owner = '" + owner + "' "
 				+ " AND parent = '" + name + "' ";
@@ -111,11 +111,14 @@ public class PlsqlInformationMod {
 		ArgumentsResult rs = new ArgumentsResult();
 		
 		String sql = "SELECT id, plsql_id, '" + owner + "' owner, argument_name, data_type, position, in_out "
-				+ " FROM all_arguments"
+				+ " FROM arguments "
 				+ " WHERE 1=1 "
-				+ " AND id = " + plsql_id + " "
+				+ " AND plsql_id = " + plsql_id + " "
 				+ " ORDER BY position ASC "
 				;
+		
+		
+		System.out.println("SQL: " + sql);
 				
 		
 		try {

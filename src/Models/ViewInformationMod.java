@@ -28,7 +28,7 @@ public class ViewInformationMod {
 		
 		ViewsResult rs = new ViewsResult();
 		
-		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM all_views WHERE id = " + viewId;
+		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM views WHERE id = " + viewId;
 		
 		System.out.println(sql);
 		
@@ -65,7 +65,7 @@ public class ViewInformationMod {
 		ViewTableResult rs = new ViewTableResult();
 		
 		String sql = "SELECT vt.id, vt.view_id, vt.table_id, t.owner, t.table_name, vt.alias "  + 
-		" FROM all_view_tables vt, all_tables t" +
+		" FROM view_tables vt, tables t" +
 		" WHERE t.table_id = vt.table_id " +
 		" AND vt.view_id = " + viewId +
 		" ORDER BY vt.id ASC";
@@ -138,7 +138,7 @@ public class ViewInformationMod {
 				+ "j.right_owner || '.' || j.right_table right_table_name,"
 				+ "j.left_column left_column_name,"
 				+ "j.right_column right_column_name " + 
-		" FROM all_joins j, join_sources js  " + 
+		" FROM joins j, join_sources js  " + 
 		" WHERE 1=1 " + 
 		" AND j.id                = js.join_id " +
 		" AND js.source_id        = " + viewId 
@@ -209,7 +209,7 @@ public class ViewInformationMod {
 		ViewColumnResult rs = new ViewColumnResult();
 		
 		String sql = "SELECT ac.id, at.owner, at.table_name, ac.column_name, ac.data_type"  + 
-		" FROM column_sources cs, all_columns ac, all_tables at" +
+		" FROM column_sources cs, columns ac, tables at" +
 		" WHERE cs.column_id = ac.id " +
 		" AND at.id = ac.table_id " +
 		" AND cs.source_id = " + viewId +

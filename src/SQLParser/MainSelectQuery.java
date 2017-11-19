@@ -59,7 +59,7 @@ public class MainSelectQuery {
 		this.sql = this.sql.toUpperCase();
 		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
 		this.sql = " " + this.sql.trim().replaceAll(" +", " ") + " ";
-		this.sql = this.removeComments(this.sql);
+		this.sql = parserUtils.removeComments(this.sql);
 		
 		this.sql = this.sql.replaceAll(" UNION ALL ", "UNION");
 		
@@ -100,51 +100,7 @@ public class MainSelectQuery {
 	
 	
 	
-	private String removeComments (String inSql) {
-		String outSql = "";
-		
-		System.out.println("Remove comments");
-		
-		boolean isComment = false;
-		
-		
-		for (int  i = 0; i < this.sql.length(); i ++) {
-			
-			char c = this.sql.charAt(i);
-			
-			// System.out.println("Character: " + c);
-			
-			if (parserUtils.atLocation(i, "--", this.sql) || parserUtils.atLocation(i, "/*", this.sql)) {
-				
-				isComment = true;
-				// System.out.println("Comment starts");
-			}
-			
-			
-			if (isComment == false) {
-				outSql += c;
-			} else {
-				if ( i > 0 && parserUtils.atLocation(i-1, "*/", this.sql)) {
-					
-					isComment = false;
-					
-				}
-				
-				if (c == '\n'  || c == '\r' ) {
-					isComment = false;
-				}
-			}
-			
-			
-		}
-		
-		
-		
-		
-		return outSql;
-		
-	}
-	
+
 	
 	
 	public ArrayList <FromTable> getTableList () {
