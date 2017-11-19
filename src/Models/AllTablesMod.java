@@ -136,7 +136,14 @@ public class AllTablesMod {
 		
 		System.out.println("LIMIT: " + limit);
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables LIMIT " + limit + "  OFFSET " + offset;
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables ";
+		
+		if (limit != -1 && offset != -1) {
+			
+			sql +=  " LIMIT " + limit + "  OFFSET " + offset;
+			
+		}
+				
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);

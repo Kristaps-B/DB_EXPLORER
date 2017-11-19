@@ -11,9 +11,16 @@ import org.apache.pdfbox.util.Matrix;
 
 
 public class PDFTableGenerator {
+	
+	
+	private String header;
 
     // Generates document from Table object
-    public void generatePDF(PDDocument document, Table table) throws IOException, Exception {
+    public void generatePDF(PDDocument document, Table table, String header) throws IOException, Exception {
+    	
+    	
+    	this.header = header; 
+    			
         PDDocument doc = null;
         try {
             doc = document;
@@ -26,6 +33,10 @@ public class PDFTableGenerator {
 
     // Configures basic setup for the table and draws it page by page
     public void drawTable(PDDocument doc, Table table) throws IOException {
+    	
+    	
+
+    	
         // Calculate pagination
         Integer rowsPerPage = new Double(Math.floor(table.getHeight() / table.getRowHeight())).intValue() - 1; // subtract
         Integer numberOfPages = new Double(Math.ceil(table.getNumberOfRows().floatValue() / rowsPerPage)).intValue();
@@ -34,15 +45,49 @@ public class PDFTableGenerator {
         for (int pageCount = 0; pageCount < numberOfPages; pageCount++) {
             PDPage page = generatePage(doc, table);
             PDPageContentStream contentStream = generateContentStream(doc, page, table);
+            
+            
+            if (pageCount == 0) {
+            	drawHeader (contentStream, this.header, table);           	
+            	
+            }
+            
+            
+            
+            
+            
             String[][] currentPageContent = getContentForCurrentPage(table, rowsPerPage, pageCount);
             drawCurrentPage(table, currentPageContent, contentStream);
         }
+    }
+    
+    
+    private void drawHeader (PDPageContentStream contentStream, String text, Table table) {
+    	
+
+        
+        try {
+        	contentStream.beginText();
+            // contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
+            contentStream.newLineAtOffset(200, table.getPageSize().getHeight() - 30);
+        	
+			contentStream.showText(text != null ? text : "");
+			
+	        contentStream.endText();  			
+			
+			
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+  	
+    	
     }
 
     // Draws current page table grid and border lines and content
     private void drawCurrentPage(Table table, String[][] currentPageContent, PDPageContentStream contentStream)
             throws IOException {
-        float tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight() - table.getMargin();
+        float tableTopY = table.isLandscape() ? table.getPageSize().getWidth() - table.getMargin() : table.getPageSize().getHeight() - (table.getMargin() + 20 );
 
         // Draws grid and borders
         drawTableGrid(table, currentPageContent, contentStream, tableTopY);

@@ -75,7 +75,19 @@ public class PlsqlInformationContr extends Controller  {
 		URL url = Main.class.getResource("../WEB/html/plsql_information.html");
 		engine.load(url.toExternalForm());
 		
-	}	
+	}
+	
+	
+	public String loadDml () {
+		String result = "";
+		
+		
+		result = this.plsqlInformationMod.getDml(Session.owner, Session.plsqlName);
+		
+		
+		return result;
+		
+	}
 	
 	
 	
