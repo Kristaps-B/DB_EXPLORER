@@ -7,6 +7,7 @@ import Results.JoinResult;
 import Results.TableJoinResult;
 import Results.TableResult;
 import Results.ViewJoinResult;
+import Utils.UserUtils;
 
 public class GraphPageMod {
 	public GraphPageMod () {
@@ -25,11 +26,17 @@ public class GraphPageMod {
 		
 		TableResult rs = new TableResult();
 		
+		String activeUsers =  new UserUtils().loadActiveUsers();
 		
 		
+		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables"
+				+ " WHERE "
+				+ " 1=1 "
+				+ " " + activeUsers
+				
+				+ " ORDER BY owner" ;
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables " ;
-		
+		System.out.println("SQL: " + sql);
 		
 		ArrayJson aJson = new ArrayJson ();
 		

@@ -131,14 +131,10 @@ public class ExportDocMod {
     	
     	
     	AllTablesMod tabMod = new AllTablesMod ();
-    	
-    	
-    	
+
     	
     	String tablesJson = tabMod.loadTables(-1, -1);
-    	
-    	
-     
+
     	
     	JSONArray jsonArray = new JSONArray(tablesJson);
     	
@@ -146,8 +142,8 @@ public class ExportDocMod {
     	
 		 List<Column> columns = new ArrayList<Column>();
 		    columns.add(new Column("Id", 20));
-	        columns.add(new Column("Owner", 30));
-	        columns.add(new Column("Name", 120));
+	        columns.add(new Column("Owner", 50));
+	        columns.add(new Column("Name", 200));
 	        
 	        
 	    String [][] content = new String [jsonArray.length()][3]; 
@@ -160,9 +156,7 @@ public class ExportDocMod {
 	    	content [i][2] = jsonArray.getJSONObject(i).getString("table_name");
 	    	
 	    }
-	        
- 
-	    
+
 	    
         
         Table table = (new StandartTable(columns, content)).getTable();
