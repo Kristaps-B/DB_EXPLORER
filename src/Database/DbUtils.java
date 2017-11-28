@@ -333,7 +333,37 @@ public class DbUtils {
 		}
 	
 	
-	
+	public void saveJoinLink (
+			int sourceId,
+			int joinId,
+			String sourceType
+		) {
+		
+		SQLLite  sqlLite = new SQLLite();
+		
+		String sql = "insert into join_sources"
+		+ "(join_id, source_id, source_type) "
+		+ "VALUES (" 
+		+ "" + joinId  + ","
+		+ "" + sourceId  + ","
+		+ "'" + sourceType  + "'"
+		+ ")"
+		;
+		
+		
+		
+		try {
+			sqlLite.insertUpdate(sql, Session.dBUserString);
+			
+			System.out.println("Inserted into JOIN_SOURCES table value join_id: " + joinId + " source_id: " + sourceId + " source_type: " + sourceType);
+			
+		} catch (Exception e) {
+			System.out.println("AllViewsMod.saveJoinLink: " + e.getMessage());
+		}		
+		
+		
+		
+	}
 	
 	
 	

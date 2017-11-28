@@ -43,8 +43,12 @@ public class AllTablesContr extends Controller  {
 	public String loadTables(int limit, int offset) {
 		String result = "";
 		
+		// if (offset > 0) {
+		// 	offset = offset -1;
+		// }
 		
-		result = this.allTablesMod.loadTables(limit, offset - 1);
+		
+		result = this.allTablesMod.loadTables(limit, offset);
 		
 		
 		return result;

@@ -103,7 +103,6 @@ public class DatabaseCreator {
 					"username           CHAR(30) unique," +
 					"active             CHAR(1), " +
 					"examine_time       DATETIME" +
-					
 					")"
 					;
 					
@@ -162,15 +161,14 @@ public class DatabaseCreator {
 			
 			
 			
-			// Create table view_tables
-			
+			// Create table view_tables	
 			sql = "CREATE TABLE IF NOT EXISTS view_tables (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
 			"view_id               INTEGER,"  +
-			"table_id              INTEGER," +
-			"alias                 CHAR(30),"  +
-			"examine_time         DATETIME," +
-			"unique (view_id, table_id)"  +
+			"source_owner          CHAR(30)," +
+			"source_name           CHAR(30)," +
+			"alias                 CHAR(30)," +
+			"unique (view_id, source_owner, source_name)"  +
 			")"
 			;
 			
@@ -194,7 +192,7 @@ public class DatabaseCreator {
 			"right_table           CHAR(30)," +
 			"left_column           CHAR(30)," +
 			"right_column          CHAR(30)," +
-			"unique (left_table, right_table, left_column, right_column)"  +
+			"unique (left_owner, right_owner, left_table, right_table, left_column, right_column)"  +
 			")"
 			;
 			
@@ -203,7 +201,7 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'table_joins'");
+			System.out.println("Created table 'joins'");
 			
 			
 			
@@ -227,12 +225,14 @@ public class DatabaseCreator {
 			
 			
 			// Create table column_sources
-			sql = "CREATE TABLE IF NOT EXISTS column_sources (" +
+			sql = "CREATE TABLE IF NOT EXISTS view_columns (" +
 			"id                    INTEGER PRIMARY KEY AUTOINCREMENT," +
-			"column_id             INTEGER," +
-			"source_id             INTEGER," +
-			"source_type           CHAR(30)," +
-			"unique (column_id, source_id, source_type)"  +
+			"view_id               INTEGER," +		
+			"object_owner          CHAR(30)," +
+			"object_name           CHAR(30)," +
+			"column_name           CHAR(30)," +
+			"alias                 CHAR(30)," +
+			"unique (view_id, column_name, alias)"  +
 			")"
 			;
 			
@@ -241,7 +241,7 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'column_sources'");
+			System.out.println("Created table 'view_columns'");
 			
 			
 			// Create table plsql
@@ -284,7 +284,7 @@ public class DatabaseCreator {
 			
 			result = stmt.executeUpdate(sql);
 			
-			System.out.println("Created table 'plsql'");				
+			System.out.println("Created table 'arguments'");				
 			
 			
 			// Create table dml_statements

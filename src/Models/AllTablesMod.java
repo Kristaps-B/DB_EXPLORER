@@ -135,6 +135,7 @@ public class AllTablesMod {
 		
 		
 		System.out.println("LIMIT: " + limit);
+		System.out.println("Offset: " + offset);
 		
 		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables ";
 		
@@ -143,6 +144,8 @@ public class AllTablesMod {
 			sql +=  " LIMIT " + limit + "  OFFSET " + offset;
 			
 		}
+		
+		System.out.println("SQL: " + sql);
 				
 		
 		try {
@@ -320,7 +323,18 @@ public class AllTablesMod {
 				
 				if (dbUtils.joinExists(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName) == false) {
 					System.out.println("Saving join");
+					
+					
+					
 					dbUtils.saveTableJoin(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName);
+					
+				    int joinId = dbUtils.findJoinId(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName);
+				    int tableId = dbUtils.getTableId(owner, table);
+				    
+				    dbUtils.saveJoinLink(tableId, joinId, "TABLE");
+					
+					
+					
 				} else {
 					System.out.println("Join already exists!");
 				}

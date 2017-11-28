@@ -298,7 +298,7 @@ public class AllViewsMod {
 			System.out.println("Owner: " + tabOwner + "Table: " + table + " alias: " + alias + " tableId: " + tableId);
 			
 			
-			saveViewTable(viewId, tableId, alias);
+			saveViewTable(viewId, tabOwner, table, alias);
 			
 		}
 		
@@ -405,9 +405,10 @@ public class AllViewsMod {
 			
 			
 			// Save Join View LINK
-			this.saveJoinLink (
+			dbUtils.saveJoinLink (
 				viewId,
-				joinId
+				joinId,
+				"VIEW"
 			);
 		
 		}
@@ -455,14 +456,15 @@ public class AllViewsMod {
 	
 	
 	
-	private void saveViewTable (int viewId, int tableId, String alias) {
+	private void saveViewTable (int viewId, String sourceOwner, String sourceName, String alias) {
 		SQLLite  sqlLite = new SQLLite();
 		
 		String sql = "insert into view_tables"
-		+ "(view_id, table_id, alias) "
+		+ "(view_id, source_owner, source_name, alias) "
 		+ "VALUES (" 
 		+ "" + viewId  + ","
-		+ "" + tableId  + ","
+		+ "'" + sourceOwner  + "',"
+		+ "'" + sourceName  + "',"
 		+ "'" + alias  + "'"
 		+ ")"
 		;
@@ -472,7 +474,7 @@ public class AllViewsMod {
 		try {
 			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
-			System.out.println("VIEW_TABLE viewID: " + viewId + " tableID: " + tableId + " was inserted!");
+			System.out.println("VIEW_TABLE viewID: " + viewId + " sourceOwner: " + sourceOwner + " sourceName: " + sourceName + " was inserted!");
 			
 		} catch (Exception e) {
 			System.out.println("AllViewsMod.saveViewTable: " + e.getMessage());
@@ -484,43 +486,7 @@ public class AllViewsMod {
 	
 
 	
-	
 
-	
-	
-
-	
-	
-	private void saveJoinLink (
-			int viewId,
-			int joinId
-		) {
-		
-		SQLLite  sqlLite = new SQLLite();
-		
-		String sql = "insert into join_sources"
-		+ "(join_id, source_id, source_type) "
-		+ "VALUES (" 
-		+ "" + joinId  + ","
-		+ "" + viewId  + ","
-		+ "'" + "VIEW"  + "'"
-		+ ")"
-		;
-		
-		
-		
-		try {
-			sqlLite.insertUpdate(sql, Session.dBUserString);
-			
-			System.out.println("Inserted into JOIN_SOURCES table value join_id: " + joinId + " view_id: " + viewId);
-			
-		} catch (Exception e) {
-			System.out.println("AllViewsMod.saveJoinLink: " + e.getMessage());
-		}		
-		
-		
-		
-	}
 	
 	
 	private void saveColumnSource(int viewId, int tableId, int columnId) {

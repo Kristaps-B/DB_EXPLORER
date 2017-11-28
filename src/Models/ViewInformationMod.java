@@ -64,9 +64,9 @@ public class ViewInformationMod {
 		
 		ViewTableResult rs = new ViewTableResult();
 		
-		String sql = "SELECT vt.id, vt.view_id, vt.table_id, t.owner, t.table_name, vt.alias "  + 
-		" FROM view_tables vt, tables t" +
-		" WHERE t.table_id = vt.table_id " +
+		String sql = "SELECT vt.id, vt.view_id, vt.source_owner, vt.source_name, vt.alias "  + 
+		" FROM view_tables vt " +
+		" WHERE 1=1 " +
 		" AND vt.view_id = " + viewId +
 		" ORDER BY vt.id ASC";
 		
@@ -89,9 +89,8 @@ public class ViewInformationMod {
 				
 				aJson.addValue("id", "" + row.id);
 				aJson.addValue("view_id", "" + row.view_id);
-				aJson.addValue("table_id", "" + row.table_id);
-				// aJson.addValue("owner", row.owner);
-				aJson.addValue("table_name", "" + row.owner + "." +row.table_name);
+				aJson.addValue("source_owner", "" + row.source_owner);
+				aJson.addValue("source_name", "" + row.source_name);
 				aJson.addValue("alias", "" + row.alias);
 				
 				aJson.newRow();
