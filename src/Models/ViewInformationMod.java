@@ -207,13 +207,11 @@ public class ViewInformationMod {
 		
 		ViewColumnResult rs = new ViewColumnResult();
 		
-		String sql = "SELECT ac.id, at.owner, at.table_name, ac.column_name, ac.data_type"  + 
-		" FROM column_sources cs, columns ac, tables at" +
-		" WHERE cs.column_id = ac.id " +
-		" AND at.id = ac.table_id " +
-		" AND cs.source_id = " + viewId +
-		" AND cs.source_type = 'VIEW'" +
-		" ORDER BY cs.id ASC";
+		String sql = "SELECT vc.id, vc.view_id, vc.object_owner, vc.object_name, vc.column_name, vc.alias "  + 
+		" FROM view_columns vc " +
+		" WHERE 1=1 " +
+		" AND vc.view_id = " + viewId +
+		" ORDER BY vc.id ASC";
 		
 	
 		
@@ -236,10 +234,10 @@ public class ViewInformationMod {
 				 
 				
 				aJson.addValue("id", "" + row.id);
-				aJson.addValue("table_name",  row.owner + "." + row.table_name);
+				aJson.addValue("view_id",  row.view_id + "");
+				aJson.addValue("object_name", "" + row.object_owner + "." + row.object_name);
 				aJson.addValue("column_name", "" + row.column_name);
-				aJson.addValue("data_type", "" + row.data_type);
-				
+				aJson.addValue("alias", "" + row.alias);
 	 
 				
 				aJson.newRow();

@@ -58,7 +58,7 @@ public class GraphPageMod {
 				// System.out.println(" " + row.table_name);
 				 
 				//  "color": "red", "size":40, "shape": "box"
-				aJson.addValue("id", "" + row.owner + "." +row.table_name);
+				aJson.addValue("id", "" + (row.owner + "." +row.table_name).replace('$', '_')  );
 				aJson.addValue("label", row.owner + "." +row.table_name);
 				aJson.addValue("color", "green");
 				aJson.addValue("font", "20px arial white");
@@ -99,7 +99,7 @@ public class GraphPageMod {
 	 		+ "j.right_column right_column, "
 	 		+ "j.left_owner left_owner, "
 	 		+ "j.right_owner right_owner " + 
-		" FROM joins j" + 
+		" FROM joins j " + 
 		" WHERE 1=1 " 
 
 		;
@@ -121,7 +121,7 @@ public class GraphPageMod {
 				
 			
 				 
-				aJson.addValue("id", row.left_owner + "." + row.left_table + "." + row.left_column + "." + id);
+				aJson.addValue("id", (row.left_owner + "." + row.left_table + "." + row.left_column + "." + id ).replace('$', '_') );
 				aJson.addValue("label",  row.left_column);
 				
 				 
@@ -129,7 +129,7 @@ public class GraphPageMod {
 				aJson.newRow();
 				
 				
-				aJson.addValue("id", row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id);
+				aJson.addValue("id", (row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id).replace('$', '_') );
 				aJson.addValue("label",  row.right_column);
 				
 				

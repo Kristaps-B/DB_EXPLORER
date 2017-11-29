@@ -19,10 +19,11 @@ public class ViewColumnResult extends Result {
 			
 			columns.add(new Row(
 					rs.getInt("ID"),
-					rs.getString("OWNER"),
-					rs.getString("TABLE_NAME"),
-					rs.getString("COLUMN_NAME"), 
-					rs.getString("DATA_TYPE")
+					rs.getInt("VIEW_ID"),
+					rs.getString("OBJECT_OWNER"),
+					rs.getString("OBJECT_NAME"), 
+					rs.getString("COLUMN_NAME"),
+					rs.getString("ALIAS")
 					));			
 			
 		}
@@ -43,19 +44,21 @@ public class ViewColumnResult extends Result {
 			
 			
 			public int id;
-			public String owner;
-			public String table_name;
-			public String column_name;
-			public String data_type;	
+			public int view_id;
+			public String object_owner;
+			public String object_name;
+			public String column_name;	
+			public String alias;	
  
 			
 			
-			public Row (int id, String owner, String tableName, String columnName, String dataType) {
+			public Row (int id, int viewId, String objectOwner, String objectName, String columnName, String alias) {
 				this.id = id;
-				this.owner = owner;
-				this.table_name = tableName;
-				this.column_name  = columnName;
-				this.data_type = dataType;
+				this.view_id = viewId;
+				this.object_owner = objectOwner;
+				this.object_name  = objectName;
+				this.column_name = columnName;
+				this.alias = alias;
 			}
 			
 

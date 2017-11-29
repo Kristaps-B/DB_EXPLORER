@@ -46,7 +46,7 @@ public class AllViewsContr extends Controller  {
 		
 		
 		result = this.allViewsMod.loadViews(
-				 limit, offset - 1);
+				 limit, offset);
 		
 		
 		return result;		

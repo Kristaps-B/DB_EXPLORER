@@ -135,8 +135,8 @@ public class TableInformationMod {
 		
 		
 		String sql = "SELECT j.id,"
-				+ " j.left_table left_table_name, "
-				+ " j.right_table right_table_name,"
+				+ " j.left_owner || '.' || j.left_table left_table_name, "
+				+ " j.right_owner || '.' || j.right_table right_table_name,"
 				+ " j.left_column left_column_name,"
 				+ " j.right_column right_column_name " + 
 		" FROM joins j " + 

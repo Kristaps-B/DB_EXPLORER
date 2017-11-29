@@ -40,7 +40,14 @@ public class AllPlsqlMod {
 		String sql = "SELECT id, plsql_id, owner, name, type, parent, examine_time "
 				+ " FROM plsql "
 				+ " WHERE  parent = 'null' "
-				+ "  LIMIT " + limit + "  OFFSET " + offset;
+				;
+				 
+		
+		if (limit != -1 && offset != -1) {
+			
+			sql +=  " LIMIT " + limit + "  OFFSET " + offset;
+			
+		}
 		
 		System.out.println(sql);
 		

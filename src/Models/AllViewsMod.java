@@ -141,7 +141,14 @@ public class AllViewsMod {
 		
 		ViewsResult rs = new ViewsResult();
 		
-		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM views LIMIT " + limit + "  OFFSET " + offset;
+		String sql = "SELECT id, view_id, owner, view_name, examine_time FROM views ";
+		
+		if (limit != -1 && offset != -1) {
+			
+			sql +=  " LIMIT " + limit + "  OFFSET " + offset;
+			
+		}
+		
 		
 		try {
 			sqlLite.query(sql, rs, Session.dBUserString);
@@ -326,7 +333,7 @@ public class AllViewsMod {
 			int tableId = dbUtils.getTableId(owner, table);
 			int columnId = dbUtils.getColumnId(tableId, column);
 			
-			this.saveColumnSource(viewId, tableId, columnId);
+			this.saveViewColumn(viewId, owner, table, column, alias);
 			
 			System.out.println("Table: " + table + " table_id: " + tableId  + " column: " + column + " column_id: " + columnId + " alias: " + alias);
 			
@@ -489,16 +496,18 @@ public class AllViewsMod {
 
 	
 	
-	private void saveColumnSource(int viewId, int tableId, int columnId) {
+	private void saveViewColumn(int viewId, String objectOwner, String objectName, String columnName, String alias) {
 		
 		SQLLite  sqlLite = new SQLLite();
 		
-		String sql = "insert into column_sources "
-		+ "(column_id, source_id, source_type) "
+		String sql = "insert into view_columns "
+		+ "(view_id, object_owner, object_name, column_name, alias) "
 		+ "VALUES (" 
-		+ "" + columnId  + ","
 		+ "" + viewId  + ","
-		+ "'" + "VIEW"  + "'"
+		+ "'" + objectOwner  + "',"
+		+ "'" + objectName  + "',"
+		+ "'" + columnName  + "',"
+		+ "'" + alias  + "'"
 		+ ")"
 		;
 		
@@ -507,7 +516,7 @@ public class AllViewsMod {
 		try {
 			sqlLite.insertUpdate(sql, Session.dBUserString);
 			
-			System.out.println("Inserted into COLUMN_SOURCES table value column_id: " + columnId + " table_id: " + tableId + " viewId: " + viewId);
+			System.out.println("Inserted into VIEW_COLUMNS column: " + columnName);
 			
 		} catch (Exception e) {
 			System.out.println("AllViewsModel.saveColumnSource: " + e.getMessage());
