@@ -29,12 +29,15 @@ public class GraphPageMod {
 		String activeUsers =  new UserUtils().loadActiveUsers();
 		
 		
-		String sql = "SELECT id, table_id, owner, table_name, examine_time FROM tables"
+		String sql = "SELECT t.id, t.table_id, t.owner, t.table_name, t.examine_time "
+				+ " FROM tables t"
 				+ " WHERE "
 				+ " 1=1 "
 				+ " " + activeUsers
 				
-				+ " ORDER BY owner" ;
+				+ "AND  EXISTS ( SELECT 1  FROM joins j  WHERE ( t.owner = j.left_owner AND t.table_name = j.left_table ) OR  (t.owner = j.right_owner AND t.table_name = j.right_table ) ) "
+				
+				+ " ORDER BY t.owner" ;
 		
 		System.out.println("SQL: " + sql);
 		
@@ -129,7 +132,7 @@ public class GraphPageMod {
 				aJson.newRow();
 				
 				
-				aJson.addValue("id", (row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id).replace('$', '_') );
+				aJson.addValue("id", (row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id + 1).replace('$', '_') );
 				aJson.addValue("label",  row.right_column);
 				
 				
@@ -141,14 +144,14 @@ public class GraphPageMod {
 				// -- {"from": "1", "to": "3"} 
 				
 				bJson.addValue("from", row.left_owner + "." + row.left_table + "." + row.left_column+ "." + id);
-				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id);
+				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column+ "." + id + 1);
 				
 				
 				bJson.newRow();
 				
 				
 				bJson.addValue("from", row.right_owner + "." +row.right_table);
-				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column + "." + id);
+				bJson.addValue("to", row.right_owner + "." + row.right_table + "." + row.right_column + "." + id + 1);
 				
 				bJson.newRow();
 				
@@ -158,7 +161,7 @@ public class GraphPageMod {
 				
 				bJson.newRow();
 				
-				id ++;
+				id += 2;
 			}
 			
 		 
