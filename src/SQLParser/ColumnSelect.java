@@ -45,9 +45,7 @@ public class ColumnSelect {
 			
 			this.alias = parserUtils.getSecondPart(this.sql, " ");
 			
-			
-			this.table = this.mainQuery.getTableByAlias(tableAlias).getTable();
-			
+ 
 			
 			if (this.column.equals("")) {
 				this.column = this.tableAlias;
@@ -58,7 +56,10 @@ public class ColumnSelect {
 			// Set alias equal to table, if no alias is present
 			if (this.alias.equals("")) {
 				this.alias = this.column;
-			}			
+			}	
+			
+			
+			this.table = this.mainQuery.getColumnTable(this.tableAlias, this.column).getTable();
 			
 		} else {
 			

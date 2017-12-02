@@ -357,8 +357,18 @@ public class AllViewsMod {
 			String leftTable     =  we.getLeftTable();
 			String rightTable    =  we.getRightTable();
 			
-			String leftOwner     = owner;
-			String rightOwner    = owner;
+			
+			
+			String leftOwner     = we.getLeftOwner();
+			String rightOwner    = we.getRightOwner();
+			
+			if (leftOwner.equals("")) {
+				leftOwner = owner;
+			}
+			
+			if (rightOwner.equals("")) {
+				rightOwner = owner;
+			}
 			
 	
 			

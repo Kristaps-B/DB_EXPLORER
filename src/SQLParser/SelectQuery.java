@@ -91,19 +91,68 @@ public class SelectQuery {
 		
 		remainingPart = parserUtils.getSecondPart(remainingPart, " FROM ");
 		
-		fromClause = parserUtils.getFirstPart(remainingPart, " WHERE ");
 		
-		remainingPart = parserUtils.getSecondPart(remainingPart, " WHERE ");
 		
-		whereClause = parserUtils.getFirstPart(remainingPart, " GROUP BY ");
 		
-		// Check other alternatives
-		if (whereClause.equals(remainingPart)) {
-			whereClause = parserUtils.getFirstPart(remainingPart, " ORDER BY ");
+		
+		// fromClause = parserUtils.getFirstPart(remainingPart, " WHERE ");
+		
+		// remainingPart = parserUtils.getSecondPart(remainingPart, " WHERE ");
+		
+		
+		
+		if (this.parserUtils.checkIfTextExists(remainingPart, " WHERE ") == false) {
+			
+			System.out.println("There is no WHERE clause!");
+			
+			if (this.parserUtils.checkIfTextExists(remainingPart, " GROUP BY ") == true) {
+				
+				fromClause = parserUtils.getFirstPart(remainingPart, " GROUP BY ");
+				
+			} else if (this.parserUtils.checkIfTextExists(remainingPart, " ORDER BY ") == true) {
+				
+				fromClause = parserUtils.getFirstPart(remainingPart, " ORDER BY ");
+				
+			} else if (this.parserUtils.checkIfTextExists(remainingPart, " WITH ") == true) {
+				
+				fromClause = parserUtils.getFirstPart(remainingPart, " WITH ");
+				
+			} else {
+				fromClause = remainingPart;
+			}
+			
+			
+			
+		} else  {
+			System.out.println("WHERE clause exists!");
+			
+			
+			fromClause = parserUtils.getFirstPart(remainingPart, " WHERE ");
+			remainingPart = parserUtils.getSecondPart(remainingPart, " WHERE ");
+			
+			 
+			if (this.parserUtils.checkIfTextExists(remainingPart, " GROUP BY ") == true) {
+				
+				whereClause = parserUtils.getFirstPart(remainingPart, " GROUP BY ");
+				
+			} else if (this.parserUtils.checkIfTextExists(remainingPart, " ORDER BY ") == true) {
+				
+				whereClause = parserUtils.getFirstPart(remainingPart, " ORDER BY ");
+				
+			} else if (this.parserUtils.checkIfTextExists(remainingPart, " WITH ") == true) {
+				
+				whereClause = parserUtils.getFirstPart(remainingPart, " WITH ");
+				
+			} else {
+				whereClause = remainingPart;
+			}
+			
 		}
-		if (whereClause.equals(remainingPart)) {
-			whereClause = parserUtils.getFirstPart(remainingPart, " WITH ");
-		}
+	 
+		
+
+		
+		
 		
 		
 		
@@ -163,6 +212,9 @@ public class SelectQuery {
 	}
 	
 	
+ 
+	
+	
 	public FromTable getTableByTable (String table) {
 		return this.fromClause.getTableByTable(table);
 	}
@@ -206,6 +258,9 @@ public class SelectQuery {
 		System.out.println("SelectQuery.getColumnTable: tableAlias " + tableAlias + " Column: " + column);
 		
 		fromTable = this.fromClause.getColumnTable( tableAlias,  column);
+		
+		
+		 
 		
 		
 		return fromTable;

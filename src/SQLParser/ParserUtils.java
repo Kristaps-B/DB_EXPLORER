@@ -407,4 +407,19 @@ public class ParserUtils {
 	}
 	
 	
+	public boolean checkIfTextExists (String text, String findStr) {
+		boolean result = true;
+		
+		 //  System.out.println("CheckIfTextExists:" + this.getSecondPart(text, findStr).length() );
+		
+		if (this.getSecondPart(text, findStr).length() == 0) {
+			
+			result = false;
+			
+		}
+		
+		return result;
+	}
+	
+	
 }

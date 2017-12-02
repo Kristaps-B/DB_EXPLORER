@@ -11,6 +11,7 @@ import Results.Result;
 import Results.SourceResult;
 import Results.TableResult;
 import SQLParser.PlsqlParser;
+import SQLParser.WhereExpression;
 import Utils.UserUtils;
 
 public class AllPlsqlMod {
@@ -522,6 +523,14 @@ public class AllPlsqlMod {
 			}
 			
 			
+			for (WhereExpression expr: plsqlParser.getExpressionList()) {
+				
+				
+				this.saveJoin(expr, owner, name);
+				
+			}
+			
+			
 			
 			
 			// result = aJson.getJson();
@@ -569,6 +578,86 @@ public class AllPlsqlMod {
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}		
+		
+	}
+	
+	
+	private void saveJoin (WhereExpression expr, String owner, String plsqlName) {
+		
+		String expression    =  expr.getExpression();
+		String leftAlias     =  expr.getLeftAlias();
+		String rightAlias    =  expr.getRightAlias();
+		
+		String leftColumn    =  expr.getLeftColumn();
+		String rightColumn   =  expr.getRightColumn();
+		
+		String leftTable     =  expr.getLeftTable();
+		String rightTable    =  expr.getRightTable();
+		
+		String leftOwner     = expr.getLeftOwner();
+		String rightOwner    = expr.getRightOwner();
+		
+		if (leftOwner.equals("")) {
+			leftOwner = owner;
+		}
+		
+		if (rightOwner.equals("")) {
+			rightOwner = owner;
+		}
+		
+		
+		int plsqlId = dbUtils.getPlsqlId(owner, plsqlName);
+		
+		
+		if (!dbUtils.joinExists(
+
+				leftOwner,
+				rightOwner,
+				leftTable,
+				rightTable,
+				leftColumn,
+				rightColumn
+					)) {
+				
+				// Save Join
+				System.out.println("Join not exists!");
+				dbUtils.saveTableJoin (
+						leftOwner,
+						rightOwner,
+						leftTable,
+						rightTable,
+						leftColumn,
+						rightColumn
+				);
+				
+				System.out.println("Saved Join");
+				
+				
+			} else {
+				 System.out.println("Join already Exists!");
+			}
+			
+			
+			// Find Join ID
+			int joinId = dbUtils.findJoinId(					
+					leftOwner,
+					rightOwner,
+					leftTable,
+					rightTable,
+					leftColumn,
+					rightColumn);
+			
+			System.out.println("Found Join_ID: " + joinId);
+			
+			
+			
+			// Save Join View LINK
+			dbUtils.saveJoinLink (
+				plsqlId,
+				joinId,
+				"PLSQL"
+			);
+		
 		
 	}
 	

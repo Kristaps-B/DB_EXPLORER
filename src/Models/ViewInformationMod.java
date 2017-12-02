@@ -140,6 +140,7 @@ public class ViewInformationMod {
 		" FROM joins j, join_sources js  " + 
 		" WHERE 1=1 " + 
 		" AND j.id                = js.join_id " +
+		" AND  js.source_type = 'VIEW' " +
 		" AND js.source_id        = " + viewId 
 		;
 		

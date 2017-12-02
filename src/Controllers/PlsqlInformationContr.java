@@ -90,5 +90,17 @@ public class PlsqlInformationContr extends Controller  {
 	}
 	
 	
+	public String loadJoins () {
+		String result = "";
+		
+		
+		result = this.plsqlInformationMod.loadJoins();
+		
+		return result;
+		
+		
+	}	
+	
+	
 	
 }

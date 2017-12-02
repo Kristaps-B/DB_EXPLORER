@@ -7,6 +7,7 @@ import Json.ArrayJson;
 import Results.ArgumentsResult;
 import Results.DmlResult;
 import Results.PlsqlResult;
+import Results.ViewJoinResult;
 
 public class PlsqlInformationMod {
 	
@@ -248,5 +249,81 @@ public class PlsqlInformationMod {
 		return result;
 		
 	}
+	
+	
+	public String loadJoins() {
+		String result = "";
+		
+		
+		int plsqlId = dbUtils.getPlsqlId(Session.owner, Session.plsqlName);
+		
+		SQLLite sqlLite = new SQLLite();
+		
+		ViewJoinResult rs = new ViewJoinResult();
+		
+		String sql = "SELECT js.id, "
+				+ "j.left_owner,"
+				+ "j.right_owner,"
+				+ "j.left_owner || '.' || j.left_table left_table_name,"
+				+ "j.right_owner || '.' || j.right_table right_table_name,"
+				+ "j.left_column left_column_name,"
+				+ "j.right_column right_column_name " + 
+		" FROM joins j, join_sources js  " + 
+		" WHERE 1=1 " + 
+		" AND j.id                = js.join_id " +
+		" AND  js.source_type = 'PLSQL' " +
+		" AND js.source_id        = " + plsqlId 
+		;
+		
+		try {
+			
+			sqlLite.query(sql, rs, Session.dBUserString);
+			
+			
+			System.out.println("--------- LOAD_VIEW_JOINS --------------");
+			
+			
+			ArrayJson aJson = new ArrayJson ();
+			aJson.startJson();
+			
+			for (int i = 0; i < rs.getColumns().size(); i++) {
+				
+				ViewJoinResult.Row row = rs.getColumns().get(i);
+				
+			
+				 
+				
+				aJson.addValue("id", "" + row.id);
+				aJson.addValue("left_table_name", "" + row.leftTableName);
+				aJson.addValue("right_table_name", "" + row.rightTableName);
+				aJson.addValue("left_column_name", "" + row.leftColumnName);
+				aJson.addValue("right_column_name", "" + row.rightColumnName);
+				 
+				
+				aJson.newRow();
+			}
+			
+			aJson.endJson();
+			
+			
+			result = aJson.getJson();
+			
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+			
+			
+		}
+		
+		System.out.println(result);		
+		
+					
+		
+		
+		
+		return result;
+		
+	}
+	
 	
 }

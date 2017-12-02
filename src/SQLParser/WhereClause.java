@@ -40,7 +40,17 @@ public class WhereClause {
 	
 	
 	public ArrayList <WhereExpression> getExpressionList () {
-		return whereExpressionList;
+		ArrayList <WhereExpression> joinList = new ArrayList <> ();
+		
+		for (WhereExpression we: whereExpressionList) {
+			
+			if (we.getIsJoin() == true) {
+				joinList.add(we);
+			}
+			
+		}
+		
+		return joinList;
 	}
 	
 	

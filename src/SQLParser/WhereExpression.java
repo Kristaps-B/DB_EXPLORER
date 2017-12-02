@@ -4,6 +4,8 @@ public class WhereExpression {
 	
 	private String sql;
 	
+	private String leftOwner = "";
+	private String rightOwner = "";
 	private String expression = "";
 	private String leftAlias = "";
 	private String rightAlias = "";
@@ -65,8 +67,27 @@ public class WhereExpression {
 			this.leftColumn = this.leftColumn.trim();
 			this.rightColumn = this.rightColumn.trim();
 			
-			this.leftTable = this.fromClause.getTableByAlias(this.leftAlias).getTable();
-			this.rightTable = this.fromClause.getTableByAlias(this.rightAlias).getTable(); 
+			
+			
+			FromTable leftFromTable = this.fromClause.getColumnTable(this.leftAlias, this.leftColumn);
+			FromTable rightFromTable = this.fromClause.getColumnTable(this.rightAlias, this.rightColumn);
+			
+			if (leftFromTable != null ) {
+			    
+				this.leftTable = leftFromTable.getTable();
+				this.leftOwner = leftFromTable.getOwner();
+			} else {
+				this.leftTable = "";
+			}
+			
+			if (rightFromTable != null ) {
+				this.rightTable = rightFromTable.getTable();
+				this.rightOwner = rightFromTable.getOwner();
+			} else {
+				this.rightTable = "";
+			}			
+					
+ 
 			
 		
 			System.out.println("####################################################");
@@ -91,9 +112,7 @@ public class WhereExpression {
 		
 		if ( 
 			this.leftAlias.equals("") ||
-			this.leftAlias.equals("") ||
-			this.leftAlias.equals("") ||
-			this.leftAlias.equals("") 
+			this.rightAlias.equals("") 
 		  ) {
 			return;
 		}
@@ -146,6 +165,18 @@ public class WhereExpression {
 		return this.leftTable;
 	}
 	
+	
+	public boolean getIsJoin () {
+		return this.isJoin;
+	}
+	
+	public String getLeftOwner() {
+		return this.leftOwner;
+	}
+	
+	public String getRightOwner () {
+		return this.rightOwner;
+	}
 
 	
 }
