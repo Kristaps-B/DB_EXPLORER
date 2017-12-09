@@ -51,10 +51,10 @@ public class ExportDocContr extends Controller {
 	}
 	
 	
-	public void exportDoc (String path) {
+	public void exportDoc (String path, boolean exportTables, boolean exportViews, boolean exportPlsql) {
 		
 
-		exportDocMod.createPdf(path);
+		exportDocMod.createPdf(path, exportTables, exportViews, exportPlsql);
 		
 		
 		

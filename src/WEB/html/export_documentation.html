@@ -22,7 +22,13 @@
 		
 		function export_doc () {
 			
-			app.exportDoc(document.getElementById('PATH').value);
+			var export_tables = document.getElementById("export_tables").checked;
+			var export_views = document.getElementById("export_views").checked;
+			var export_plsql = document.getElementById("export_plsql").checked;
+			
+			 
+			
+			app.exportDoc(document.getElementById('PATH').value, export_tables, export_views, export_plsql);
 			
 		}
 		
@@ -57,6 +63,12 @@
  
 		<button class="btn btn-primary"   onclick="toMenu()" > TO_MENU </button></br>
  
+ 
+ 
+    Export Tables: <input id='export_tables' type='checkbox'  checked >
+    Export Views: <input id='export_views' type='checkbox'  checked >
+    Export PL/SQL: <input id='export_plsql' type='checkbox'  checked >
+    
 	</center>
 	<br/>
 	
