@@ -63,27 +63,29 @@
  
 		<button class="btn btn-primary"   onclick="toMenu()" > TO_MENU </button></br>
  
- 
- 
-    Export Tables: <input id='export_tables' type='checkbox'  checked >
-    Export Views: <input id='export_views' type='checkbox'  checked >
-    Export PL/SQL: <input id='export_plsql' type='checkbox'  checked >
+    <br/>
     
-	</center>
-	<br/>
+    <div class="well">
+    
+	    EXPORT_TABLES: <input id='export_tables' type='checkbox'  checked >
+	    EXPORT_VIEWS: <input id='export_views' type='checkbox'  checked >
+	    EXPORT_PLSQL: <input id='export_plsql' type='checkbox'  checked >
+	    
+		</center>
+		<br/>
+		
+		<div class="input-group">	
+						<input class="form-control"  id="PATH" type="text" value = "" />
+						<span class="input-group-btn">
+						<button class="btn btn-primary"   onclick="setPath()" > DIRECTORY </button>
+						</span>
+		</div>
+		</br>
+		<center>
+			<button class="btn btn-primary"   onclick="export_doc()" > EXPORT_DOCUMENTATION </button></br>
+		</center>
 	
-	<div class="input-group">	
-					<input class="form-control"  id="PATH" type="text" value = "" />
-					<span class="input-group-btn">
-					<button class="btn btn-primary"   onclick="setPath()" > LOCATION </button>
-					</span>
-	</div>
-	</br>
-	<center>
-		<button class="btn btn-primary"   onclick="export_doc()" > EXPORT </button></br>
-	</center>
-	
-
+    </div>
 
 	
 		

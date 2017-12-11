@@ -233,10 +233,10 @@ public class ExportDocMod {
 				 Session.tableName = jsonArray.getJSONObject(i).getString("table_name");
 				 
 				 documentWrapper.addSubSubHeader("Columns");
-				 this.addColumnsTable(documentWrapper, jsonArray.getJSONObject(i).getString("table_id"));
+				 this.addTableColumns(documentWrapper, jsonArray.getJSONObject(i).getString("table_id"));
 				 
 				 documentWrapper.addSubSubHeader("Joins");
-				 this.addJoinsTable(documentWrapper);
+				 this.addTableJoins(documentWrapper);
 				 
 			    
  	    	 } catch (JSONException e) {
@@ -249,7 +249,7 @@ public class ExportDocMod {
     }
     
     
-    public void addColumnsTable(DocumentWrapper documentWrapper, String tableId) {
+    public void addTableColumns(DocumentWrapper documentWrapper, String tableId) {
     	
     	TableInformationMod tabInformMod = new TableInformationMod();
     	
@@ -303,7 +303,7 @@ public class ExportDocMod {
     }
     
     
-    public void addJoinsTable(DocumentWrapper documentWrapper ) {
+    public void addTableJoins(DocumentWrapper documentWrapper ) {
     	
     	
     	TableInformationMod tabInformMod = new TableInformationMod();
@@ -316,10 +316,10 @@ public class ExportDocMod {
 			
 		  	
 			 List<Column> columns = new ArrayList<Column>();
-			    columns.add(new Column("Left Table", 100));
-		        columns.add(new Column("Left Column", 100));
-		        columns.add(new Column("Right Table", 100));
-		        columns.add(new Column("Right Column", 100));
+			    columns.add(new Column("Left Table", 140));
+		        columns.add(new Column("Left Column", 140));
+		        columns.add(new Column("Right Table", 140));
+		        columns.add(new Column("Right Column", 140));
 		        
 		        
 		    String [][] content = new String [jsonArray.length()][4]; 
@@ -362,7 +362,264 @@ public class ExportDocMod {
     
     private  void createViewInformation(DocumentWrapper documentWrapper) {
     	documentWrapper.addHeader("VIEWS");
+    	
+    	AllViewsMod viewMod = new AllViewsMod ();
+    	
+    	String tablesJson = viewMod.loadViews(-1, -1);
+
+    	
+    	JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(tablesJson);
+			
+			
+			
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Id", 30));
+		        columns.add(new Column("Owner", 60));
+		        columns.add(new Column("Name", 210));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][3]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("view_id");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("owner");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("view_name");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     new PDFTableGenerator().generatePDF(documentWrapper, table);			
+			
+			
+		     
+		     addViewInformation (documentWrapper, jsonArray );
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+
+    	
+    	
+    	
     }
+    
+    
+    private void addViewInformation (DocumentWrapper documentWrapper, JSONArray jsonArray ) {
+      	 for (int i = 0; i < jsonArray.length(); i ++) {
+  	    	
+ 	    	 try {
+ 	    		 
+				 documentWrapper.addSubHeader("View: " + jsonArray.getJSONObject(i).getString("owner") + "." + jsonArray.getJSONObject(i).getString("view_name"));
+			     
+				 
+				 
+				 
+				 Session.owner = jsonArray.getJSONObject(i).getString("owner");
+				 Session.viewName = jsonArray.getJSONObject(i).getString("view_name");
+				 
+				 documentWrapper.addSubSubHeader("Tables/Views");
+				 this.addViewsTables(documentWrapper);
+				 
+				 documentWrapper.addSubSubHeader("Columns");
+				 this.addViewsColumns(documentWrapper);
+				 
+				 documentWrapper.addSubSubHeader("Joins");
+				 this.addViewJoins(documentWrapper);
+				 
+			    
+ 	    	 } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+ 	    	
+ 	    }
+    	
+    }
+    
+    public void addViewsTables(DocumentWrapper documentWrapper) {
+    	
+    	ViewInformationMod viewInformMod = new  ViewInformationMod();
+    	
+ 
+    	String jsonStr = viewInformMod.loadViewsTables();
+    	try {
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			
+		  	
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Id", 30));
+		        columns.add(new Column("Table Name", 200));
+		        columns.add(new Column("Table Alias", 200));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][3]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("id");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("source_owner") + "." + jsonArray.getJSONObject(i).getString("source_name");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("alias");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     try {
+				new PDFTableGenerator().generatePDF(documentWrapper, table);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+    	
+    	
+    }  
+    
+    
+    public void addViewsColumns(DocumentWrapper documentWrapper) {
+    	
+    	ViewInformationMod viewInformMod = new  ViewInformationMod();
+    	
+ 
+    	String jsonStr = viewInformMod.loadColumns();
+    	try {
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			
+		  	
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Id", 30));
+		        columns.add(new Column("Table/View Name", 200));
+		        columns.add(new Column("Column", 170));
+		        columns.add(new Column("Column Alias", 170));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][4]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("id");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("object_name");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("column_name");
+		    	content [i][3] = jsonArray.getJSONObject(i).getString("alias");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     try {
+				new PDFTableGenerator().generatePDF(documentWrapper, table);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+    	
+    	
+    }  
+    
+    
+   public void addViewJoins(DocumentWrapper documentWrapper ) {
+    	
+    	
+    	ViewInformationMod viewInformMod = new ViewInformationMod();
+    	
+    	 
+    	String jsonStr = viewInformMod.loadJoins();
+    	try {
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			
+		  	
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Left Table", 140));
+		        columns.add(new Column("Left Column", 140));
+		        columns.add(new Column("Right Table", 140));
+		        columns.add(new Column("Right Column", 140));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][4]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("left_table_name");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("left_column_name");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("right_table_name");
+		    	content [i][3] = jsonArray.getJSONObject(i).getString("right_column_name");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     try {
+				new PDFTableGenerator().generatePDF(documentWrapper, table);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	        
+    	
+    }    
+    
     
     private void createPlsqlInformation(DocumentWrapper documentWrapper) {
     	documentWrapper.addHeader("PLSQL");

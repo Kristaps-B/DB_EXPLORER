@@ -161,8 +161,8 @@ public class DocumentWrapper {
 			  this.subHeaderNumber = 0;
 			  this.subSubHeaderNumber = 0;
 
-
-
+			  this.setCurrentLineY(this.currentLineY - 20);
+            
 			  PDPageContentStream  contentStream = this.getContentStream();
 			
 			 //Begin the Content stream 

@@ -29,6 +29,7 @@ C:\Users\KB00408\workspace\DB_EXPLORER\src\Models\PlsqlInformationMod.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Models\TableInformationMod.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\Models\ViewInformationMod.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\PdfUtils\Column.java
+C:\Users\KB00408\workspace\DB_EXPLORER\src\PdfUtils\DocumentWrapper.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\PdfUtils\PDFTableGenerator.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\PdfUtils\StandartTable.java
 C:\Users\KB00408\workspace\DB_EXPLORER\src\PdfUtils\Table.java
