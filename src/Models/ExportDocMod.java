@@ -623,7 +623,334 @@ public class ExportDocMod {
     
     private void createPlsqlInformation(DocumentWrapper documentWrapper) {
     	documentWrapper.addHeader("PLSQL");
+    	
+    	
+ 
+    	
+    	AllPlsqlMod plsqlMod = new AllPlsqlMod ();
+    	
+    	String tablesJson = plsqlMod.loadPlsql(-1, -1);
+
+    	
+    	JSONArray jsonArray;
+		try {
+			jsonArray = new JSONArray(tablesJson);
+			
+			
+			
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Id", 30));
+		        columns.add(new Column("Owner", 60));
+		        columns.add(new Column("Name", 210));
+		        columns.add(new Column("Type", 140));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][4]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("plsql_id");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("owner");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("name");
+		    	content [i][3] = jsonArray.getJSONObject(i).getString("type");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     new PDFTableGenerator().generatePDF(documentWrapper, table);			
+			
+			
+		     this.addPlsqlInformation(documentWrapper, jsonArray);
+		     
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	
+    	
+
+    	
+    	
+    	
     }
+    
+    
+    private void addPlsqlInformation (DocumentWrapper documentWrapper, JSONArray jsonArray ) {
+     	 for (int i = 0; i < jsonArray.length(); i ++) {
+ 	    	
+	    	 try {
+	    		 
+				 documentWrapper.addSubHeader("Plsql: " + jsonArray.getJSONObject(i).getString("owner") + "." + jsonArray.getJSONObject(i).getString("name"));
+			     
+				 
+				 
+				 
+				 Session.owner = jsonArray.getJSONObject(i).getString("owner");
+				 Session.plsqlName = jsonArray.getJSONObject(i).getString("name");
+				 
+				 documentWrapper.addSubSubHeader("DML");
+				 this.addPlsqlDml(documentWrapper);
+				  
+				 
+				 documentWrapper.addSubSubHeader("Joins");
+				 this.addPlsqlJoins(documentWrapper );
+				 
+				 
+				 if (jsonArray.getJSONObject(i).getString("type").equals("PACKAGE")) {
+						documentWrapper.addSubSubHeader("Procedures/Functions");
+						this.addPlsqlProcFunc ( documentWrapper );
+						
+				 }
+				 
+				 if (jsonArray.getJSONObject(i).getString("type").equals("PROCEDURE") || jsonArray.getJSONObject(i).getString("type").equals("FUNCTION")) {
+						documentWrapper.addSubSubHeader("Arguments");
+						this.addPlsqlArguments (documentWrapper);
+						
+				 }
+				 
+				 // this.addViewJoins(documentWrapper);
+				 
+			    
+	    	 } catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	
+	    }
+   	
+   }
+    
+    
+   private void addPlsqlDml (DocumentWrapper documentWrapper) {
+
+   	PlsqlInformationMod plsqlInformMod = new  PlsqlInformationMod();
+	
+    
+   	String jsonStr = plsqlInformMod.getDml(Session.owner, Session.plsqlName);
+   	try {
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			
+		  	
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Owner", 100));
+		        columns.add(new Column("Table/Name", 200));
+		        columns.add(new Column("DML Type", 100));
+		  
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][3]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("owner");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("name");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("type");
+
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     try {
+				new PDFTableGenerator().generatePDF(documentWrapper, table);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   	
+	   
+   }
+   
+   public void addPlsqlJoins(DocumentWrapper documentWrapper ) {
+   	
+   	
+   	PlsqlInformationMod plsqlInformMod = new PlsqlInformationMod();
+   	
+   	 
+   	String jsonStr = plsqlInformMod.loadJoins();
+   	try {
+			JSONArray jsonArray = new JSONArray(jsonStr);
+			
+			
+		  	
+			 List<Column> columns = new ArrayList<Column>();
+			    columns.add(new Column("Left Table", 140));
+		        columns.add(new Column("Left Column", 140));
+		        columns.add(new Column("Right Table", 140));
+		        columns.add(new Column("Right Column", 140));
+		        
+		        
+		    String [][] content = new String [jsonArray.length()][4]; 
+	 
+	        
+		    for (int i = 0; i < jsonArray.length(); i ++) {
+		    	
+		    	content [i][0] = jsonArray.getJSONObject(i).getString("left_table_name");
+		    	content [i][1] = jsonArray.getJSONObject(i).getString("left_column_name");
+		    	content [i][2] = jsonArray.getJSONObject(i).getString("right_table_name");
+		    	content [i][3] = jsonArray.getJSONObject(i).getString("right_column_name");
+		    	
+		    }
+
+		    
+	        
+	        Table table = (new StandartTable(columns, content)).getTable();
+
+
+		     try {
+				new PDFTableGenerator().generatePDF(documentWrapper, table);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
+			
+		} catch (JSONException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+   	
+   	
+   	        
+   	
+   }       
+
+   private void addPlsqlProcFunc (DocumentWrapper documentWrapper) {
+
+	   	PlsqlInformationMod plsqlInformMod = new  PlsqlInformationMod();
+		
+	    
+	   	String jsonStr = plsqlInformMod.loadProcFunc ( Session.owner, Session.plsqlName) ;
+	   	try {
+				JSONArray jsonArray = new JSONArray(jsonStr);
+				
+				
+			  	
+				 List<Column> columns = new ArrayList<Column>();
+				    columns.add(new Column("Id", 30));
+			        columns.add(new Column("Owner", 200));
+			        columns.add(new Column("Name", 140));
+			        columns.add(new Column("Type", 100));
+			  
+			        
+			        
+			    String [][] content = new String [jsonArray.length()][4]; 
+		 
+		        
+			    for (int i = 0; i < jsonArray.length(); i ++) {
+			    	
+			    	content [i][0] = jsonArray.getJSONObject(i).getString("plsql_id");
+			    	content [i][1] = jsonArray.getJSONObject(i).getString("owner");
+			    	content [i][2] = jsonArray.getJSONObject(i).getString("name");
+			    	content [i][3] = jsonArray.getJSONObject(i).getString("type");
+			    	
+			    }
+
+			    
+		        
+		        Table table = (new StandartTable(columns, content)).getTable();
+
+
+			     try {
+					new PDFTableGenerator().generatePDF(documentWrapper, table);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   	
+		   
+	   }   
+   
+   private void addPlsqlArguments (DocumentWrapper documentWrapper) {
+
+	   	PlsqlInformationMod plsqlInformMod = new  PlsqlInformationMod();
+		
+	    
+	   	String jsonStr = plsqlInformMod.getArguments ( Session.owner, Session.plsqlName) ;
+	   	try {
+				JSONArray jsonArray = new JSONArray(jsonStr);
+				
+				
+			  	
+				 List<Column> columns = new ArrayList<Column>();
+				    columns.add(new Column("Id", 30));
+			        columns.add(new Column("Owner", 100));
+			        columns.add(new Column("Argument Name", 140));
+			        columns.add(new Column("Data Type", 100));
+			        columns.add(new Column("Position", 100));
+			        columns.add(new Column("In/Out", 40));
+			  
+			        
+			        
+			    String [][] content = new String [jsonArray.length()][6]; 
+		 
+		        
+			    for (int i = 0; i < jsonArray.length(); i ++) {
+			    	
+			    	content [i][0] = jsonArray.getJSONObject(i).getString("id");
+			    	content [i][1] = jsonArray.getJSONObject(i).getString("owner");
+			    	content [i][2] = jsonArray.getJSONObject(i).getString("argument_name");
+			    	content [i][3] = jsonArray.getJSONObject(i).getString("data_type");
+			    	content [i][4] = jsonArray.getJSONObject(i).getString("position");
+			    	content [i][5] = jsonArray.getJSONObject(i).getString("in_out");
+			    	
+			    }
+
+			    
+		        
+		        Table table = (new StandartTable(columns, content)).getTable();
+
+
+			     try {
+					new PDFTableGenerator().generatePDF(documentWrapper, table);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				
+				
+			} catch (JSONException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	   	
+		   
+	   }     
     
  
 }
