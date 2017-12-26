@@ -12,9 +12,11 @@ public class CheckIfTextExistsTest {
 	public void test() {
 		ParserUtils parserUtils = new ParserUtils();
 		
-		boolean result = parserUtils.checkIfTextExists ("Check test inside.", "inside") ;
+		boolean result = parserUtils.checkIfTextExists ("SELECT first_name FROM hr.employees", "first_name") ;
 		
 		assertEquals(result, true);
 	}
 
 }
+
+

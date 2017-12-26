@@ -1,6 +1,7 @@
 <html>
 	<head>
 		<link rel="stylesheet" href="css/bootstrap.css">
+		<link rel="stylesheet" href="css/main.css">	
 	
 		<title>VIEW_INFORMATION</title>
 		
@@ -171,6 +172,24 @@
 		</script>
 	</head>
 	<body>
+	
+	
+	<!-- Side navigation -->
+<div class="sidenav">
+  <h3><center>MENU</center></h3>
+
+  <a href="javascript:app.changePage('ALL_USERS');">ALL_USERS</a>
+  <a href="javascript:app.changePage('ALL_TABLES');">ALL_TABLES</a>
+  <a href="javascript:app.changePage('ALL_VIEWS');">ALL_VIEWS</a>
+  <a href="javascript:app.changePage('ALL_PLSQL');">ALL_PL/SQL</a>
+  <a href="javascript:app.changePage('TABLE_GRAPH');">TABLE_GRAPH</a>
+  <a href="javascript:app.changePage('EXPORT_DOCUMENTATION');">EXPORT_DOCUMENTATION</a>
+  <a href="javascript:app.changePage('CHANGE_DATABASE');">CHANGE_DATABASE</a>
+</div>
+	
+	<div class="main">
+	
+	
 		<center><h1>VIEW_INFORMATION: <div id="view_name"></div></h1></center>
 		
 		</br>
@@ -217,7 +236,8 @@
 	
 	</table>	
 	
-		
+	
+	</div>	
 	
 	</body>
 </html>

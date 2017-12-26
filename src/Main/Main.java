@@ -72,7 +72,7 @@ public class Main extends Application {
 		layout.getChildren().addAll(myWebView);
 		
 		//Create scene and show Window
-		Scene scene = new Scene(layout, 960, 740);
+		Scene scene = new Scene(layout, 1200, 740);
 		primaryStage.setScene(scene);
 		primaryStage.show();
 		

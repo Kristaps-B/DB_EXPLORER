@@ -2,6 +2,7 @@
 <head>
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<script src="js/db_explorer.js"></script>
+	<link rel="stylesheet" href="css/main.css">
 <title>ALL_TABLES</title>
 
 <script type="text/javascript">
@@ -198,6 +199,20 @@
 </head>
 <body>
 
+<!-- Side navigation -->
+<div class="sidenav">
+  <h3><center>MENU</center></h3>
+
+  <a href="javascript:app.changePage('ALL_USERS');">ALL_USERS</a>
+  <a href="javascript:app.changePage('ALL_TABLES');">ALL_TABLES</a>
+  <a href="javascript:app.changePage('ALL_VIEWS');">ALL_VIEWS</a>
+  <a href="javascript:app.changePage('ALL_PLSQL');">ALL_PL/SQL</a>
+  <a href="javascript:app.changePage('TABLE_GRAPH');">TABLE_GRAPH</a>
+  <a href="javascript:app.changePage('EXPORT_DOCUMENTATION');">EXPORT_DOCUMENTATION</a>
+  <a href="javascript:app.changePage('CHANGE_DATABASE');">CHANGE_DATABASE</a>
+</div>
+
+<div class="main">
 	<div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>ALL_PLSQL</h1></center>
 	
@@ -234,8 +249,8 @@
 		 <input id="offset" type="number" value="0" disabled /> 
 		 <button class="btn btn-primary"   onclick="next();" > NEXT </button></br>
 	</center>	
-		
-	
+
+</div>	
 
 </body>
 

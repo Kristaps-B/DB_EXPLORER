@@ -6,6 +6,7 @@
 	<link rel="stylesheet" href="css/bootstrap.css">
 	<script type="text/javascript" src="js/vis.js"></script>
     <link href="css/vis.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="css/main.css">    
 	
 	
 	<style type="text/css">
@@ -21,6 +22,22 @@
 <body  bgcolor="#000000">
 
 
+
+<!-- Side navigation -->
+<div class="sidenav">
+  <h3><center>MENU</center></h3>
+
+  <a href="javascript:app.changePage('ALL_USERS');">ALL_USERS</a>
+  <a href="javascript:app.changePage('ALL_TABLES');">ALL_TABLES</a>
+  <a href="javascript:app.changePage('ALL_VIEWS');">ALL_VIEWS</a>
+  <a href="javascript:app.changePage('ALL_PLSQL');">ALL_PL/SQL</a>
+  <a href="javascript:app.changePage('TABLE_GRAPH');">TABLE_GRAPH</a>
+  <a href="javascript:app.changePage('EXPORT_DOCUMENTATION');">EXPORT_DOCUMENTATION</a>
+  <a href="javascript:app.changePage('CHANGE_DATABASE');">CHANGE_DATABASE</a>
+</div>
+
+<div class="main">
+
     <div id="flash" class="alert alert-success"  ><center>Loading...</center></div>
 	<center><h1>DB_GRAPH</h1></center>
 	
@@ -30,7 +47,7 @@
 	<center><div id="mynetwork"></div></center>
 	
 	
-	
+</div>	
 	
 	
 		<script type="text/javascript">
