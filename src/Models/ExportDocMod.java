@@ -188,9 +188,9 @@ public class ExportDocMod {
     	
     	
 		 List<Column> columns = new ArrayList<Column>();
-		    columns.add(new Column("Id", 30));
-	        columns.add(new Column("Owner", 60));
-	        columns.add(new Column("Name", 210));
+		    columns.add(new Column("Id", 60));
+	        columns.add(new Column("Owner", 80));
+	        columns.add(new Column("Name", 260));
 	        
 	        
 	    String [][] content = new String [jsonArray.length()][3]; 

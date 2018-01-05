@@ -20,8 +20,17 @@ import org.junit.runners.Suite.SuiteClasses;
 	GetOwnerTest.class,
 	GetTableTest.class,
 	CheckIfTextExistsTest.class,
+	
 	SimpleQueryTest.class,
-	EmployeesQueryTest.class
+	EmployeesQueryTest.class,
+	WhereQueryTest.class,
+	AnsiQueryTest.class,
+	SelectSubqueryTest.class,
+	FromSubqueryTest.class,
+	WhereSubqueryTest.class,
+	SubquerySubqueryTest.class,
+	UnionQueryTest.class,
+	WithQueryTest.class
 	})
 public class RunAllTests {
 

@@ -6,6 +6,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import java.security.Key;
+import javax.crypto.Cipher;
+import javax.crypto.spec.SecretKeySpec;
+
 import Database.DBGlobal;
 import Database.SQLLite;
 
@@ -19,6 +23,11 @@ public class ConnectDBMod {
 		
 		SQLLite lInsert = new SQLLite();
 		
+		//password = this.encryptPassword(password, "12345678");
+		String encrPassword = encrypt(password, "12345678");
+		 
+		
+		
 		
 		String sql = "INSERT INTO databases (ip, port, sid, username, password) " +
 				" VALUES (" +
@@ -26,7 +35,7 @@ public class ConnectDBMod {
 				"'"+ port + "'," +
 				"'"+ sid + "'," +
 				"'"+ username + "'," +
-				"'"+ password + "'" +
+				"'"+ encrPassword + "'" +
 				")";
 		
 		
@@ -34,6 +43,40 @@ public class ConnectDBMod {
 		
 	
 		
+	}
+	
+	public static String encrypt(String strClearText,String strKey) throws Exception{
+		String strData="";
+		
+		try {
+			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
+			Cipher cipher=Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.ENCRYPT_MODE, skeyspec);
+			byte[] encrypted=cipher.doFinal(strClearText.getBytes());
+			strData=new String(encrypted);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return strData;
+	}
+	
+	public static String decrypt(String strEncrypted,String strKey) throws Exception{
+		String strData="";
+		
+		try {
+			SecretKeySpec skeyspec=new SecretKeySpec(strKey.getBytes(),"Blowfish");
+			Cipher cipher=Cipher.getInstance("Blowfish");
+			cipher.init(Cipher.DECRYPT_MODE, skeyspec);
+			byte[] decrypted=cipher.doFinal(strEncrypted.getBytes());
+			strData=new String(decrypted);
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw new Exception(e);
+		}
+		return strData;
 	}
 	
 	
@@ -117,7 +160,7 @@ public class ConnectDBMod {
 				result += "\"port\":\"" + rs.getString("port") + "\","; 
 				result += "\"sid\":\"" + rs.getString("sid") + "\",";
 				result += "\"username\":\"" + rs.getString("username") + "\",";
-				result += "\"password\":\"" + rs.getString("password") + "\"";
+				result += "\"password\":\"" + decrypt(rs.getString("password"), "12345678") + "\"";
 			 
 				
 				
@@ -130,6 +173,9 @@ public class ConnectDBMod {
 				
 			
 			result += "]";
+			
+			
+			System.out.println("result: " + result);
 			
 			
 			//result = "[{a:a},{a:b}]";
@@ -166,15 +212,7 @@ public class ConnectDBMod {
 			
 			
 				
-				String sql = /* "INSERT INTO all_databases (ip, port, sid, username, password) " +
-						" VALUES (" +
-						"'"+ ip + "'," +
-						"'"+ port + "'," +
-						"'"+ sid + "'," +
-						"'"+ username + "'," +
-						"'"+ password + "'" +
-						")";
-						*/
+				String sql =  
 						"DELETE FROM databases WHERE id = " + id;
 					 
 						

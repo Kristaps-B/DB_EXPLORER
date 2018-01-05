@@ -195,12 +195,12 @@ public class SelectQuery {
 	public ArrayList <FromTable> getTables () {
 		ArrayList <FromTable> tables = new ArrayList <> ();
 		
-		
+		System.out.println("GET FROM clause Tables");
 		tables.addAll(this.fromClause.getTables());
 		
-		
+		System.out.println("GET WHERE clause Tables");
 		tables.addAll(this.selectClause.getTables());
-	
+		System.out.println("AFTER");
 		
 		return tables;
 		
@@ -230,16 +230,28 @@ public class SelectQuery {
 		
 		ArrayList <WhereExpression> whereList = new ArrayList <> ();
 		
-		System.out.println("Get from where clause");
+		System.out.println("Get from FROM clause");
+		for (WhereClause w : fromClause.getAnsiWhereList()) {
+			
+			whereList.addAll(w.getExpressionList());
+		}
 		
 		
+		System.out.println("Get from WHERE clause");
 		if (this.whereClause != null) {
+			
+		 
+			
+		
+			
 			whereList.addAll(this.whereClause.getExpressionList());
+			
+			
 			
 		}
 	
 		
-		System.out.println("Get from select clause");
+		System.out.println("Get from SELECT clause");
 		whereList.addAll( this.selectClause.getExpressionList() );
 		
 		

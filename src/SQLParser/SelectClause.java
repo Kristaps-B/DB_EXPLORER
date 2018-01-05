@@ -60,6 +60,9 @@ public class SelectClause {
 			
 			if (cs.getIsSimpleColumn() == true) {
 				colList.add(cs);
+			} else {
+				colList.addAll(cs.getSubSelect().getColumnList());
+				
 			}
 			
 		}
@@ -73,6 +76,12 @@ public class SelectClause {
 	
 	public ArrayList <FromTable> getTables () {
 		ArrayList <FromTable> tableList = new ArrayList <> ();
+		
+		for (ColumnSelect cs: this.columnSelectList) {
+			if (cs.getIsSubquery() == true) {
+				tableList.addAll(cs.getSubSelect().getTableList());
+			}
+		}
 		
 		
 		

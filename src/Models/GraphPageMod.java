@@ -103,9 +103,12 @@ public class GraphPageMod {
 	 		+ "j.left_owner left_owner, "
 	 		+ "j.right_owner right_owner " + 
 		" FROM joins j " + 
-		" WHERE 1=1 " 
-
-		;
+		" WHERE 1=1 "
+		+ " AND  j.right_owner IN  " + activeUsers.substring(12) + " OR j.left_owner IN " + activeUsers.substring(12) 
+;
+	 
+	 
+	 System.out.println("Edge SQL: " + sql);
 		
 		try {
 			

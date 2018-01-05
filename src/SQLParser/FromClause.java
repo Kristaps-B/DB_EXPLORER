@@ -274,6 +274,11 @@ public class FromClause {
 	}
 	
 	
+	public ArrayList <WhereClause> getAnsiWhereList () {
+		return this.ansiWhereList;
+	}
+	
+	
 	
  
 	

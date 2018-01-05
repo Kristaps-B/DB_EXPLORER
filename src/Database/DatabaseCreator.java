@@ -84,6 +84,7 @@ public class DatabaseCreator {
 			"table_id          INTEGER," +
 			"owner             CHAR(30)," +
 			"table_name        CHAR(30)," +
+			"comments          CHAR(300)," +
 			"examine_time      DATETIME," +
 			"unique (owner, table_name)" +
 			")"
@@ -124,6 +125,7 @@ public class DatabaseCreator {
 			"owner             CHAR(30)," +
 			"view_name        CHAR(30)," +
 			"examine_time       DATETIME," +
+			"comments          CHAR(300)," +
 			"unique (owner, view_name)" +
 			")"
 			;
@@ -148,6 +150,7 @@ public class DatabaseCreator {
 			"column_name           CHAR(30)," +
 			"table_id              INTEGER,"  +
 			"data_type             CHAR(30)," +
+			"comments              CHAR(300)," +
 			"unique (column_name, table_id)"  +
 			")"
 			;
