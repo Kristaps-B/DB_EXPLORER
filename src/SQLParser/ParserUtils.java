@@ -179,14 +179,21 @@ public class ParserUtils {
 		String result = "";
 		
 		
+		
+		
+		
 		int start = str.indexOf("(");
 		
 		int end = str.lastIndexOf(")");
 		
 		System.out.println("Get Brackets content: start: " + start + " end: " + end);		
 		
+		if (start == -1 && end == -1) {
+			result = str;
+		} else {
+			result = str.substring(start + 1, end);
+		}
 		
-		result = str.substring(start + 1, end);
 		
 		return result;
 		

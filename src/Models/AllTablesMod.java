@@ -56,6 +56,9 @@ public class AllTablesMod {
 			}
 			
 			
+			queryFk (  );
+			
+			
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -223,7 +226,7 @@ public class AllTablesMod {
 			
 			update_examine_time ( owner, table );
 			
-			queryFk(owner, table);
+			// queryFk(owner, table);
 			
 			
 		} catch (Exception e) {
@@ -273,9 +276,9 @@ public class AllTablesMod {
 		
 	}
 	
-	private void queryFk ( String owner, String table) {
+	private void queryFk (  ) {
 		
-		
+		String activeUsers =  new UserUtils().loadActiveUsers();
 		DbUtils dbUtils = new DbUtils ();
 		
 		String sql = "SELECT a.owner left_owner, a.table_name left_table, a.column_name left_column, a.constraint_name,  "
@@ -284,10 +287,16 @@ public class AllTablesMod {
       + " JOIN all_constraints c ON a.owner = c.owner AND a.constraint_name = c.constraint_name "
       + " join all_cons_columns b on c.owner = b.owner and c.r_constraint_name = b.constraint_name "
       +  " WHERE c.constraint_type = 'R' "
+      /*
       + " AND ((a.table_name = '" + table + "' "
       + " AND a.owner = '" + owner +"' ) OR ("
       + " b.table_name = '" + table +"' "
-      + " AND b.owner = '" + owner + "' )) ";
+      + " AND b.owner = '" + owner + "' )) "
+      */
+     + " AND a.owner IN " + activeUsers.substring(12)  + "  " 
+     + " AND  b.owner IN " + activeUsers.substring(12)  +" "
+      
+      ;
 		
 		
 		System.out.println("Query FK! " + sql);
@@ -329,7 +338,7 @@ public class AllTablesMod {
 					dbUtils.saveTableJoin(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName);
 					
 				    int joinId = dbUtils.findJoinId(row.leftOwner, row.rightOwner, row.leftTableName, row.rightTableName, row.leftColumnName, row.rightColumnName);
-				    int tableId = dbUtils.getTableId(owner, table);
+				    int tableId = dbUtils.getTableId(row.leftOwner, row.leftTableName);
 				    
 				    dbUtils.saveJoinLink(tableId, joinId, "TABLE");
 					

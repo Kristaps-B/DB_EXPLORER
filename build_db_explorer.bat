@@ -1,2 +1,2 @@
 dir /s /B *.java > sources.txt
-javac -cp "src;lib/jfxrt.jar;lib/ojdbc6.jar;lib/sqlite-jdbc-3.8.11.2.jar;lib/jsqlparser-1.1.jar;lib/fontbox-2.0.8.jar;lib/pdfbox-2.0.8.jar;lib/pdfbox-tools-2.0.8.jar;lib/preflight-2.0.8.jar;lib/xmpbox-2.0.8.jar;lib/java-json-schema.jar"  @sources.txt
+javac -cp "src;lib/jfxrt.jar;lib/ojdbc6.jar;lib/sqlite-jdbc-3.8.11.2.jar;lib/jsqlparser-1.1.jar;lib/fontbox-2.0.8.jar;lib/pdfbox-2.0.8.jar;lib/pdfbox-tools-2.0.8.jar;lib/preflight-2.0.8.jar;lib/xmpbox-2.0.8.jar;lib/java-json-schema.jar"  @sources.tx
