@@ -232,10 +232,10 @@ public class ExportDocMod {
 				 Session.owner = jsonArray.getJSONObject(i).getString("owner");
 				 Session.tableName = jsonArray.getJSONObject(i).getString("table_name");
 				 
-				 documentWrapper.addSubSubHeader("Columns");
+				 
 				 this.addTableColumns(documentWrapper, jsonArray.getJSONObject(i).getString("table_id"));
 				 
-				 documentWrapper.addSubSubHeader("Joins");
+				
 				 this.addTableJoins(documentWrapper);
 				 
 			    
@@ -257,8 +257,8 @@ public class ExportDocMod {
     	String jsonStr = tabInformMod.loadColumns();
     	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			documentWrapper.addSubSubHeader("Columns");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Id", 30));
@@ -312,8 +312,8 @@ public class ExportDocMod {
     	String jsonStr = tabInformMod.loadTableJoins();
     	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			 documentWrapper.addSubSubHeader("Joins");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Left Table", 140));
@@ -436,13 +436,13 @@ public class ExportDocMod {
 				 Session.owner = jsonArray.getJSONObject(i).getString("owner");
 				 Session.viewName = jsonArray.getJSONObject(i).getString("view_name");
 				 
-				 documentWrapper.addSubSubHeader("Tables/Views");
+				 
 				 this.addViewsTables(documentWrapper);
 				 
-				 documentWrapper.addSubSubHeader("Columns");
+				 
 				 this.addViewsColumns(documentWrapper);
 				 
-				 documentWrapper.addSubSubHeader("Joins");
+				 
 				 this.addViewJoins(documentWrapper);
 				 
 			    
@@ -463,8 +463,8 @@ public class ExportDocMod {
     	String jsonStr = viewInformMod.loadViewsTables();
     	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			documentWrapper.addSubSubHeader("Tables/Views");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Id", 30));
@@ -517,8 +517,8 @@ public class ExportDocMod {
     	String jsonStr = viewInformMod.loadColumns();
     	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			documentWrapper.addSubSubHeader("Columns");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Id", 30));
@@ -575,7 +575,7 @@ public class ExportDocMod {
     	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
 			
-			
+			documentWrapper.addSubSubHeader("Joins");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Left Table", 140));
@@ -702,22 +702,22 @@ public class ExportDocMod {
 				 Session.owner = jsonArray.getJSONObject(i).getString("owner");
 				 Session.plsqlName = jsonArray.getJSONObject(i).getString("name");
 				 
-				 documentWrapper.addSubSubHeader("DML");
+				 
 				 this.addPlsqlDml(documentWrapper);
 				  
 				 
-				 documentWrapper.addSubSubHeader("Joins");
+				 
 				 this.addPlsqlJoins(documentWrapper );
 				 
 				 
 				 if (jsonArray.getJSONObject(i).getString("type").equals("PACKAGE")) {
-						documentWrapper.addSubSubHeader("Procedures/Functions");
+						
 						this.addPlsqlProcFunc ( documentWrapper );
 						
 				 }
 				 
 				 if (jsonArray.getJSONObject(i).getString("type").equals("PROCEDURE") || jsonArray.getJSONObject(i).getString("type").equals("FUNCTION")) {
-						documentWrapper.addSubSubHeader("Arguments");
+						
 						this.addPlsqlArguments (documentWrapper);
 						
 				 }
@@ -743,8 +743,8 @@ public class ExportDocMod {
    	String jsonStr = plsqlInformMod.getDml(Session.owner, Session.plsqlName);
    	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			documentWrapper.addSubSubHeader("DML");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Owner", 100));
@@ -796,8 +796,8 @@ public class ExportDocMod {
    	String jsonStr = plsqlInformMod.loadJoins();
    	try {
 			JSONArray jsonArray = new JSONArray(jsonStr);
-			
-			
+			if (jsonArray.length() == 0) return;
+			documentWrapper.addSubSubHeader("Joins");
 		  	
 			 List<Column> columns = new ArrayList<Column>();
 			    columns.add(new Column("Left Table", 140));
@@ -851,7 +851,9 @@ public class ExportDocMod {
 	   	try {
 				JSONArray jsonArray = new JSONArray(jsonStr);
 				
+				if (jsonArray.length() == 0) return;
 				
+				documentWrapper.addSubSubHeader("Procedures/Functions");
 			  	
 				 List<Column> columns = new ArrayList<Column>();
 				    columns.add(new Column("Id", 30));
@@ -901,10 +903,14 @@ public class ExportDocMod {
 		
 	    
 	   	String jsonStr = plsqlInformMod.getArguments ( Session.owner, Session.plsqlName) ;
+	   	
+	   	
+	   	
 	   	try {
 				JSONArray jsonArray = new JSONArray(jsonStr);
+				if (jsonArray.length() == 0) return;
 				
-				
+				documentWrapper.addSubSubHeader("Arguments");
 			  	
 				 List<Column> columns = new ArrayList<Column>();
 				    columns.add(new Column("Id", 30));

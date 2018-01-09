@@ -60,7 +60,7 @@ public class SelectClause {
 			
 			if (cs.getIsSimpleColumn() == true) {
 				colList.add(cs);
-			} else {
+			} else if (cs.getIsSubquery() == true) {
 				colList.addAll(cs.getSubSelect().getColumnList());
 				
 			}
@@ -91,7 +91,7 @@ public class SelectClause {
 	
 	public ColumnSelect  getColumnSelect (String alias) {
 		ColumnSelect columnSelect = null;
-		
+		System.out.println("SelectClause.getColumnSelect: 1");
 		
 		for (ColumnSelect cs: columnSelectList) {
 			

@@ -19,7 +19,7 @@ public class StandartTable {
 
     // Font configuration
     private static final PDFont TEXT_FONT = PDType1Font.HELVETICA;
-    private static final float FONT_SIZE = 10;
+    private static final float FONT_SIZE = 8;
 
     // Table configuration
     private static final float ROW_HEIGHT = 15;

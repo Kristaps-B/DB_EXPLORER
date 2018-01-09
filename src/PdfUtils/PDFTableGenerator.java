@@ -145,7 +145,20 @@ public class PDFTableGenerator {
             contentStream.beginText();
             // contentStream.moveTextPositionByAmount(nextTextX, nextTextY);
             
-            contentStream.setFont(PDType1Font.TIMES_ROMAN, 10);
+            int fontSize = 0;
+            if (text.length() < 10) {
+            	fontSize = 11;
+            } else if (text.length() < 15) {
+            	fontSize = 10;
+            }  else if (text.length() < 20) {
+            	fontSize = 8;
+            }  else if (text.length() < 25) {
+            	fontSize = 7;
+            } else {
+            	fontSize = 5;
+            }
+            
+            contentStream.setFont(PDType1Font.TIMES_ROMAN, fontSize);
             contentStream.newLineAtOffset(nextTextX, nextTextY);
             
             contentStream.showText(text != null ? text : "");

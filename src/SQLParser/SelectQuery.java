@@ -284,10 +284,12 @@ public class SelectQuery {
 	public ColumnSelect getColumnSelect(String alias) {
 		
 		
-		System.out.println("Get columnSelect: alias: " + alias);
+		System.out.println("SelectQuery.getColumnSelect:  alias: " + alias);
 		ColumnSelect columnSelect = null;
 		
 		columnSelect = this.selectClause.getColumnSelect(alias);
+		
+		System.out.println("SelectQuery.getColumnSelect:  result:" + columnSelect);
 		
 		return columnSelect;
 	}

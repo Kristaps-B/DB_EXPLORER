@@ -208,7 +208,7 @@ public class AllTablesMod {
 		
 		ColumnResult rs = new ColumnResult();
 		
-		String sql = "SELECT rownum id, column_id, column_name,  " + id + " table_id, data_type FROM all_tab_cols WHERE owner = '" + owner + "' AND table_name = '" + table + "'";
+		String sql = "SELECT rownum id, column_id, column_name,  " + id + " table_id, DECODE(data_type, 'VARCHAR2', data_type || '(' || data_length || ')', data_type)  data_type FROM all_tab_cols WHERE owner = '" + owner + "' AND table_name = '" + table + "'";
 		
 		System.out.println(sql);
 		

@@ -57,10 +57,11 @@ public class MainSelectQuery {
 		parserUtils = new ParserUtils();
 		
 		this.sql = this.sql.toUpperCase();
-		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
+		
 		this.sql = " " + this.sql.trim().replaceAll(" +", " ") + " ";
 		this.sql = parserUtils.removeComments(this.sql);
 		
+		this.sql = this.sql.replace("\n", " ").replace("\r", " ");
 		this.sql = this.sql.replaceAll(" UNION ALL ", "UNION");
 		
 		ArrayList <String> sqlList = this.parserUtils.parseString(this.sql, " UNION ");

@@ -288,6 +288,7 @@ public class ParserUtils {
 	
 	public String removeComments (String inSql) {
 		String outSql = "";
+		String commentType = "";
 		
 		System.out.println("Remove comments");
 		
@@ -297,29 +298,42 @@ public class ParserUtils {
 		for (int  i = 0; i < inSql.length(); i ++) {
 			
 			char c = inSql.charAt(i);
-			
-			// System.out.println("Character: " + c);
-			
-			if (atLocation(i, "--", inSql) || atLocation(i, "/*", inSql)) {
+			 
+			  
+			if ( isComment == false) {
 				
-				isComment = true;
-				// System.out.println("Comment starts");
+				if (atLocation(i, "--", inSql) ) {
+					
+					isComment = true;
+					commentType = "--";
+					// System.out.println("Comment starts");
+				} else if ( atLocation(i, "/*", inSql) ) {
+					
+					isComment = true;
+					commentType = "/*";
+				}
 			}
+				
+			
 			
 			
 			if (isComment == false) {
 				outSql += c;
-			} else {
-				if ( i > 0 && atLocation(i-1, "*/", inSql)) {
+			} else if (isComment == true) {
+				if ( i > 0 && atLocation(i-1, "*/", inSql) && commentType.equals("/*")) {
 					
 					isComment = false;
 					
 				}
 				
-				if (c == '\n'  || c == '\r' ) {
+				if ((c == '\n'  || c == '\r'  ) && commentType.equals("--") ) {
+					System.out.println("Character: " + c);
 					isComment = false;
 				}
+				
 			}
+			
+			 
 			
 			
 		}

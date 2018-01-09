@@ -40,7 +40,13 @@ public class WhereExpression {
 		this.sql = this.sql.replace("(+)", "");
 		
 		
-		if (parserUtils.isTextInside(this.sql, "=") == true) {
+		this.checkIfIsJoinPre();
+		
+		
+		
+		
+		if (this.isJoin == false) {
+			System.out.println("WhereExpression.WhereExpression: IS JOIN!");
 			
 			
 			leftColumn   = parserUtils.getFirstPart(this.sql, "=");
@@ -68,9 +74,17 @@ public class WhereExpression {
 			this.rightColumn = this.rightColumn.trim();
 			
 			
-			
+			System.out.println("WhereExpression.WhereExpression: Before this.fromClause.getColumnTable this.leftAlias: " + this.leftAlias + " this.leftColumn:" + this.leftColumn);
 			FromTable leftFromTable = this.fromClause.getColumnTable(this.leftAlias, this.leftColumn);
+			System.out.println("WhereExpression.WhereExpression: Before this.fromClause.getColumnTable this.rightAlias: " + this.rightAlias + " this.righColumn:" + this.rightColumn);
 			FromTable rightFromTable = this.fromClause.getColumnTable(this.rightAlias, this.rightColumn);
+			System.out.println("WhereExpression.WhereExpression: After this.fromClause.getColumnTable");
+			
+			
+			if (leftFromTable == null || rightFromTable == null) {
+				this.isJoin = false;
+				return;
+			}
 			
 			if (leftFromTable != null ) {
 			    
@@ -85,7 +99,11 @@ public class WhereExpression {
 				this.rightOwner = rightFromTable.getOwner();
 			} else {
 				this.rightTable = "";
-			}			
+			}	
+			
+			if (this.leftTable.length() == 0 && this.leftAlias.length() != 0) {
+				this.leftTable = this.leftAlias;
+			}
 					
  
 			
@@ -105,6 +123,23 @@ public class WhereExpression {
 		
 		checkIfIsJoin();
 
+	}
+	
+	private void checkIfIsJoinPre () {
+		
+		if (parserUtils.isTextInside(this.sql, "=") == false ) {
+			isJoin = false;
+		}
+		if (parserUtils.isTextInside(this.sql, "'") == false ) {
+			isJoin = false;
+		}
+		if (parserUtils.isTextInside(this.sql, " IN ") == false ) {
+			isJoin = false;
+		}
+		if (parserUtils.isTextInside(this.sql, " EXISTS ") == false ) {
+			isJoin = false;
+		}
+		
 	}
 	
 	

@@ -57,9 +57,17 @@ public class ColumnSelect {
 			if (this.alias.equals("")) {
 				this.alias = this.column;
 			}	
+			System.out.println("ColumnSelect.ColumnSelect: before this.mainQuery.getColumnTable(this.tableAlias, this.column) ");
+			FromTable colTable = this.mainQuery.getColumnTable(this.tableAlias, this.column);
+			System.out.println("ColumnSelect.ColumnSelect: before this.mainQuery.getColumnTable(this.tableAlias, this.column) ");
+			if (colTable == null) {
+				this.isSimpleColumn = false;
+				return;
+			}
+			
+			this.table = colTable.getTable();
 			
 			
-			this.table = this.mainQuery.getColumnTable(this.tableAlias, this.column).getTable();
 			
 		} else {
 			

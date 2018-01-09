@@ -66,6 +66,7 @@ public class FromClause {
 			str = str.replace(" LEFT ", " ");
 			str = str.replaceAll(" INNER ", " ");
 			str = str.replaceAll(" RIGHT", " ");
+			str = str.replaceAll(" OUTER", " ");
 			
 			processAnsi(str);
 			
@@ -235,9 +236,11 @@ public class FromClause {
 		
 		for (FromTable ft: fromTableList) {
 			
+			System.out.println("FromClause.getColumnTable: Is Substring: " + ft.getIsSubstring() + " Table " + ft.getTable() + " Alias: " + ft.getAlias());
+			
 			
 			if (ft.getIsSubstring() == false) {
-				if (ft.getAlias().equals(tableAlias.toUpperCase())) {
+				if (ft.getAlias().equals(tableAlias.toUpperCase()) || (ft.getAlias().length() == 0 &&  ft.getTable().equals(tableAlias.toUpperCase()))) {
 					
 					System.out.println("Get by alias (not substring)");
 					fromTable = ft;
@@ -254,9 +257,15 @@ public class FromClause {
 				
 				ColumnSelect columnSelect = ft.getSubquery().getFirstQuery().getColumnSelect(column);
 				
+				if (columnSelect == null) {
+					continue;
+				}
+				
 				fromTable = ft.getSubquery().getFirstQuery().getColumnTable(columnSelect.getTableAlias(), columnSelect.getColumn());
 				
 				
+				
+				// System.out.println("FromClause.getColumnTable: Subquery FROMTable? :: "   + ft.getTable());
 				
 				if (fromTable != null) {
 					return fromTable;
@@ -268,6 +277,9 @@ public class FromClause {
 			
 				
 		}
+		
+		
+		
 		
 		
 		return fromTable;
