@@ -5,14 +5,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.PDPage;
+ 
 import org.apache.pdfbox.pdmodel.PDPageContentStream;
-import org.apache.pdfbox.pdmodel.common.PDRectangle;
-import org.apache.pdfbox.pdmodel.font.PDFont;
+ 
 import org.apache.pdfbox.pdmodel.font.PDType1Font;
 import org.json.JSONArray;
 import org.json.JSONException;
-import org.json.JSONObject;
+ 
 
 import Global.Session;
 import PdfUtils.Column;
@@ -20,7 +19,7 @@ import PdfUtils.DocumentWrapper;
 import PdfUtils.PDFTableGenerator;
 import PdfUtils.StandartTable;
 import PdfUtils.Table;
-import PdfUtils.TableBuilder;
+ 
 
 public class ExportDocMod {
 	
@@ -50,10 +49,10 @@ public class ExportDocMod {
 		String filePath =  path + "\\documentation_" + Session.sid +  ".pdf";
 		
 		System.out.println("File Path: " + filePath);
-
+		System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider");
 		PDDocument document = new PDDocument();
 		
-		
+		System.out.println("ExportDocMod.createPdf: after new PDDocument() " );
 		
 		
 		
@@ -150,7 +149,7 @@ public class ExportDocMod {
 		      contentStream.beginText(); 
 		      contentStream.setFont(PDType1Font.TIMES_ROMAN, 12);
 		      contentStream.newLineAtOffset(80, 480);
-		      contentStream.showText("Created by DATABASE_EXPLORER");  
+		      contentStream.showText("Created with DATABASE_EXPLORER");  
 		      contentStream.endText();
 		      
 		      

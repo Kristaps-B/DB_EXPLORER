@@ -40,13 +40,15 @@ public class PlsqlParser {
 	
 	private void modifyCode() {
 		
+		this.code = this.code.toUpperCase();
 		this.code = parserUtils.removeComments(this.code);
 		
-		this.code = this.code.replace("\n", " ").replace("\r", " ");
+		this.code = this.code.replaceAll("\n", " ").replaceAll("\r", " ").replaceAll("\t", " ");
+		this.code = this.code.replaceAll("\\(", " ( ").replaceAll("\\)", " ) ");
 		this.code = " " + this.code.trim().replaceAll(" +", " ") + " ";
+		this.code = code.replaceAll(" BEGIN ", " BEGIN; ").replaceAll(" BEGIN ", " BEGIN; ");
 		
 		
-		this.code = this.code.toUpperCase();
 		
 		
 		
@@ -190,18 +192,22 @@ public class PlsqlParser {
 		
 		
 		
-		String tempCode = code.replaceAll(" AS ", " IS ").replaceAll(" IS ", " IS; ").replaceAll(" BEGIN ", " BEGIN; ");
 		
-		ArrayList <String> lineList = parserUtils.parseString(tempCode, ";");
+		
+		ArrayList <String> lineList = parserUtils.parseString(this.code, ";");
 		
 		for (String line: lineList) {
 			
-			//  System.out.println("LINE: " + line);
+			 //System.out.println("LINE: " + line);
 			
+			 //For loops
+			 if (this.parserUtils.checkIfTextExists(line, " FOR ") == true && this.parserUtils.checkIfTextExists(line, " IN ") == true) {
+				 line = parserUtils.getBracketsContent(line);
+			 }
 			
 			// Check Line if contains query
-			if ( this.parserUtils.checkIfTextExists(line, " SELECT ") == true && this.parserUtils.checkIfTextExists(line, " FROM ") == true ) {
-				
+			if ( this.parserUtils.checkIfTextExists(line, " SELECT ") == true /* && this.parserUtils.checkIfTextExists(line, " FROM ") == true */ ) {
+				//System.out.println("LINE QUERY: " + line);
 				parseSelectLine(line);
 				
 			}
@@ -218,10 +224,11 @@ public class PlsqlParser {
 		
 		String sql = "";
 		
+		/*
 		// Check if CURSOR
 		if ( this.parserUtils.checkIfTextExists(line, " CURSOR ") == true ) {
 			
-			
+			System.out.println("PlsqlParser.parseSelectLine: CURSOR");
 			sql = this.parserUtils.getSecondPart(line, " IS ");
 			
 		}
@@ -231,20 +238,36 @@ public class PlsqlParser {
 		// Check if inline cursor
 		else if ( this.parserUtils.checkIfTextExists(line, " INTO ") == true) {
 			
-			 
+			System.out.println("PlsqlParser.parseSelectLine: INLINE CURSOR");
 			sql = this.parserUtils.getFirstPart(line, " INTO ") + " FROM " + this.parserUtils.getSecondPart(line, " FROM ");
 			
 		}
+		*/
 		
+		 
+			
+			sql = " SELECT " + this.parserUtils.getSecondPart(line, " SELECT ");
+			
+			
+		// Remove into
+		sql = sql.replaceAll(" BULK COLLECT ", " ");	
+		
+		 if ( this.parserUtils.checkIfTextExists(sql, " INTO ") == true) {
+				
+			System.out.println("PlsqlParser.parseSelectLine: INLINE CURSOR");
+			sql = this.parserUtils.getFirstPart(sql, " INTO ") + " FROM " + this.parserUtils.getSecondPart(sql, " FROM ");
+			
+		}
+		 
 		
 		
 		System.out.println("SQL: " + sql);
 		
-		
+		 
 		MainSelectQuery selectQuery = new MainSelectQuery(sql);
 		
 		this.queryList.add(selectQuery);
-		
+		 
 		
 	}
 	

@@ -175,7 +175,7 @@
 		 
 
 			
-			 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - 10;
+			 document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) - size;
 			
 			 loadTables(size, document.getElementById('offset').value);
 		 }, 100); 
@@ -194,7 +194,7 @@
 		
 		setTimeout(function(){
 			 
-			document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + 10;
+			document.getElementById('offset').value  = parseInt(document.getElementById('offset').value) + size;
 			
 			 loadTables(size, document.getElementById('offset').value);
 		 }, 100); 

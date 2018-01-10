@@ -186,7 +186,7 @@ public class ParserUtils {
 		
 		int end = str.lastIndexOf(")");
 		
-		System.out.println("Get Brackets content: start: " + start + " end: " + end);		
+		//System.out.println("Get Brackets content: start: " + start + " end: " + end);		
 		
 		if (start == -1 && end == -1) {
 			result = str;
@@ -431,7 +431,7 @@ public class ParserUtils {
 	public boolean checkIfTextExists (String text, String findStr) {
 		boolean result = true;
 		
-		 //  System.out.println("CheckIfTextExists:" + this.getSecondPart(text, findStr).length() );
+		 //System.out.println("CheckIfTextExists:" + this.getSecondPart(text, findStr).length() );
 		
 		if (this.getSecondPart(text, findStr).length() == 0) {
 			
